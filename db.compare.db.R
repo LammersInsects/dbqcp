@@ -1,0 +1,163 @@
+# Written by Mark Lammers; Institute for Evolution and Biodiversity, University of Muenster; marklammers6@gmail.com
+# (c) 2020. Released under the terms of the GNU General Public License v3.
+
+# source('C:/Users/mls241/surfdrive/Common_scripts/R_startup_script.R') #VU
+# source("C:/DATA/SURFdrive/Common_scripts/R_startup_script.R") #Thuis
+# source("G:/DATA/Common_scripts/R_startup_script.R") #Thuis using Maxtor HDD
+# source("E:/SURFdrive/Common_scripts/R_startup_script.R") #Yoga
+# source("E:/DATA/Common_scripts/R_startup_script.R") #Dell using Maxtor HDD
+# source("D:/DATA/Common_scripts/R_startup_script.R") #Dell internal data
+
+# Load data and packages
+# load.db.package()
+# setwd(paste(wd.base, 'Projects_home/Planten/database_v2', sep=''))
+
+# Load packages
+# if(!require('')){install.packages('')}
+# library('')
+
+# Load data 
+# existing.db<-read.table('pot.db_20201106.csv', header=T, sep = ';')
+# new.db<-read.xlsx(paste(gd.base,'Pot-plant_current_database_20201107.xlsx', sep=''), sheetIndex = 1, startRow = 3)
+# output<-db.compare.db(existing.db = existing.db, new.db = new.db, date = '06.11.2020', filename = 'pot', quiet = F)
+# output<-db.compare.db(existing.db = existing.db[,1:10], new.db = existing.db[,10:1], date = '06.11.2020', filename = 'pot', quiet = F)
+
+# Reformat data
+
+# Define function
+db.compare.db<-function(existing.db, 
+                        new.db, 
+                        date=Sys.Date(),
+                        source='db.compare.db',
+                        filename='debugging', #TODO currently not used
+                        quiet=F){
+  #TODO db.is.db() voor beide dbs
+  
+  # Check date format
+  # read.date.format(date) 
+  #else #take today's date for these new records
+  head(existing.db)
+  head(new.db)
+  
+  # sort both databases by subject 
+  sort.col<-colnames(existing.db)[1] #this definitely works for databases from db, but is not an all-over solution for other dfs
+  existing.db<-existing.db[order(existing.db[,sort.col]),]
+  new.db<-new.db[order(new.db[,sort.col]),]
+  
+  # order the columns alphabetically
+  #store the current column order
+  e.cols<-colnames(existing.db)
+  n.cols<-colnames(new.db)
+  #then change it
+  existing.db<-existing.db[,sort(colnames(existing.db))]
+  new.db<-new.db[,sort(colnames(new.db))]
+  
+  # Remove any trailing whitespaces in each column
+  for(i in 1:ncol(new.db)){
+    new.db[,i]<-trailingspace(new.db[,i])
+  }
+  
+  # compare databases
+  #TODO I could use a separate script for this! It's useful to be able to compare data frames like this!!!
+  #it should then return a logical matrix with all the fields that have been changed or added.
+  #however, that will not work well with the present way of generating the new records
+  new.subjects<-!new.db[,sort.col] %in% existing.db[,sort.col] #test whether any new lines have been added
+  new.columns<-!colnames(new.db) %in% colnames(existing.db)#test whether any new columns have been added
+  new.db.s<-new.db[!new.subjects,!new.columns] #if so, both of these have to be excluded in the next tests
+  new.values<-existing.db!=new.db.s #test whether any cell contents have changed
+  new.values[emptyvalues(new.values)]<-FALSE
+  edited.cols<-colSums(new.values)
+  
+  #generate an empty output data frame
+  new.records<-data.frame()
+  
+  if(any(new.subjects)){
+    if(!quiet){
+      print(paste(sum(new.subjects, na.rm = T), 'new subjects were added to the database. Generating new records from these...'))
+      print(new.db[new.subjects,n.cols])
+    }
+    #if so, get those lines and generate new records from those
+    process<-remove.empty.columns.and.rows(new.db[new.subjects,])
+    subject<-process[,sort.col]
+    for(col in colnames(process)){
+      new.records<-rbind(new.records,
+                         data.frame(date=date, 
+                                    subject=subject,
+                                    field=col,
+                                    value=process[,col],
+                                    source=source))
+    }
+  }  
+  
+  if (any(new.columns)){
+    if(!quiet){
+      print(paste(sum(new.columns, na.rm = T), 'new fields were added to the database. Generating new records from these...'))
+      print(colnames(new.db)[new.columns])
+    }
+    #if so, get those lines and generate new records from those
+    for(col in colnames(new.db)[new.columns]){
+      new.records<-rbind(new.records,data.frame(date=date,
+                                                subject=new.db[!emptyvalues(new.db[,col]),sort.col],
+                                                field=colnames(new.db)[new.columns],
+                                                value=new.db[!emptyvalues(new.db[,col]),new.columns],
+                                                source=source))
+    }
+    #the cells that happen to be both in new rows and new columns get added twice, so remove duplicates
+    new.records<-unique(new.records)
+  } 
+  
+  if (any(new.values)){
+    if(!quiet){
+      print(paste(sum(new.values, na.rm = T), 'cells have different contents than the stored database. Generating new records from these...'))
+      print('Number of new values per column:')
+      print(edited.cols)
+    }
+    n.cols[!new.columns]
+    for(col in colnames(new.db.s)[edited.cols>0]){ #these are the fields for which we need to make new records
+      new.records<-rbind(new.records,
+                         data.frame(date=date, #take today's date for these new records
+                                    subject=new.db.s[new.values[,col],sort.col],
+                                    field=col,
+                                    value=new.db.s[new.values[,col],col],
+                                    source=source)) #not sure whether this is useful
+    }
+    
+  } 
+  
+  if(!any(new.subjects) & !any(new.columns) & !any(new.values)){
+    if(!quiet){
+      print('No new lines, columns, or changed cell values found. It seems that both databases are identical...')
+      print('Returning an empty data frame')
+      
+    }
+    
+    return(new.records)
+    
+  } else {
+    
+    # sort new records by subject
+    new.records<-new.records[order(new.records[,2]),]
+    
+    #restore column names to existing db names
+    file<-paste(filename,'.registry.csv', sep='')
+    if(file %in% list.files(getwd())){
+      if(!quiet){
+        print('Found the registry in the working directory. Copying column names from those...')
+      }
+      column.names<-colnames(read.csv(file, header = T, sep = ';'))
+      colnames(new.records)<-column.names[2:6]
+    } else {
+      if(!quiet){
+        print('Associated registry is not found in the working directory. Keeping column names as defaults.')
+      }
+    }
+    
+    #restore row names
+    row.names(new.records)<-1:nrow(new.records)
+    
+    # return new records
+    return(new.records)
+  }
+}
+# Explore and plot data
+
