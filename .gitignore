@@ -9,6 +9,9 @@
 *.svg
 *.png
 
+# old but not deleted scripts should be ignored
+*-old*
+
 ### Exclude R files
 
 # History files
