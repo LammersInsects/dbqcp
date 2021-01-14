@@ -12,13 +12,13 @@
 
 db.mask<-function(registry, #the previously saved registry
                   values.to.mask=F,
-                  level='subject', # subject or field
+                  level='subject', # subject, field, or both
                   invert=F, #get everything except the values.to.mask, invert=TRUE gives only the subjects that conform to values.to.mask 
                   filename='debugging' #the base filename
 ){
   print('Running db.mask.R ...')
   print('This function expects a registry as produced by db.registry() and a set of values to mask')
-    
+  
   # Checks before anything can be done
   if(db.is.registry(registry = registry, quiet=T)){
     df<-registry
@@ -29,19 +29,19 @@ db.mask<-function(registry, #the previously saved registry
   
   if(level=='subject'){
     lev<-3
+  } else if(level=='field'){
+    lev<-4
+  } else if(level=='both'){
+    lev<-c(3,4)
   } else {
-    if(level=='field'){
-      lev<-4
-    } else {
-      print('Level must either be subject or field, no other text input is accepted')
-      stop()
-    }
+    print('Level must either be subject, field, or both, no other text input is accepted')
+    stop()
   }
   
   val<-values.to.mask
-    if(val[1]!=F){
-    remove<-df[df[,5] %in% val,lev]
-    keep<-!df[,lev] %in% remove
+  if(val[1]!=F){
+    remove<-df[df[,5] %in% val,c(1,lev)]
+    keep<-!rownames(df[,c(1,lev)]) %in% rownames(remove)
     if(invert){
       keep<-!keep
       print('Only keeping subjects that would have been removed because invert=TRUE')
