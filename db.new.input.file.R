@@ -21,7 +21,8 @@
 # Define function
 db.new.input.file<-function(registry=F, #the registry for which an input file needs to be generated
                             filename='debugging', #the base filename
-                            colwidths=c(12,8,10,24,8) #preferred for pot_plant_db_new.xlsx
+                            colwidths=c(12,8,10,24,8), #preferred for pot_plant_db_new.xlsx
+                            extra.header.info=NA #allows parsing this string to write.default.xlsx()
                             
 ){
   print('Running db.new.input.file.R ...')
@@ -41,6 +42,6 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   file=paste(gd.base, filename, '.input.xlsx' ,sep='') 
   
   print('Calling write.default.xlsx()')
-  write.default.xlsx(dataframe = df, file = file, filename = filename, colwidths = colwidths)
+  write.default.xlsx(dataframe = df, file = file, filename = filename, colwidths = colwidths, extra.header.info = extra.header.info)
   print(paste('New input file is saved as ',file, sep=''))
 }
