@@ -39,6 +39,14 @@ db.compare.db<-function(existing.db,
   head(existing.db)
   head(new.db)
   
+  # Change empty values into NAs
+  new.db[sapply(new.db,emptyvalues)]<-NA
+  
+  # Remove any trailing whitespaces in each column
+  for(i in 1:ncol(new.db)){
+    new.db[,i]<-trailingspace(new.db[,i])
+  }
+  
   # sort both databases by subject 
   sort.col<-colnames(existing.db)[1] #this definitely works for databases from db, but is not an all-over solution for other dfs
   existing.db<-existing.db[order(existing.db[,sort.col]),]
@@ -52,11 +60,6 @@ db.compare.db<-function(existing.db,
   existing.db<-existing.db[,sort(colnames(existing.db))]
   new.db<-new.db[,sort(colnames(new.db))]
   
-  # Remove any trailing whitespaces in each column
-  for(i in 1:ncol(new.db)){
-    new.db[,i]<-trailingspace(new.db[,i])
-  }
-  
   # compare databases
   #TODO I could use a separate script for this! It's useful to be able to compare data frames like this!!!
   #it should then return a logical matrix with all the fields that have been changed or added.
@@ -64,9 +67,11 @@ db.compare.db<-function(existing.db,
   new.subjects<-!new.db[,sort.col] %in% existing.db[,sort.col] #test whether any new lines have been added
   new.columns<-!colnames(new.db) %in% colnames(existing.db)#test whether any new columns have been added
   new.db.s<-new.db[!new.subjects,!new.columns] #if so, both of these have to be excluded in the next tests
-  new.values<-existing.db!=new.db.s #test whether any cell contents have changed
-  new.values[emptyvalues(new.values)]<-FALSE
-  edited.cols<-colSums(new.values)
+  new.values<-existing.db!=new.db.s #test whether any cell contents have changed from one value to another
+  changed.na<-is.na(existing.db)!=is.na(new.db.s) #test whether any values changed from or to NA
+  changed.values<-new.values | changed.na #combine both test results
+  changed.values[emptyvalues(changed.values)]<-FALSE #These were NA and are still NA
+  edited.cols<-colSums(changed.values) #how many were changed per column
   
   #generate an empty output data frame
   new.records<-data.frame()
@@ -89,7 +94,7 @@ db.compare.db<-function(existing.db,
     }
   }  
   
-  if (any(new.columns)){
+  if(any(new.columns)){
     if(!quiet){
       print(paste(sum(new.columns, na.rm = T), 'new fields were added to the database. Generating new records from these...'))
       print(colnames(new.db)[new.columns])
@@ -106,32 +111,30 @@ db.compare.db<-function(existing.db,
     new.records<-unique(new.records)
   } 
   
-  if (any(new.values)){
+  if(any(changed.values)){
     if(!quiet){
-      print(paste(sum(new.values, na.rm = T), 'cells have different contents than the stored database. Generating new records from these...'))
+      print(paste(sum(changed.values, na.rm = T), 'cells have different contents than the stored database. Generating new records from these...'))
       print('Number of new values per column:')
       print(edited.cols)
     }
-    n.cols[!new.columns]
+    # n.cols[!new.columns]
     for(col in colnames(new.db.s)[edited.cols>0]){ #these are the fields for which we need to make new records
       new.records<-rbind(new.records,
                          data.frame(date=date, #take today's date for these new records
-                                    subject=new.db.s[new.values[,col],sort.col],
+                                    subject=new.db.s[changed.values[,col],sort.col],
                                     field=col,
-                                    value=new.db.s[new.values[,col],col],
+                                    value=new.db.s[changed.values[,col],col],
                                     source=source)) #not sure whether this is useful
     }
     
   } 
   
-  if(!any(new.subjects) & !any(new.columns) & !any(new.values)){
+  if(!any(new.subjects) & !any(new.columns) & !any(changed.values)){
     if(!quiet){
       print('No new lines, columns, or changed cell values found. It seems that both databases are identical...')
       print('Returning an empty data frame')
       
     }
-    
-    return(new.records)
     
   } else {
     
@@ -154,10 +157,11 @@ db.compare.db<-function(existing.db,
     
     #restore row names
     row.names(new.records)<-1:nrow(new.records)
-    
-    # return new records
-    return(new.records)
   }
+  
+  # return new records
+  return(new.records)
+  
 }
 # Explore and plot data
 
