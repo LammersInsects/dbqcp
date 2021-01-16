@@ -34,27 +34,29 @@ db.mask<-function(registry, #the previously saved registry
   } else if(level=='both'){
     lev<-c(3,4)
   } else {
-    print('Level must either be subject, field, or both, no other text input is accepted')
-    stop()
+    stop('Level must either be subject, field, or both, no other text input is accepted')
   }
   
   val<-values.to.mask
   if(val[1]!=F){
     remove<-df[df[,5] %in% val,c(1,lev)]
-    keep<-!rownames(df[,c(1,lev)]) %in% rownames(remove)
+    if(length(lev)>1){
+      keep<-!rownames(df[,c(1,lev)]) %in% rownames(remove)
+    } else {
+      keep<-!df[,lev] %in% remove[,2]
+    }
     if(invert){
       keep<-!keep
       print('Only keeping subjects that would have been removed because invert=TRUE')
     }
     omit<-df[!keep,]
-    df<-df[keep,]
+    df.s<-df[keep,]
     print(paste(nrow(omit),' records were removed based on the values given. They are saved as ',filename,'.masked.csv',sep=''))
     write.table(omit,file=paste(filename,'.masked.csv',sep=''),row.names=F,sep=';')
     print('Masked register is returned')
   } else {
-    print('No values to remove were provided')
-    stop()
+    stop('No values to remove were provided')
   }  
   
-  return(df)
+  return(df.s)
 }
