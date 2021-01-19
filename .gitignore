@@ -12,6 +12,18 @@
 # old but not deleted scripts should be ignored
 *-old*
 
+# ignore automatically created archive files ending in .o or .a with:
+*.[oa]
+
+# ignore linux tmp files ending with ~
+*~
+
+# ignore windows tmp files starting with ~$
+~$*
+
+# ignore all .pdf files 
+*.pdf
+
 ### Exclude R files
 
 # History files
