@@ -39,6 +39,9 @@ db.files<-function(database.folder, #The folder holding the database files to an
   
   # Load file names from folder
   files<-list.files(wd)
+  if(length(files)==0){
+    stop('The folder is empty')
+  }
   file.infos<-t(sapply(files, file.info))
   files<-files[!unlist(file.infos[,2])] #exclude directories
   
