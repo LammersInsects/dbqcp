@@ -1,13 +1,6 @@
 # Written by Mark Lammers; Institute for Evolution and Biodiversity, University of Muenster; marklammers6@gmail.com
 # (c) 2020. Released under the terms of the GNU General Public License v3.
 
-# source('C:/Users/mls241/surfdrive/Common_scripts/R_startup_script.R') #VU
-# source("C:/DATA/SURFdrive/Common_scripts/R_startup_script.R") #Thuis
-# source("G:/DATA/Common_scripts/R_startup_script.R") #Thuis using Maxtor HDD
-# source("E:/SURFdrive/Common_scripts/R_startup_script.R") #Yoga
-# source("E:/DATA/Common_scripts/R_startup_script.R") #Dell using Maxtor HDD
-# source("D:/DATA/Common_scripts/R_startup_script.R") #Dell internal data
-
 # Load data and packages
 # load.db.package()
 # setwd(paste(wd.base, 'Projects_home/Planten/database_v2', sep=''))
