@@ -77,7 +77,7 @@ db.compare.db<-function(existing.db,
     #if so, get those lines and generate new records from those
     process<-remove.empty.columns.and.rows(new.db[new.subjects,])
     subject<-process[,sort.col]
-    for(col in colnames(process)){
+    for(col in colnames(process)[colnames(process)!=sort.col]){
       new.records<-rbind(new.records,
                          data.frame(date=date, 
                                     subject=subject,
