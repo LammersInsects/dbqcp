@@ -125,6 +125,13 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       new.records[nodate,2]<-as.Date(today, format='%Y%m%d')
     }
     
+    # If new records contain records from more than 300 days ago, give a warning; they are most likely typos
+    veryold<-new.records[,2] <= as.Date(today, format='%Y%m%d')-300
+    if(sum(veryold)>0){
+      cat(warn('WARNING!',sum(veryold),'records have dates over 300 days old. Do these input dates contain typos?\n'))
+      print(new.records[veryold,2])
+    }
+    
     # Check whether all records have a source
     nosource<-emptyvalues(new.records[,6])
     if(sum(nosource)>0){
