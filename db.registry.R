@@ -6,6 +6,7 @@
 
 db.registry<-function(existing.data.registry=F, #the previously saved registry
                       new.records=F, #the records to be added
+                      too.old=300, #a number of days against which new records' dates are checked for age
                       filename='debugging', #the base filename
                       user=NA #optional: if not entered here, the script will prompt you for a manual input
 ){
@@ -40,6 +41,10 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     stop()
   } else {
     
+  }
+  
+  if(!is.numeric(too.old)){
+    stop('Variable too.old must be a number')
   }
   
   #is an existing registry provided?
@@ -126,9 +131,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     }
     
     # If new records contain records from more than 300 days ago, give a warning; they are most likely typos
-    veryold<-new.records[,2] <= as.Date(today, format='%Y%m%d')-300
+    veryold<-new.records[,2] <= as.Date(today, format='%Y%m%d')-too.old
     if(sum(veryold)>0){
-      cat(warn('WARNING!',sum(veryold),'records have dates over 300 days old. Do these input dates contain typos?\n'))
+      cat(warn('WARNING!',sum(veryold),'records have dates over',too.old,'days old. Do these input dates contain typos?\n'))
       print(new.records[veryold,2])
     }
     
