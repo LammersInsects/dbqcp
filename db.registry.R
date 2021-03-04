@@ -10,10 +10,10 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
                       filename='debugging', #the base filename
                       user=NA #optional: if not entered here, the script will prompt you for a manual input
 ){
-  print('Running db.registry.R ...')
-  print('The existing registry must be produced by db.registry()')
-  print('For new records, this function expects a dataframe with max 5 columns:')
-  print('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)')
+  cat(note('Running db.registry.R ...\n'))
+  cat(note('The existing registry must be produced by db.registry()\n'))
+  cat(note('For new records, this function expects a dataframe with max 5 columns:\n'))
+  cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
   #Neither is a category column
   
   
@@ -30,15 +30,13 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
    
     }
   } else {
-    print('Given user name is not validated')
-    stop()
+    stop('Given user name is not validated')
   }      
   
   # Checks before anything can be done
   #is any input provided?
   if(existing.data.registry[[1]][[1]]==F & new.records[[1]][[1]]==F){
-    print('ERROR: No input is provided.')
-    stop()
+    stop('ERROR: No input is provided.')
   } else {
     
   }
@@ -49,7 +47,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   #is an existing registry provided?
   if(existing.data.registry[[1]][[1]]==F){
-    print('No existing data registry is provided, constructing a new one from the new records')
+    cat(note('No existing data registry is provided, constructing a new one from the new records\n'))
     header<-colnames(new.records)
     id<-0
   } else {
@@ -64,12 +62,12 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     } 
     #test whether it's a registry
     if(db.is.registry(registry = existing.data.registry, quiet = T)){
-      print(paste('Existing registry is provided. A backup of it is saved as',paste(today,filename,'registry.backup',sep='.')))
+      cat(note('Existing registry is provided. A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
       write.table(existing.data.registry,file=paste(today,filename,'registry.backup',sep='.'),row.names=F,sep=';')
       header<-colnames(existing.data.registry)
       id<-max(existing.data.registry$ID)
     } else {
-      print('The provided existing registry does not comply with the registry format')
+      cat(error('The provided existing registry does not comply with the registry format\n'))
       db.is.registry(registry = existing.data.registry, quiet = F)
       stop()
     }
@@ -77,9 +75,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   #are new records provided?
   if(new.records[[1]][[1]]==F){
-    print('No new records are provided, loading the existing registry')
+    cat(note('No new records are provided, loading the existing registry\n'))
   } else { #If so, continue processing the new records
-    print('New records are provided')
+    cat(note('New records are provided\n'))
     new.records<-new.records[,1:5]
     #TODO use db.input.qc() to do all QC checks >under construction
     
@@ -87,12 +85,12 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     nosubject<-emptyvalues(new.records[,2])
     nofield<-emptyvalues(new.records[,3])
     novalue<-emptyvalues(new.records[,4])
-    remove<-nosubject | nofield | novalue
-    if(sum(remove)>0){
-      print(paste(sum(remove),'records with missing Subject, Field or Value found. These are removed from the registry.'))
-      print('NOTE: If this is unexpected; verify input and re-run db.registry without reloading the existing data registry!')
-      # print(new.records[remove,])
-      new.records<-new.records[!remove,]
+    to.remove<-nosubject | nofield | novalue
+    if(sum(to.remove)>0){
+      cat(warn(sum(to.remove),'records with missing Subject, Field or Value found. These are removed from the registry.\n'))
+      cat(warn('NOTE: If this is unexpected; verify input and re-run db.registry without reloading the existing data registry!\n'))
+      # print(new.records[to.remove,])
+      new.records<-new.records[!to.remove,]
     }
     
     #Create to extra columns
@@ -110,7 +108,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       if(test3){
         test4<-is.na(as.Date(new.records[1,2],format='%d.%m.%Y'))
         if(test4){
-          print('Date format was not converted. This generally means that the loaded registry was a pre-existing one saved by this script')
+          cat(warn('Date format was not converted. This generally means that the loaded registry was a pre-existing one saved by this script\n'))
           new.records[,2]<-as.Date(new.records[,2],format='%Y-%m-%d')
         } else {
           new.records[,2]<-as.Date(new.records[,2],format='%d.%m.%Y')
@@ -125,7 +123,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     # If no date provided, use today
     nodate<-emptyvalues(new.records[,2])
     if(sum(nodate)>0){
-      print(paste(sum(nodate),"records have no date. Today's date is imputed in these records:"))
+      cat(warn(sum(nodate),"records have no date. Today's date is imputed in these records:\n"))
       print(new.records[nodate,])
       new.records[nodate,2]<-as.Date(today, format='%Y%m%d')
     }
@@ -133,17 +131,17 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     # If new records contain records from more than 300 days ago, give a warning; they are most likely typos
     veryold<-new.records[,2] <= as.Date(today, format='%Y%m%d')-too.old
     if(sum(veryold)>0){
-      cat(warn('WARNING!',sum(veryold),'records have dates over',too.old,'days old. Do these input dates contain typos?\n'))
-      print(new.records[veryold,2])
+      cat(warn('WARNING!',sum(veryold),'records have dates over',too.old,"days old. Do these records' dates contain typos?\n"))
+      print(new.records[veryold,])
     }
     
     # Check whether all records have a source
     nosource<-emptyvalues(new.records[,6])
     if(sum(nosource)>0){
-      print(paste('WARNING!',sum(nosource),'records have no source. Records:'))
+      cat(warn('WARNING!',sum(nosource),'records have no source. Records:\n'))
       print(new.records[nosource,])
-      print(paste('Source can be added by reading it as a new record with a newer date. They have been saved as ',
-                  today,filename,'registry.nosource.csv',sep='.'))
+      cat(warn('Source can be added by reading it as a new record with a later date. They have been saved as',
+                  paste(today,filename,'registry.nosource.csv',sep='.')))
       write.table(new.records[nosource,],file=paste(today,filename,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
     }
     
@@ -154,10 +152,10 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     if(all(colnames(existing.data.registry)==colnames(new.records))){
       #       print('CHECKPOINT OK: Names of columns of both existing and new registry are equal')
     } else {
-      print('ERROR: Names of columns of existing and new registry do not match')
-      print('Existing registry:')
+      cat(error('ERROR: Names of columns of existing and new registry do not match\n'))
+      cat(warn('Existing registry:\n'))
       print(colnames(existing.data.registry))
-      print('New records:')
+      cat(warn('New records:\n'))
       print(colnames(new.records))
       stop()
     }
@@ -174,15 +172,15 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   df<-df[rownames(unique(df[,2:5])),]
   df.length.clean<-nrow(df)
   if(df.length.raw>df.length.clean){
-    print(paste(df.length.raw-df.length.clean,'records were already present in the registry'))
+    cat(warn(df.length.raw-df.length.clean,'records were already present in the registry\n'))
     #TODO would be good to print the ones already present
     #TODO and distinguish between ones already present and duplicates in the new.records
   } else {
     if(nrow(new.records)>0){
-    print(paste('All',nrow(new.records),'records are new to the registry'))
+      cat(note('All',nrow(new.records),'records are new to the registry\n'))
     #TODO it's a bit funny that it says that when the registry already existed
     } else {
-      print(paste('All records',nrow(existing.data.registry),'come from the existing registry'))
+      cat(note('All',nrow(existing.data.registry),'records come from the existing registry\n'))
     }
   }
   
@@ -203,9 +201,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   # Export registry
   write.table(df, file=paste(filename,'.registry.csv',sep=''), sep=';',row.names=F)
-  print(paste('Registry has been saved as',paste(filename,'.registry.csv',sep='')))
+  cat(note('Registry has been saved as',paste(filename,'.registry.csv',sep=''),'\n'))
   
   # Return registry
-  print('Constructed registry is returned')
+  cat(note('Constructed registry is returned\n'))
   return(df)
 }
