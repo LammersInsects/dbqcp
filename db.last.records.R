@@ -10,8 +10,8 @@ db.last.records<-function(registry, #the previously saved registry
                           quiet=F
 ){
   if(!quiet){
-    print('Running db.last.record.R ...')
-    print('This function expects a registry as produced by db.registry()')
+    cat(note('Running db.last.record.R ...\n'))
+    cat(note('This function expects a registry as produced by db.registry()\n'))
   }
   
   
@@ -25,11 +25,10 @@ db.last.records<-function(registry, #the previously saved registry
   
   if(level %in% c('subject','field','value')){
     if(!quiet){
-      print(paste('Filtering registry to include only the last record per',level))
+      cat(note('Filtering registry to include only the last record per',level,'\n'))
     }
   } else {
-    print('The level needs to be either subject, field or value')
-    stop()
+    stop('The level needs to be either subject, field or value')
   }
   
   # Limit registry to only the most recent records per field
@@ -62,17 +61,17 @@ db.last.records<-function(registry, #the previously saved registry
   }
   
   if(!quiet){
-    print(paste(nrow(omit),'records were omitted because newer records replace those'))
+    cat(warn(nrow(omit),'records were omitted because newer records replace those\n'))
   }
   
   # Write backups to disk
   write.table(keep.df,file=paste(filename,'.registry.newonly.csv',sep=''), sep=';',row.names=F)
   if(!quiet){
-    print(paste('Filtered registry has been saved as',paste(filename,'.registry.newonly.csv',sep='')))
+    cat(note('Filtered registry has been saved as',paste(filename,'.registry.newonly.csv',sep=''),'\n'))
   }
   write.table(omit,file=paste(filename,'.registry.omitted.csv',sep=''), sep=';',row.names=F)
   if(!quiet){
-    print(paste('Omitted records have been saved as',paste(filename,'.registry.omitted.csv',sep='')))
+    cat(note('Omitted records have been saved as',paste(filename,'.registry.omitted.csv',sep=''),'\n'))
   }
   
   # Prepare output
@@ -81,7 +80,7 @@ db.last.records<-function(registry, #the previously saved registry
   
   # Return filtered registry
   if(!quiet){
-    print(paste('Registry with only the last records per ',level,' is returned',sep=''))
+    cat(note('Registry with only the last records per',level,'is returned\n'))
   }
   
   return(keep.df)

@@ -10,8 +10,8 @@ db.build<-function(registry, #the previously saved registry
                    quiet=F
 ){
   if(!quiet){
-    print('Running db.build.R ...')
-    print('This function expects a registry as produced by db.registry()')
+    cat(note('Running db.build.R ...\n'))
+    cat(note('This function expects a registry as produced by db.registry()\n'))
   }
   
   # Checks before anything can be done
@@ -72,7 +72,8 @@ db.build<-function(registry, #the previously saved registry
   
   # Return database
   write.table(db,file=paste(filename,'db.csv',sep='.'),sep=';',row.names=F)
-  if(!quiet){print(paste('Constructed database is returned and saved as ',filename,'.db.csv',sep=''))
+  if(!quiet){
+    cat(note('Constructed database is returned and saved as ',filename,'.db.csv\n',sep=''))
   }
   return(db)
 }

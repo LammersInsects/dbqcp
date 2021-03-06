@@ -10,8 +10,8 @@ db.mask<-function(registry, #the previously saved registry
                   invert=F, #get everything except the values.to.mask, invert=TRUE gives only the subjects that conform to values.to.mask 
                   filename='debugging' #the base filename
 ){
-  print('Running db.mask.R ...')
-  print('This function expects a registry as produced by db.registry() and a set of values to mask')
+  cat(note('Running db.mask.R ...\n'))
+  cat(note('This function expects a registry as produced by db.registry() and a set of values to mask\n'))
   
   # Checks before anything can be done
   if(db.is.registry(registry = registry, quiet=T)){
@@ -41,13 +41,14 @@ db.mask<-function(registry, #the previously saved registry
     }
     if(invert){
       keep<-!keep
-      print('Only keeping subjects that would have been removed because invert=TRUE')
+      cat(warn('Only keeping subjects that would have been removed because invert=TRUE\n'))
     }
     omit<-df[!keep,]
     df.s<-df[keep,]
-    print(paste(nrow(omit),' records were removed based on the values given. They are saved as ',filename,'.masked.csv',sep=''))
+    cat(note(nrow(omit),'records were removed based on the values given. They are saved as',
+             paste(filename,'.masked.csv',sep=''),'\n'))
     write.table(omit,file=paste(filename,'.masked.csv',sep=''),row.names=F,sep=';')
-    print('Masked register is returned')
+    cat(note('Masked register is returned\n'))
   } else {
     stop('No values to remove were provided')
   }  

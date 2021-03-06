@@ -14,9 +14,9 @@
 db.new<-function(new.records, #the records to be used for generating a new database
                  filename='debugging' #the base filename
 ){
-  print('Running db.new.R ...')
-  print('This function expects a dataframe with max 5 columns:')
-  print('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)')
+  cat(note('Running db.new.R ...\n'))
+  cat(note('This function expects a dataframe with max 5 columns:\n'))
+  cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
   
   # Checks before anything can be done
   new.records<-new.records[,1:5]
@@ -28,9 +28,9 @@ db.new<-function(new.records, #the records to be used for generating a new datab
   novalue<-emptyvalues(new.records[,4])
   remove<-nosubject | nofield | novalue
   if(sum(remove)>0){
-    print(paste(sum(remove),'records with missing Subject, Field or Value found. These are removed from the registry.'))
+    cat(warn(sum(remove),'records with missing Subject, Field or Value found. These are removed from the registry.\n'))
     print(new.records[remove,])
-    print('NOTE: If this is unexpected; verify input and re-run db.new()!')
+    cat(warn('NOTE: If this is unexpected; verify input and re-run db.new()!\n'))
     # print(new.records[remove,])
     new.records<-new.records[!remove,]
   }
@@ -47,7 +47,7 @@ db.new<-function(new.records, #the records to be used for generating a new datab
   
   registry<-db.registry(existing.data.registry = res, new.records = new.records[2:nrow(new.records),], filename = filename)
   
-  print('The new database is stored in the working directory, i.e.')
+  cat(note('The new database is stored in the working directory, i.e.\n'))
   print(getwd())
   
   return(registry)

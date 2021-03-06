@@ -66,22 +66,25 @@ db.is.registry<-function(registry, quiet=T){
   
   # Report output
   if(all(res$outcome)){
-    if(!quiet){print("Input dataframe is a registry from MarkLammers' database package")}
+    if(!quiet){
+      cat(note("Input dataframe is a registry from MarkLammers' database package\n"))
+    }
   } else {
     bad<-res[which(res$outcome!=TRUE),]
     if(!quiet){
-      print("ERROR: Some criteria are not met, thus input is not a registry as produced by MarkLammers' database package")
-      print('Criteria not met are:')
+      cat(error("ERROR: Some criteria are not met, thus input is not a registry as produced by MarkLammers' database package\n"))
+      cat(warn('Criteria not met are:\n'))
       print(bad$name)
     }
     if('dt' %in% bad$abbreviation){
-      print('CHECKPOINT triggered, unusual data in registry?')
-      print('If the only missed criterion is <dt>, but the data frame should be a registry, then it may be that some data should better be changed to integer, numeric or character')
-      print('Please let MarkLammers look at your registry to investigate the source of this problem')
+      cat(error('CHECKPOINT triggered, unusual data in registry?\n'))
+      cat(warn('If the only missed criterion is <dt>, but the data frame should be a registry, then it may be that some data should better be changed to integer, numeric or character\n'))
+      cat(warn('Please let MarkLammers look at your registry to investigate the source of this problem\n'))
     } else {
       
     }
   }
+  
   # Returned is only the conclusion of doing all tests
   return(all(tests))
   

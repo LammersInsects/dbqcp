@@ -29,8 +29,8 @@ db.compare.db<-function(existing.db,
   # Check date format
   # read.date.format(date) 
   #else #take today's date for these new records
-  head(existing.db)
-  head(new.db)
+  # head(existing.db)
+  # head(new.db)
   
   # Change empty values into NAs
   new.db[sapply(new.db,emptyvalues)]<-NA
@@ -71,7 +71,7 @@ db.compare.db<-function(existing.db,
   
   if(any(new.subjects)){
     if(!quiet){
-      print(paste(sum(new.subjects, na.rm = T), 'new subjects were added to the database. Generating new records from these...'))
+      cat(note(sum(new.subjects, na.rm = T), 'new subjects were added to the database. Generating new records from these...\n'))
       print(new.db[new.subjects,n.cols])
     }
     #if so, get those lines and generate new records from those
@@ -89,7 +89,7 @@ db.compare.db<-function(existing.db,
   
   if(any(new.columns)){
     if(!quiet){
-      print(paste(sum(new.columns, na.rm = T), 'new fields were added to the database. Generating new records from these...'))
+      cat(note(sum(new.columns, na.rm = T), 'new fields were added to the database. Generating new records from these...\n'))
       print(colnames(new.db)[new.columns])
     }
     #if so, get those lines and generate new records from those
@@ -106,8 +106,8 @@ db.compare.db<-function(existing.db,
   
   if(any(changed.values)){
     if(!quiet){
-      print(paste(sum(changed.values, na.rm = T), 'cells have different contents than the stored database. Generating new records from these...'))
-      print('Number of new values per column:')
+      cat(note(sum(changed.values, na.rm = T), 'cells have different contents than the stored database. Generating new records from these...\n'))
+      cat(note('Number of new values per column:\n'))
       print(edited.cols)
     }
     # n.cols[!new.columns]
@@ -124,8 +124,8 @@ db.compare.db<-function(existing.db,
   
   if(!any(new.subjects) & !any(new.columns) & !any(changed.values)){
     if(!quiet){
-      print('No new lines, columns, or changed cell values found. It seems that both databases are identical...')
-      print('Returning an empty data frame')
+      cat(note('No new lines, columns, or changed cell values found. It seems that both databases are identical...\n'))
+      cat(note('Returning an empty data frame\n'))
       
     }
     
@@ -138,13 +138,13 @@ db.compare.db<-function(existing.db,
     file<-paste(filename,'.registry.csv', sep='')
     if(file %in% list.files(getwd())){
       if(!quiet){
-        print('Found the registry in the working directory. Copying column names from those...')
+        cat(note('Found the registry in the working directory. Copying column names from those...\n'))
       }
       column.names<-colnames(read.csv(file, header = T, sep = ';'))
       colnames(new.records)<-column.names[2:6]
     } else {
       if(!quiet){
-        print('Associated registry is not found in the working directory. Keeping column names as defaults.')
+        cat(warn('Associated registry is not found in the working directory. Keeping column names as defaults.\n'))
       }
     }
     

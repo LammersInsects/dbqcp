@@ -51,12 +51,12 @@ db.compress<-function(registry, quiet=F){
   }
   
   if(!quiet){
-    print('Running db.compress.R with a registry as input. Calling db.build.R ...')
+    cat(note('Running db.compress.R with a registry as input. Calling db.build.R ...\n'))
   }
   db.tmp<-db.build(registry = registry, include.date = F, filename = 'tmp', quiet = quiet) #first build the database so that this is independent
   
   if(!quiet){
-    print('Compressing database ...')
+    cat(note('Compressing database ...\n'))
   }
   compressed<-sapply(1:nrow(db.tmp), function(i){
     df<-registry[registry[,3]==db.tmp[i,1],] #grab all records for each subject
@@ -76,7 +76,7 @@ db.compress<-function(registry, quiet=F){
   colnames(compressed)<-db.tmp[,1]
   
   if(!quiet){
-    print('Compressed database is returned')
+    cat(note('Compressed database is returned\n'))
   }
   return(compressed)
 }

@@ -10,13 +10,13 @@ db.missing<-function(registry, #the previously saved registry
                      exclude=F, #values of fiels to be excluded from the output  #NOT USED YET
                      filename='debugging' #the base filename
 ){
-  print('Running db.missing.R ...')
-  print('This function expects a registry as produced by db.registry() and the corresponding database as produced by db.build()')
+  cat(note('Running db.missing.R ...\n'))
+  cat(note('This function expects a registry as produced by db.registry() and the corresponding database as produced by db.build()\n'))
   
-#   if(exclude[1]!=F){
-#     print(paste(length(exclude),'values were excluded:'))
-#     print(exclude)
-#   }
+  #   if(exclude[1]!=F){
+  #     print(paste(length(exclude),'values were excluded:'))
+  #     print(exclude)
+  #   }
   
   # Checks before anything can be done
   if(db.is.registry(registry = registry, quiet=T)){
@@ -48,16 +48,16 @@ db.missing<-function(registry, #the previously saved registry
     
     l=l+length(v)
   }
-
-# Remove all the NAs
-result[,c(1,4,5)]<-''
-
-# Sort by subject
-result<-result[order(result[,2]),]
-
-# Export table with missing fields
-write.table(result, file=paste(today,filename,'missing.csv',sep='.'), sep=';', row.names=F)
-
-print(paste('A table with missing values is returned and has been exported as ',today,'.',filename,'.missing.csv',sep=''))
-return(result)
+  
+  # Remove all the NAs
+  result[,c(1,4,5)]<-''
+  
+  # Sort by subject
+  result<-result[order(result[,2]),]
+  
+  # Export table with missing fields
+  write.table(result, file=paste(today,filename,'missing.csv',sep='.'), sep=';', row.names=F)
+  
+  cat(note('A table with missing values is returned and has been exported as',paste(today,'.',filename,'.missing.csv',sep=''),'\n'))
+  return(result)
 }

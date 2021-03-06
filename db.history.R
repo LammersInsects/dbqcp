@@ -8,8 +8,8 @@ db.history<-function(registry, #the previously saved registry
                      do='recording.activities', #recording.activities, time.first.last, or a combination of those using c()
                      filename='debugging' #the base filename
 ){
-  print('Running db.history.R ...')
-  print('This function expects a registry as produced by db.registry()')
+  cat(note('Running db.history.R ...\n'))
+  cat(note('This function expects a registry as produced by db.registry()\n'))
   
   # Checks before anything can be done
   if(db.is.registry(registry = registry, quiet=T)){
@@ -22,7 +22,7 @@ db.history<-function(registry, #the previously saved registry
   if('recording.activities' %in% do){
     # Plot activity of data recording
     time.df<-max(df[,2])-min(df[,2])
-    print(paste(time.df,'days between oldest and newest records'))
+    cat(note(time.df,'days between oldest and newest records\n'))
     breaks<-julian(max(df[,2]),origin=min(df[,2]))[1]
     if(breaks==0){breaks<-1}
     hist(df[,2],breaks=breaks,freq=T,
@@ -34,7 +34,7 @@ db.history<-function(registry, #the previously saved registry
     axis.Date(1, at = seq(min(df[,2]), max(df[,2]), length.out=20),
               format= "%m-%Y", las = 2) 
     axis(2)
-    print('A barplot of recording activities is drawn')
+    cat(note('A barplot of recording activities is drawn\n'))
   }
   
   if('time.first.last' %in% do){
@@ -49,7 +49,7 @@ db.history<-function(registry, #the previously saved registry
     x.axis<-pretty(subjects$Duration)
     hist(subjects$Duration, breaks=max(subjects$Duration), xlim = x.axis[c(1,length(x.axis))],
          main='Histogram of time\nbetween first and last record per subject',xlab='Duration [days]')
-    print('A histogram of the time between first and last record per subject is drawn')
+    cat(note('A histogram of the time between first and last record per subject is drawn\n'))
   }
   
 }

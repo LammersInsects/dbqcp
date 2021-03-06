@@ -13,8 +13,8 @@ db.files<-function(database.folder, #The folder holding the database files to an
                    quiet=F
 ){
   if(!quiet){
-    print('Running db.files.R ...')
-    print('This function expects a name for the folder that holds the database files')
+    cat(note('Running db.files.R ...\n'))
+    cat(note('This function expects a name for the folder that holds the database files\n'))
   }
   
   split<-paste(split,collapse='')
@@ -25,7 +25,7 @@ db.files<-function(database.folder, #The folder holding the database files to an
   if(length(database.folder==1)){
     wd<-database.folder
     if(!quiet){
-      print(paste('Analysing',wd,'using these splits',spl))
+      cat(note('Analysing',wd,'using these splits',spl,'\n'))
     }
   } else {
     stop('Input is not a working directory')
@@ -104,14 +104,14 @@ db.files<-function(database.folder, #The folder holding the database files to an
   
   # Print output
   if(print.output){
-    print(paste('Folder contains',length(files),'files'))
-    print(paste('File base names in the folder are:'))
+    cat(note('Folder contains',length(files),'files\n'))
+    cat(note('File base names in the folder are:\n'))
     print(filenames)    
-    print(paste('File extensions in the folder are:'))
+    cat(note('File extensions in the folder are:\n'))
     print(filetypes)    
-    print(paste('Package-generated files in the folder are:'))
+    cat(note('Package-generated files in the folder are:\n'))
     print(package.components)    
-    print(paste('Dates on which files were saved in the folder by the package are:'))
+    cat(note('Dates on which files were saved in the folder by the package are:\n'))
     print(dates)
   }
   

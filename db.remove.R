@@ -9,8 +9,8 @@ db.remove<-function(registry, #the previously saved registry
                      invert=F, #include everything except the remove.IDs, invert=TRUE gives only the records that conform to remove.IDs
                      filename='debugging' #the base filename
 ){
-  print('Running db.remove.R ...')
-  print('This function expects a registry as produced by db.registry() and a set of values to remove')
+  cat(note('Running db.remove.R ...\n'))
+  cat(note('This function expects a registry as produced by db.registry() and a set of values to remove\n'))
   
   # Checks before anything can be done
   if(db.is.registry(registry = registry, quiet=T)){
@@ -25,7 +25,7 @@ db.remove<-function(registry, #the previously saved registry
   files<-list.files(getwd())
   fullfilename<-paste(today,filename,'removed.csv',sep='.')
   if(fullfilename %in% files){
-    print('Records were already removed earlier today. The newly removed records are appended.')
+    cat(warn('Records were already removed earlier today. The newly removed records are appended.\n'))
     removed<-read.table(fullfilename,header=T,sep=';')
     test<-is.na(as.Date(removed[1,2], format='%d-%m-%Y'))
     if(test){
@@ -41,14 +41,14 @@ db.remove<-function(registry, #the previously saved registry
   remove<-df[,1] %in% to.remove#[,1]
   if(invert){
     remove<-!remove
-    print('Only keeping records that would have been removed because invert=TRUE')
+    cat(warn('Only keeping records that would have been removed because invert=TRUE\n'))
   }
-  print(paste(sum(remove),'records were removed, but a backup of these is saved in',fullfilename))
+  cat(note(sum(remove),'records were removed, but a backup of these is saved in',fullfilename,'\n'))
   omit<-df[remove,]
   
   # Produce the new registry
   keep<-df[!remove,]
-  print('Registry without removed records is returned')
+  cat(note('Registry without the removed records is returned\n'))
   
   # Overwrite the old registry
   # OR MAYBE BETTER NOT?

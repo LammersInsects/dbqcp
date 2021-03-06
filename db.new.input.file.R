@@ -16,8 +16,8 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
                             extra.header.info=NA #allows parsing this string to write.default.xlsx()
                             
 ){
-  print('Running db.new.input.file.R ...')
-  print('This function expects a registry as created by db.registry()')
+  cat(note('Running db.new.input.file.R ...\n'))
+  cat(note('This function expects a registry as created by db.registry()\n'))
   
   if(db.is.registry(registry = registry, quiet=T)){
     df<-registry

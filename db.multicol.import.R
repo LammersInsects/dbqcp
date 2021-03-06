@@ -11,9 +11,9 @@ db.multicol.import<-function(dataframe, #the records to be added
                              source.col=F, #the source of the records
                              filename='debugging' #the base filename
 ){
-  print('Running db.multicol.import.R ...')
-  print('This function expects a dataframe with any number of columns:')
-  print('  Date recorded -- Subject -- Value-columns -- Source   (header is compulsory)')
+  cat(note('Running db.multicol.import.R ...\n'))
+  cat(note('This function expects a dataframe with any number of columns:\n'))
+  cat(note('  Date recorded -- Subject -- Value-columns -- Source   (header is compulsory)\n'))
   
   ## Checks before the start
   df<-dataframe
@@ -29,14 +29,14 @@ db.multicol.import<-function(dataframe, #the records to be added
       if(date.col %in% colnames(df)){ #which is a column name
         nodate<-emptyvalues(df[,date.col])
         if(sum(nodate)>0){
-          print(paste(sum(nodate),"records have no date. Today's date is imputed in these records:"))
+          cat(warn(sum(nodate),"records have no date. Today's date is imputed in these records:\n"))
           print(df[nodate,])
           df[nodate,date.col]<-as.Date(today, format='%Y%m%d')
         }
         df$Date<-as.Date(df[,date.col], format='%d-%m-%Y') #assumes Excel-formatted short date
         date.col.name<-date.col
       } else { #it's not a column name
-        print('A single value is provided for the date, but not found as a column name, trying to use it as a date for all records')
+        cat(warn('A single value is provided for the date, but not found as a column name, trying to use it as a date for all records\n'))
         df$Date<-as.Date(date.col, format='%d.%m.%Y')
         date.col.name<-'Date'
       }
@@ -44,7 +44,7 @@ db.multicol.import<-function(dataframe, #the records to be added
       stop('ERROR: Only one column can be the date recorded column')
     }
   } else {
-    print("No column specifying the date recorded is provided. Today's date is imputed in all records")
+    cat(warn("No column specifying the date recorded is provided. Today's date is imputed in all records\n"))
     df$Date<-as.Date(today, format='%Y%m%d')
     date.col.name='Date'
   }
@@ -54,9 +54,9 @@ db.multicol.import<-function(dataframe, #the records to be added
     if(length(subject.col)==1){
       if(subject.col %in% colnames(df)){
         nsubj<-length(unique(df[,subject.col]))
-        print(paste(nsubj,'unique subjects found in column',subject.col))
+        cat(note(nsubj,'unique subjects found in column',subject.col,'\n'))
         if(nsubj<nrow(df)){
-          print('WARNING: There is less unique subjects than rows in the dataframe')
+          cat(warn('WARNING: There are less unique subjects than rows in the dataframe\n'))
         }
         df$Subject<-df[,subject.col]
         subject.col.name=subject.col
@@ -74,13 +74,13 @@ db.multicol.import<-function(dataframe, #the records to be added
   if(value.columns[1]!=F){
     if(all(value.columns %in% colnames(df))){
       nvalcol<-length(value.columns)
-      print(paste(nvalcol,'columns with values are provided:'))
+      cat(note(nvalcol,'columns with values are provided:\n'))
       print(paste(value.columns,collapse = ', '))
       
       #test whether there is columns in date format
       test<-sapply(df[,value.columns], class)=='Date'
       if(sum(test)>0){
-        print('Some value columns contain dates, coercing these to character in format %d.%m.%Y:')
+        cat(note('Some value columns contain dates, coercing these to character in format %d.%m.%Y:\n'))
         print(head(df[,value.columns])[,test])
         df[,value.columns][,test]<-sapply(df[,value.columns][,test], function(x){
           as.character(format(x, '%d.%m.%Y'))
@@ -99,11 +99,11 @@ db.multicol.import<-function(dataframe, #the records to be added
     if(length(source.col)==1){ #it's only one value
       if(source.col %in% colnames(df)){ #it matches a column name
         nsources<-length(unique(df[,source.col]))
-        print(paste(nsources,'unique sources are found in column',source.col))
+        cat(note(nsources,'unique sources are found in column',source.col,'\n'))
         df$Source<-df[,source.col]
         source.col.name<-source.col
       } else { #the value provided is not a column name
-        print('A single value is provided for the source, but not found as a column name, trying to use it as a source for all records')
+        cat(warn('A single value is provided for the source, but not found as a column name, trying to use it as a source for all records\n'))
         df$Source<-source.col
         source.col.name<-'Source'
       }
@@ -111,7 +111,7 @@ db.multicol.import<-function(dataframe, #the records to be added
       stop('ERROR: Only one column can be the source column')
     }
   } else {
-    print('No source column is provided')
+    cat(warn('No source column is provided\n'))
     df$Source<-NA
     source.col.name<-'Source'
   }
@@ -122,7 +122,7 @@ db.multicol.import<-function(dataframe, #the records to be added
   #   novalue<-emptyvalues(df[,value.columns])
   remove<-nosubject #| novalue
   if(sum(remove)>0){
-    print(paste(sum(remove),'records with missing Subject found. These are removed from the registry:'))
+    cat(note(sum(remove),'records with missing Subject found. These are removed from the registry:\n'))
     print(df[remove,])
     df<-df[!remove,]
   }
@@ -147,6 +147,7 @@ db.multicol.import<-function(dataframe, #the records to be added
   row.names(output)<-1:nrow(output)
   
   # Return the standardized registry 
+  cat(note('The constructed standardized registry is returned\n'))
   return(output)
   
 }

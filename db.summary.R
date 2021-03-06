@@ -10,8 +10,8 @@ db.summary<-function(registry, #the previously saved registry
                      save.STDOUT=F, #should the STOUT text output be saved to file?
                      filename='debugging' #the base filename
 ){
-  print('Running db.summary.R ...')
-  print('This function expects a registry as produced by db.registry()')
+  cat(note('Running db.summary.R ...\n'))
+  cat(note('This function expects a registry as produced by db.registry()\n'))
   
   if(exclude[1]!=F){
     print(paste(length(exclude),'values were excluded:'))
@@ -33,21 +33,21 @@ db.summary<-function(registry, #the previously saved registry
   }
   
   # Very basic summary statistics
-  print(paste('The registry has',nrow(df),'records'))
-  print(paste('of which',nrow(unique(df[,3:4])),'are expected to be displayed in the database'))
+  cat(note('The registry has',nrow(df),'records\n'))
+  cat(note('of which',nrow(unique(df[,3:4])),'are expected to be displayed in the database\n'))
   
   # Overview of the subjects
-  print('These subjects are recorded in the database:')
+  cat(note('These subjects are recorded in the database:\n'))
   subjects<-as.data.frame(table(df[!df[,3] %in% exclude,3]))
   print(subjects)
   
   # All fields
-  print('These fields are used in the database:')
+  cat(note('These fields are used in the database:\n'))
   fields<-as.data.frame(table(df[!df[,4] %in% exclude,4]))
   print(fields)
   
   # Summarise and count all values per field
-  print('This is a summary of all numeric values for each field as it is in the full registry:')  
+  cat(note('This is a summary of all numeric values for each field as it is in the full registry:\n'))
   df.s<-df[!df[,4] %in% exclude,]
   t<-as.data.frame(table(df.s[,5:4]),stringsAsFactors = F)
   options(warn = -1)
@@ -58,7 +58,7 @@ db.summary<-function(registry, #the previously saved registry
   values<-t[t$Freq>0,c(2,1,3)]
   print(values)
   
-  print('This is a summary of all possible values for each field as it is in the full registry:')  
+  cat(note('This is a summary of all possible values for each field as it is in the full registry:\n'))
   for (i in sort(unique(df[,4]))){
     print(i)
     df.s<-subset(df,df[,4]==i)
@@ -66,13 +66,13 @@ db.summary<-function(registry, #the previously saved registry
   }
   
   # Overview of the sources
-  print('These sources were used to provide records for the database:')
+  cat(note('These sources were used to provide records for the database:\n'))
   sources<-as.data.frame(table(df[,6]))
   print(as.data.frame(table(df[,6])))
   
   if(save.STDOUT){
     sink()
-    print(paste('All printed output is saved to',con))
+    cat(note('All printed output is saved to',con))
   }
   
   write.table(subjects,file=paste(today,filename,'summary.subjects.csv',sep='.'),sep=';',row.names=F)

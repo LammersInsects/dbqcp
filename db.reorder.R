@@ -16,11 +16,11 @@ db.reorder<-function(database, #the previously saved database, coming from db.bu
                      save.STDOUT=F, #should the STOUT text output be saved to file?
                      filename='debugging' #the base filename
 ){
-  print('Running db.reorder.R ...')
-  print('This function expects a registry as produced by db.build()')
+  cat(note('Running db.reorder.R ...\n'))
+  cat(note('This function expects a registry as produced by db.build()\n'))
   db<-database
   
-  print('Currently doing nothing, 9 different attempts to reorder are written in the script...')
+  cat(warn('Currently doing nothing, 9 different attempts to reorder are written in the script...\n'))
   # Reorganize database
   #attempt 1
   db1<-db[substring(db[,1],1,7)!='Aromaat',]

@@ -8,10 +8,10 @@ db.verify<-function(registry, #the previously saved registry
                     verified.IDs=F, #IDs of the records to remove
                     filename='debugging' #the base filename
 ){
-  print('Running db.verify.R ...')
-  print('This function expects a registry as produced by db.registry() and a 4-column table with the verified records and these column names:')
-  print('  ID -- Verified -- Verified.by -- Date.verified  (header is compulsory)')
-  print('If no table of verified records is provided, than a table for records verification is generated')
+  cat(note('Running db.verify.R ...\n'))
+  cat(note('This function expects a registry as produced by db.registry() and a 4-column table with the verified records and these column names:\n'))
+  cat(note('  ID -- Verified -- Verified.by -- Date.verified  (header is compulsory)\n'))
+  cat(note('If no table of verified records is provided, than a table for records verification is generated\n'))
   
   # Checks before anything can be done
   if(verified.IDs[[1]][1]==F){
@@ -21,8 +21,7 @@ db.verify<-function(registry, #the previously saved registry
     stop()
   } else {
     if(ncol(verified.IDs)!=4){
-      print('ERROR: Table that specifies the verification of the records does not have 4 columns; check input!')
-      stop()
+      stop('ERROR: Table that specifies the verification of the records does not have 4 columns; check input!')
     }
   }
   
@@ -41,7 +40,7 @@ db.verify<-function(registry, #the previously saved registry
   files<-list.files(getwd())
   fullfilename<-paste(filename,'verification.log.csv',sep='.')
   if(fullfilename %in% files){
-    print('Records were already verified earlier today. The newly verified records are appended to the same log.')
+    cat(warn('Records were already verified earlier today. The newly verified records are appended to the same log.\n'))
     verification<-read.table(fullfilename,header=T,sep=';')    
     test<-is.na(as.Date(verification[1,2]))
     if(test){
@@ -55,7 +54,7 @@ db.verify<-function(registry, #the previously saved registry
   
   # Find and store the original records
   old<-df$ID %in% verified$ID
-  print(paste(sum(old),'records had their verification value changed. The verification was logged in',fullfilename))
+  cat(note(sum(old),'records had their verification value changed. The verification was logged in',fullfilename,'\n'))
   done<-merge(df,verified,by='ID')
   verification<-rbind(verification,done)
   verification<-unique(verification)

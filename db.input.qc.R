@@ -9,28 +9,28 @@ db.input.qc<-function(existing.data.registry=F,
                       filename='debugging', #the base filename
                       in.pipeline=T
 ){
-  print('Running db.input.qc.R ...')
-  print('This function expects a dataframe with max 5 columns:')
-  print('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)')
+  cat(note('Running db.input.qc.R ...\n'))
+  cat(note('This function expects a dataframe with max 5 columns:\n'))
+  cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
   #Neither is a category column
   
   # Checks before anything can be done
   if(ncol(new.records)>5){
     new.records<-new.records[,1:5]
-    print('Input dataframe has more than 5 columns. Only the first 5 are used, the rest is ignored.')
+    cat(warn('Input dataframe has more than 5 columns. Only the first 5 are used, the rest is ignored.\n'))
   }
   
   #is this a new data registry?
   if(existing.data.registry[[1]][[1]]==F){
-    print('No existing data registry is provided, constructing a new one from the new records')
+    cat(note('No existing data registry is provided, constructing a new one from the new records\n'))
     header<-colnames(new.records)
     id<-0
   } else {
     if(in.pipeline){
-      print(paste('Existing registry is provided. A backup of it is saved as',paste(today,filename,'registry.backup',sep='.')))
+      cat(note('Existing registry is provided. A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
       write.table(existing.data.registry,file=paste(today,filename,'registry.backup',sep='.'),row.names=F,sep=';')
     } else {
-      print('Existing registry is provided.')
+      cat(note('Existing registry is provided.\n'))
     }
     header<-colnames(existing.data.registry)
     # id<-max(existing.data.registry$ID)
@@ -41,8 +41,8 @@ db.input.qc<-function(existing.data.registry=F,
   novalue<-emptyvalues(new.records[,4])
   remove<-nosubject | novalue
   if(sum(remove)>0){
-    print(paste(sum(remove),'records with missing Subject or Value found. These are removed from the registry.'))
-    print('NOTE: If this is unexpected; verify input and re-run db.registry without reloading the existing data registry!')
+    cat(note(sum(remove),'records with missing Subject or Value found. These are removed from the registry.\n'))
+    cat(warn('NOTE: If this is unexpected; verify input and re-run db.registry without reloading the existing data registry!\n'))
     # print(new.records[remove,])
     new.records<-new.records[!remove,]
   }
@@ -50,12 +50,12 @@ db.input.qc<-function(existing.data.registry=F,
   #colnames should be equal
   if(existing.data.registry[[1]][[1]]!=F){
     if(all(colnames(existing.data.registry)==colnames(new.records))){
-      print('CHECKPOINT OK: Names of columns of both existing and new registry are equal')
+      cat(note('CHECKPOINT OK: Names of columns of both existing and new registry are equal'))
     } else {
-      print('ERROR: Names of columns of existing and new registry do not match')
-      print('Existing registry:')
+      cat(error('ERROR: Names of columns of existing and new registry do not match\n'))
+      cat(note('Existing registry:\n'))
       print(colnames(existing.data.registry))
-      print('New records:')
+      cat(note('New records:\n'))
       print(colnames(new.records))
       stop()
     }
@@ -77,8 +77,8 @@ db.input.qc<-function(existing.data.registry=F,
     if(test3){
       test4<-is.na(as.Date(new.records[1,2],format='%d.%m.%Y'))
       if(test4){
-        print('Date format was not converted. This generally means that the loaded registry was a pre-existing one saved by this script')
-        print('It could also mean that the date format is unusual or irregular!')
+        cat(warn('Date format was not converted. This generally means that the loaded registry was a pre-existing one saved by this script\n'))
+        cat(warn('It could also mean that the date format is unusual or irregular!\n'))
         new.records[,2]<-as.Date(new.records[,2],format='%Y-%m-%d')
       } else {
         new.records[,2]<-as.Date(new.records[,2],format='%d.%m.%Y')
@@ -93,7 +93,7 @@ db.input.qc<-function(existing.data.registry=F,
   # If no date provided, use today
   nodate<-emptyvalues(new.records[,2])
   if(sum(nodate)>0){
-    print(paste(sum(nodate),"records have no date. Today's date is imputed in these records:"))
+    cat(warn(sum(nodate),"records have no date. Today's date is imputed in these records:\n"))
     print(new.records[nodate,])
     new.records[nodate,2]<-as.Date(today, format='%Y%m%d')
   }
@@ -101,14 +101,14 @@ db.input.qc<-function(existing.data.registry=F,
   # Check whether all records have a source
   nosource<-emptyvalues(new.records[,6])
   if(sum(nosource)>0){
-    print(paste('WARNING!',sum(nosource),'records have no source. Records:'))
+    cat(warn('WARNING!',sum(nosource),'records have no source. Records:\n'))
     print(new.records[nosource,])
     if(in.pipeline){
-      print(paste('Source can be always added by reading it as a new record with a newer date. They have been saved as ',
-                  today,filename,'registry.nosource.csv',sep='.'))
+      cat(note('Source can be always added by reading it as a new record with a newer date. They have been saved as ',
+                  paste(today,filename,'registry.nosource.csv',sep='.'),'\n'))
       write.table(new.records[nosource,],file=paste(today,filename,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
     } else {
-      print('Source can always be added by reading it as a new record with a newer date.')
+      cat(note('Source can always be added by reading it as a new record with a newer date.\n'))
     }
     
   }
@@ -122,11 +122,11 @@ db.input.qc<-function(existing.data.registry=F,
   df<-df[rownames(unique(df[,2:5])),]
   df.length.clean<-nrow(df)
   if(df.length.raw>df.length.clean){
-    print(paste(df.length.raw-df.length.clean,'records were already present in the registry'))
+    cat(warn(df.length.raw-df.length.clean,'records were already present in the registry\n'))
     #TODO would be good to print the ones already present
     #TODO Use duplicates() to find them
   } else {
-    print('All records are new to the registry')
+    cat(note('All records are new to the registry'))
   }
   
   # Remove any trailing whitespaces in each column
@@ -136,9 +136,9 @@ db.input.qc<-function(existing.data.registry=F,
   
   # Export registry
   write.table(df, file=paste(filename,'.registry.csv',sep=''), sep=';',row.names=F)
-  print(paste('Registry has been saved as',paste(filename,'.registry.csv',sep='')))
+  cat(note('Registry has been saved as',paste(filename,'.registry.csv',sep=''),'\n'))
   
   # Return registry
-  print('Constructed registry is returned')
+  cat(note('Constructed registry is returned\n'))
   return(df)
 }
