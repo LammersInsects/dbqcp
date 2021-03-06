@@ -30,9 +30,9 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   df<-data.frame('','',unique(registry[,4]),'','')
   colnames(df)<-colnames(registry[2:6])
   
-  file=paste(gd.base, filename, '.input.xlsx' ,sep='') 
+  filepath<-paste(gd.base, filename, '.input.xlsx' ,sep='') 
   
-  print('Calling write.default.xlsx()')
-  write.default.xlsx(dataframe = df, file = file, filename = filename, colwidths = colwidths, extra.header.info = extra.header.info)
-  print(paste('New input file is saved as ',file, sep=''))
+  cat(note('Calling write.default.xlsx()\n'))
+  write.default.xlsx(dataframe = df, file = filepath, filename = filename, colwidths = colwidths, extra.header.info = extra.header.info)
+  cat(note('New input file is saved as ',file,'\n',sep=''))
 }
