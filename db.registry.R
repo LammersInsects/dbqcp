@@ -27,7 +27,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     if(new.records[[1]][[1]]==F){
       #
     } else {
-   
+      
     }
   } else {
     stop('Given user name is not validated')
@@ -48,9 +48,11 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   #is an existing registry provided?
   if(existing.data.registry[[1]][[1]]==F){
     cat(note('No existing data registry is provided, constructing a new one from the new records\n'))
+    no.existing<-T
     header<-colnames(new.records)
     id<-0
   } else {
+    no.existing<-F
     # Convert standard Excel date format to R-friendly
     if(existing.data.registry[[1]][[1]]!=F){
       test1<-is.na(as.Date(existing.data.registry[1,2],format='%d-%m-%Y'))
@@ -76,8 +78,10 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   #are new records provided?
   if(new.records[[1]][[1]]==F){
     cat(note('No new records are provided, loading the existing registry\n'))
+    no.new<-T
   } else { #If so, continue processing the new records
     cat(note('New records are provided\n'))
+    no.new<-F
     new.records<-new.records[,1:5]
     #TODO use db.input.qc() to do all QC checks >under construction
     
@@ -129,10 +133,15 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     }
     
     # If new records contain records from more than 300 days ago, give a warning; they are most likely typos
-    veryold<-new.records[,2] <= as.Date(today, format='%Y%m%d')-too.old
-    if(sum(veryold)>0){
-      cat(warn('WARNING!',sum(veryold),'records have dates over',too.old,"days old. Do these records' dates contain typos?\n"))
-      print(new.records[veryold,])
+    #this should not get triggered if only an existing registry is loaded!
+    if(no.new | no.existing){
+      
+    } else {
+      veryold<-new.records[,2] <= as.Date(today, format='%Y%m%d')-too.old
+      if(sum(veryold)>0){
+        cat(warn('WARNING!',sum(veryold),'records have dates over',too.old,"days old. Do these records' dates contain typos?\n"))
+        print(new.records[veryold,])
+      }
     }
     
     # Check whether all records have a source
@@ -141,7 +150,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       cat(warn('WARNING!',sum(nosource),'records have no source. Records:\n'))
       print(new.records[nosource,])
       cat(warn('Source can be added by reading it as a new record with a later date. They have been saved as',
-                  paste(today,filename,'registry.nosource.csv',sep='.')))
+               paste(today,filename,'registry.nosource.csv',sep='.')))
       write.table(new.records[nosource,],file=paste(today,filename,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
     }
     
@@ -178,7 +187,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   } else {
     if(nrow(new.records)>0){
       cat(note('All',nrow(new.records),'records are new to the registry\n'))
-    #TODO it's a bit funny that it says that when the registry already existed
+      #TODO it's a bit funny that it says that when the registry already existed
     } else {
       cat(note('All',nrow(existing.data.registry),'records come from the existing registry\n'))
     }
