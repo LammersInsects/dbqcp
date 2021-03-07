@@ -63,10 +63,16 @@ db.findrecords<-function(registry, #the previously saved registry
     } else {
       result<-df[grep(to.find,df[,i],ignore.case=T,invert = invert),]
     }
+    
     if(!quiet){
       cat(note(nrow(result),'records found in column',colnames(df)[i],'\n'))
     }
-    if(print.result){print(result)}
+    if(nrow(result)>0){
+      if(print.result){
+        print(result)
+      }
+    }
+    
     output<-rbind(output,result)
   }
   
