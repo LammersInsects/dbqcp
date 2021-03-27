@@ -133,14 +133,20 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     }
     
     # If new records contain records from more than 300 days ago, give a warning; they are most likely typos
-    #this should not get triggered if only an existing registry is loaded!
-    if(no.new | no.existing){
+    # Similarly, a warning should be printed if records with dates in the future are entered
+    if(no.new | no.existing){ #this should not get triggered if only an existing registry is loaded!
       
     } else {
       veryold<-new.records[,2] <= as.Date(today, format='%Y%m%d')-too.old
       if(sum(veryold)>0){
         cat(warn('WARNING!',sum(veryold),'records have dates over',too.old,"days old. Do these records' dates contain typos?\n"))
         print(new.records[veryold,])
+      }
+      
+      future<-new.records[,2] > as.Date(today, format='%Y%m%d')
+      if(sum(future)>0){
+        cat(warn('WARNING!',sum(future),"records have dates that are in the future! Do these records' dates contain typos?\n"))
+        print(new.records[future,])
       }
     }
     
