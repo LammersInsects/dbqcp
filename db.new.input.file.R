@@ -34,5 +34,5 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   
   cat(note('Calling write.default.xlsx()\n'))
   write.default.xlsx(dataframe = df, file = filepath, filename = filename, colwidths = colwidths, extra.header.info = extra.header.info)
-  cat(note('New input file is saved as ',file,'\n',sep=''))
+  cat(note('New input file is saved as ',filepath,'\n',sep=''))
 }
