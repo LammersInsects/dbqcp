@@ -77,7 +77,7 @@ db.findrecords<-function(registry, #the previously saved registry
   }
   
   if(!quiet){
-    cat(note('All matching records are returned as one registry'))
+    cat(note('All matching records are returned as one registry\n'))
   }
   
   return(output)
