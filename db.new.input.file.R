@@ -22,6 +22,7 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
     cat(note('This function expects a registry as created by db.registry()\n'))
   }
   
+  #Check input registry
   if(db.is.registry(registry = registry, quiet=T)){
     df<-registry
   } else {
@@ -29,13 +30,14 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
     stop()
   }
   
-  # df<-registry[0,2:6]
+  #Create dataframe for the new input file with all field names that are used in the registry
   df<-data.frame('','',unique(registry[,4]),'','')
   colnames(df)<-colnames(registry[2:6])
   
-  if(class(precomputed.records)!='logical'){
-    if(is.data.frame(precomputed.records)){
-      if(ncol(precomputed.records)==5){
+  #Append with precomputed records if those are provided
+  if(class(precomputed.records)!='logical'){ #if precomputed records are provided
+    if(is.data.frame(precomputed.records)){ #and it is a data frame
+      if(ncol(precomputed.records)==5){ #with 5 columns
         
       } else {
         cat(warn('The dataframe of precomputed records does not have 5 columns. Only the first five columns are used\n'))
@@ -43,10 +45,10 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
       if(!quiet){
         cat(note('Adding ',nrow(precomputed.records),' records to the new input file\n',sep=''))
       }
-      df<-rbind(df,precomputed.records[,1:5])
+      df<-rbind(df,precomputed.records[,1:5]) #then add them to the new input file
       for(x in 1:5){
-        if(class(precomputed.records[,x])=='integer'){
-          df[,x]<-as.integer(df[,x])
+        if(class(precomputed.records[,x])=='integer'){ #if we have integers in the precomputed records
+          df[,x]<-as.integer(df[,x]) #then pass that on to the new input file
         }
       }
     } else {
@@ -58,8 +60,10 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
     }
   }
   
+  #Store the full path where to store the new input file
   filepath<-paste(gd.base, filename, '.input.xlsx' ,sep='') 
   
+  #Write to that path with a function from MLmisc
   if(!quiet){
     cat(note('Calling write.default.xlsx()\n'))
   }
