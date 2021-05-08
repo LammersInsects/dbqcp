@@ -14,11 +14,13 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
                             filename='debugging', #the base filename
                             colwidths=c(12,8,10,24,8), #preferred for pot_plant_db_new.xlsx
                             precomputed.records=F, #a dataframe with 5 columns with pre-filled information
-                            extra.header.info=NA #allows parsing this string to write.default.xlsx()
-                            
+                            extra.header.info=NA, #allows parsing this string to write.default.xlsx()
+                            quiet=F
 ){
-  cat(note('Running db.new.input.file.R ...\n'))
-  cat(note('This function expects a registry as created by db.registry()\n'))
+  if(!quiet){
+    cat(note('Running db.new.input.file.R ...\n'))
+    cat(note('This function expects a registry as created by db.registry()\n'))
+  }
   
   if(db.is.registry(registry = registry, quiet=T)){
     df<-registry
@@ -38,7 +40,9 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
       } else {
         cat(warn('The dataframe of precomputed records does not have 5 columns. Only the first five columns are used\n'))
       }
-      cat(note('Adding ',nrow(precomputed.records),' records to the new input file\n',sep=''))
+      if(!quiet){
+        cat(note('Adding ',nrow(precomputed.records),' records to the new input file\n',sep=''))
+      }
       df<-rbind(df,precomputed.records[,1:5])
       for(x in 1:5){
         if(class(precomputed.records[,x])=='integer'){
@@ -49,12 +53,19 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
       cat(warn('The precomputed recods are not a dataframe; the input is ignored!\n'))
     }
   } else {
-    cat(note('No precomputed records were provided.\n'))
+    if(!quiet){
+      cat(note('No precomputed records were provided.\n'))
+    }
   }
   
   filepath<-paste(gd.base, filename, '.input.xlsx' ,sep='') 
   
-  cat(note('Calling write.default.xlsx()\n'))
-  write.default.xlsx(dataframe = df, file = filepath, filename = filename, colwidths = colwidths, extra.header.info = extra.header.info)
-  cat(note('New input file is saved as ',filepath,'\n',sep=''))
+  if(!quiet){
+    cat(note('Calling write.default.xlsx()\n'))
+  }
+  write.default.xlsx(dataframe = df, file = filepath, filename = filename, colwidths = colwidths, 
+                     extra.header.info = extra.header.info, quiet = quiet)
+  if(!quiet){
+    cat(note('New input file is saved as ',filepath,'\n',sep=''))
+  }
 }
