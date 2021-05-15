@@ -160,7 +160,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       cat(warn('WARNING!',sum(nosource),'records have no source. Records:\n'))
       print(new.records[nosource,])
       cat(warn('Source can be added by reading it as a new record with a later date. They have been saved as',
-               paste(today,filename,'registry.nosource.csv',sep='.')))
+               paste(today,filename,'registry.nosource.csv\n',sep='.')))
       write.table(new.records[nosource,],file=paste(today,filename,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
     }
     
