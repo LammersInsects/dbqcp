@@ -7,6 +7,7 @@
 db.registry<-function(existing.data.registry=F, #the previously saved registry
                       new.records=F, #the records to be added
                       too.old=300, #a number of days against which new records' dates are checked for age
+                      expected.missing=0, #use this if the default new input always has a fixed number of incomplete records
                       filename='debugging', #the base filename
                       user=NA #optional: if not entered here, the script will prompt you for a manual input
 ){
@@ -90,10 +91,13 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     nofield<-emptyvalues(new.records[,3])
     novalue<-emptyvalues(new.records[,4])
     to.remove<-nosubject | nofield | novalue
-    if(sum(to.remove)>0){
-      cat(warn(sum(to.remove),'records with missing Subject, Field or Value found. These are removed from the registry.\n'))
+    if(sum(to.remove)>expected.missing){
+      cat(warn(sum(to.remove)-expected.missing,
+               'records with missing Subject, Field or Value found. These are removed from the registry.\n'))
       cat(warn('NOTE: If this is unexpected; verify input and re-run db.registry without reloading the existing data registry!\n'))
       # print(new.records[to.remove,])
+    }
+    if(sum(to.remove>0)){
       new.records<-new.records[!to.remove,]
     }
     
