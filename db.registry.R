@@ -9,14 +9,15 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
                       too.old=300, #a number of days against which new records' dates are checked for age
                       expected.missing=0, #use this if the default new input always has a fixed number of incomplete records
                       filename='debugging', #the base filename
-                      user=NA #optional: if not entered here, the script will prompt you for a manual input
+                      user=NA, #optional: if not entered here, the script will prompt you for a manual input
+                      quiet=F
 ){
-  cat(note('Running db.registry.R ...\n'))
-  cat(note('The existing registry must be produced by db.registry()\n'))
-  cat(note('For new records, this function expects a dataframe with max 5 columns:\n'))
-  cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
-  #Neither is a category column
-  
+  if(!quiet){
+    cat(note('Running db.registry.R ...\n'))
+    cat(note('The existing registry must be produced by db.registry()\n'))
+    cat(note('For new records, this function expects a dataframe with max 5 columns:\n'))
+    cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
+  }
   
   #Who is recording data?
   if(is.na(user)){
@@ -48,7 +49,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   #is an existing registry provided?
   if(existing.data.registry[[1]][[1]]==F){
-    cat(note('No existing data registry is provided, constructing a new one from the new records\n'))
+    if(!quiet){
+      cat(note('No existing data registry is provided, constructing a new one from the new records\n'))
+    }
     no.existing<-T
     header<-colnames(new.records)
     id<-0
@@ -65,7 +68,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     } 
     #test whether it's a registry
     if(db.is.registry(registry = existing.data.registry, quiet = T)){
-      cat(note('Existing registry is provided. A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
+      if(!quiet){
+        cat(note('Existing registry is provided. A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
+      }
       write.table(existing.data.registry,file=paste(today,filename,'registry.backup',sep='.'),row.names=F,sep=';')
       header<-colnames(existing.data.registry)
       id<-max(existing.data.registry$ID)
@@ -78,7 +83,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   #are new records provided?
   if(new.records[[1]][[1]]==F){
-    cat(note('No new records are provided, loading the existing registry\n'))
+    if(!quiet){
+      cat(note('No new records are provided, loading the existing registry\n'))
+    }
     no.new<-T
   } else { #If so, continue processing the new records
     cat(note('New records are provided\n'))
@@ -196,10 +203,14 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     #TODO and distinguish between ones already present and duplicates in the new.records
   } else {
     if(nrow(new.records)>0){
-      cat(note('All',nrow(new.records),'records are new to the registry\n'))
+      if(!quiet){
+        cat(note('All',nrow(new.records),'records are new to the registry\n'))
+      }
       #TODO it's a bit funny that it says that when the registry already existed
     } else {
-      cat(note('All',nrow(existing.data.registry),'records come from the existing registry\n'))
+      if(!quiet){
+        cat(note('All',nrow(existing.data.registry),'records come from the existing registry\n'))
+      }
     }
   }
   
@@ -220,9 +231,13 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   # Export registry
   write.table(df, file=paste(filename,'.registry.csv',sep=''), sep=';',row.names=F)
-  cat(note('Registry has been saved as',paste(filename,'.registry.csv',sep=''),'\n'))
+  if(!quiet){
+    cat(note('Registry has been saved as',paste(filename,'.registry.csv',sep=''),'\n'))
+  }
   
   # Return registry
-  cat(note('Constructed registry is returned\n'))
+  if(!quiet){
+    cat(note('Constructed registry is returned\n'))
+  }
   return(df)
 }
