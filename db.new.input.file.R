@@ -61,13 +61,14 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   }
   
   #Store the full path where to store the new input file
-  filepath<-paste(gd.base, filename, '.input.xlsx' ,sep='') 
+  file.name<-paste(filename, '.input.xlsx' ,sep='')
+  filepath<-paste(gd.base, file.name,sep='')
   
   #Write to that path with a function from MLmisc
   if(!quiet){
     cat(note('Calling write.default.xlsx()\n'))
   }
-  write.default.xlsx(dataframe = df, file = filepath, filename = filename, colwidths = colwidths, 
+  write.default.xlsx(dataframe = df, file = filepath, filename = file.name, colwidths = colwidths, 
                      extra.header.info = extra.header.info, quiet = quiet)
   if(!quiet){
     cat(note('New input file is saved as ',filepath,'\n',sep=''))
