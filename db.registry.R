@@ -171,6 +171,35 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       write.table(new.records[nosource,],file=paste(today,filename,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
     }
     
+    # Check whether any are adding new subjects or fields
+    if(no.existing){
+      #then we cannot check it
+    } else {
+      n.new.subj<-sum(!unique(trailingspace(new.records[,3])) %in% unique(trailingspace(existing.data.registry[,3])))
+      n.new.field<-sum(!unique(trailingspace(new.records[,4])) %in% unique(trailingspace(existing.data.registry[,4])))
+      if(n.new.subj>0){
+        if(n.new.field>0){
+          if(!quiet){
+            cat(note('The new records add ',n.new.subj,' new subjects and ',n.new.field,' new fields to the database\n',sep=''))
+          }
+        } else {
+          if(!quiet){
+            cat(note('The new records add ',n.new.subj,' new subjects to the database\n',sep=''))
+          }
+        }
+      } else {
+        if(n.new.field>0){
+          if(!quiet){
+            cat(note('The new records add ',n.new.field,' new fields to the database\n',sep=''))
+          }
+        } else {
+          if(!quiet){
+            cat(note('The new records add no new subjects and no new fields to the database\n',sep=''))
+          }
+        }
+      }
+    }
+    
   }
   
   #colnames should be equal
