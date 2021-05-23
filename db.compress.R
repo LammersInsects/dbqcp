@@ -65,7 +65,7 @@ db.compress<-function(registry, quiet=F){
       interm<-df[df[,4]==column,c(-3,-4)] #for the selected field, grab the records
       if(nrow(interm)==0){interm[1,]<-NA} #if no records exist, put NA. Without it the next line doesn't work
       tmp<-data.frame(column,interm)
-      colnames(tmp)<-c(colnames(register)[4],colnames(tmp)[2:ncol(tmp)])
+      colnames(tmp)<-c(colnames(registry)[4],colnames(tmp)[2:ncol(tmp)])
       tmp<-tmp[order(tmp$Datum),]
       return(tmp) #return data frame for this field
     }) #produces a 3-dimensional matrix with all values, dates and sources per field
