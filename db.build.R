@@ -52,7 +52,7 @@ db.build<-function(registry, #the previously saved registry
   
   #Include a possibility that columns are numeric (including subjects)
   test.dt<-sapply(db, data.type, quiet = T) #Test what kind of data types are used
-  test.dt.interpr<-test.dt['numeric',]>0 & (test.dt['empty',]+test.dt['numeric',])==1
+  test.dt.interpr<-test.dt['numeric',]>0 & (test.dt['empty',]+test.dt['numeric',])>0.999
   if(any(test.dt.interpr)){ #When any columns is always numeric or empty
     db[,test.dt.interpr]<-sapply(db[,test.dt.interpr], as.numeric) #automatically convert it as such
   }
