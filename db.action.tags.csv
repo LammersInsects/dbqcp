@@ -1,0 +1,5 @@
+Action;Subject;Field;Value;Does
+remove;db.action.remove;[the record ID to be removed];reason why the record should be removed;running db.action removes the flagged records in antechronological order, also removing the record listing the action as it goes
+approve;db.action.approve;[the record ID for which verification is given];reason why the record has been approved;
+doubtful;db.action.doubt;[the ID of the record that is flagged as doubtful];source of doubt;
+;;;;
