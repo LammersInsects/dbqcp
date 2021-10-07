@@ -10,20 +10,25 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
                       expected.missing=0, #use this if the default new input always has a fixed number of incomplete records
                       filename='debugging', #the base filename
                       user=NA, #optional: if not entered here, the script will prompt you for a manual input
-                      quiet=F
+                      quiet=F, #absolutely no information is printed
+                      print.help=F #no help message is printed, overridden by quiet flag
 ){
   if(!quiet){
     cat(note('Running db.registry.R ...\n'))
-    cat(note('The existing registry must be produced by db.registry()\n'))
-    cat(note('For new records, this function expects a dataframe with max 5 columns:\n'))
-    cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
+    if(print.help){
+      cat(note('The existing registry must be produced by db.registry()\n'))
+      cat(note('For new records, this function expects a dataframe with max 5 columns:\n'))
+      cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
+    }
   }
   
   #Who is recording data?
   if(is.na(user)){
     user<-readline(prompt='Who has recorded the data? Name: ')
   }
-  print(paste('New data is recorded by',user))
+  if(!quiet){
+    print(paste('New data is recorded by',user))
+  }
   #   if(user %in% users){
   if(user %in% local(users,env=hidden.env)){
     if(new.records[[1]][[1]]==F){

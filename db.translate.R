@@ -6,10 +6,16 @@
 
 db.translate<-function(registry, #the previously saved registry
                        translate, #the previously saved database
+                       quiet=F, #absolutely no information is printed
+                       print.help=F, #no help message is printed, overridden by quiet flag
                        filename='debugging' #the base filename
 ){
-  cat(note('Running db.translate.R ...\n'))
-  cat(note('This function expects a registry as produced by db.registry() and a 3-column dataframe with dates, original and replacement values\n'))
+  if(!quiet){
+    cat(note('Running db.translate.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry() and a 3-column dataframe with dates, original and replacement values\n'))
+    }
+  }
   
   # Checks before anything can be done
   if(db.is.registry(registry = registry, quiet=T)){
@@ -48,17 +54,23 @@ db.translate<-function(registry, #the previously saved registry
   keep.tr<-unique(keep.tr)
   omit<-unique(omit)
   
-  cat(note(nrow(omit),'records of replacements were omitted because newer records replace those\n'))
+  if(!quiet){
+    cat(note(nrow(omit),'records of replacements were omitted because newer records replace those\n'))
+  }
   
   # Find values to be translated
   for(i in 3:6){
     todo<-df[,i] %in% keep.tr[,2]
     if(sum(todo>0)){
-      cat(note(sum(todo),'values were replaced in column',colnames(df)[i],'\n'))
+      if(!quiet){
+        cat(note(sum(todo),'values were replaced in column',colnames(df)[i],'\n'))
+      }
       replacement<-merge(df[todo,c(1,i)],keep.tr[,2:3],by.x=colnames(df)[i],by.y=colnames(keep.tr)[2],all.x=T)[,c(2,1,3)]
       replacement<-replacement[order(replacement[,1]),]
       if(all(replacement[,2]==df[todo,i])){
-        print(replacement)
+        if(!quiet){
+          print(replacement)
+        }
         df[todo,i]<-replacement[,3]
       } else {
         stop('Something went wrong')

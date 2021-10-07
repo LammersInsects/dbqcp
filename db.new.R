@@ -12,11 +12,17 @@
 # Define function
 # new.records<-pot.new
 db.new<-function(new.records, #the records to be used for generating a new database
+                 quiet=F, #absolutely no information is printed
+                 print.help=F, #no help message is printed, overridden by quiet flag
                  filename='debugging' #the base filename
 ){
-  cat(note('Running db.new.R ...\n'))
-  cat(note('This function expects a dataframe with max 5 columns:\n'))
-  cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
+  if(!quiet){
+    cat(note('Running db.new.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a dataframe with max 5 columns:\n'))
+      cat(note('  Date recorded -- Subject -- Field -- Value [-- Source]   (header is compulsory)\n'))
+    }
+  }
   
   # Checks before anything can be done
   new.records<-new.records[,1:5]
@@ -39,16 +45,18 @@ db.new<-function(new.records, #the records to be used for generating a new datab
   # colnames(res)<-c('ID',colnames(new.records),'Recorded.by','Verified')
   
   res<-data.frame('ID'=1,
-                   new.records[1,],
-                   'Recorded.by'='admin',
-                   'Verified'=0)
+                  new.records[1,],
+                  'Recorded.by'='admin',
+                  'Verified'=0)
   # write.table(res, file=paste(filename,'.registry.csv',sep=''), sep=';',row.names=F)
   res[,2]<-read.date.format(res[,2])
   
   registry<-db.registry(existing.data.registry = res, new.records = new.records[2:nrow(new.records),], filename = filename)
   
-  cat(note('The new database is stored in the working directory, i.e.\n'))
-  print(getwd())
+  if(!quiet){
+    cat(note('The new database is stored in the working directory, i.e.\n'))
+    print(getwd())
+  }
   
   return(registry)
 }

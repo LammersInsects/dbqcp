@@ -10,11 +10,14 @@ db.files<-function(database.folder, #The folder holding the database files to an
                    split='.',
                    return.dates=F,
                    print.output=T,
-                   quiet=F
+                   quiet=F, #absolutely no information is printed
+                   print.help=F #no help message is printed, overridden by quiet flag
 ){
   if(!quiet){
     cat(note('Running db.files.R ...\n'))
-    cat(note('This function expects a name for the folder that holds the database files\n'))
+    if(print.help){
+      cat(note('This function expects a name for the folder that holds the database files\n'))
+    }
   }
   
   split<-paste(split,collapse='')

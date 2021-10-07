@@ -16,11 +16,15 @@ db.plot.subjects<-function(registry, #a registry as produced by the db package
                            text.fields=c(), #one or more fields of the registry
                            additional.plot.head=NA, #a field of the registry, or any other string
                            extend.date.to=NA, #NA, Sys.Date(), or any other date variable
-                           quiet=F){ #sets quiet mode
-  
+                           quiet=F, #absolutely no information is printed
+                           print.help=F #no help message is printed, overridden by quiet flag
+){
   #first check all the input
   if(!quiet){
     cat(note('Running db.plot.subjects() with a registry as input. Checking input ...\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry() and a number of other important values.\n'))
+    }
   }
   
   if(db.is.registry(registry = registry, quiet=T)){

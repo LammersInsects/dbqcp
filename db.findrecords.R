@@ -10,21 +10,24 @@ db.findrecords<-function(registry, #the previously saved registry
                          level='all', # all, subject, field or value
                          invert=F, #get everything except the to.find, invert=TRUE gives only the records that conform to to.find 
                          print.result=F,
-                         quiet=F,
+                         quiet=F, #absolutely no information is printed
+                         print.help=F, #no help message is printed, overridden by quiet flag
                          filename='debugging' #the base filename
 ){
   if(!quiet){
     cat(note('Running db.findrecords.R ...\n'))
-    cat(note('This function expects a registry as produced by db.registry() and a text string to find\n'))
-    cat(note('It also works on other datasets when level is given as column index\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry() and a text string to find\n'))
+      cat(note('It also works on other datasets when level is given as column index\n'))
+    }
   }
   
   # Checks before anything can be done
   # if(db.is.registry(registry = registry, quiet=T)){
-    df<-registry
+  df<-registry
   # } else {
-    # db.is.registry(registry = registry, quiet=F)
-    # stop()
+  # db.is.registry(registry = registry, quiet=F)
+  # stop()
   # }
   
   if(length(to.find)!=1){

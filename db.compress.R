@@ -10,7 +10,17 @@
 # Reformat data
 
 # Define function
-db.compress<-function(registry, quiet=F){
+db.compress<-function(registry,
+                      quiet=F, #absolutely no information is printed
+                      print.help=F #no help message is printed, overridden by quiet flag
+){
+  if(!quiet){
+    cat(note('Running db.build.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry()\n'))
+    }
+  }
+  
   #I thought this would be easy, done as follows:
   # tabled<-as.data.frame(table(registry[,3]))
   # compressed<-sapply(tabled$Var1, db.findrecords, exact = T, registry = registry, level = 'subject', quiet=T)

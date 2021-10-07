@@ -23,7 +23,16 @@ db.compare.db<-function(existing.db,
                         date=Sys.Date(),
                         source='db.compare.db',
                         filename='debugging', #TODO currently not used
-                        quiet=F){
+                        quiet=F, #absolutely no information is printed
+                        print.help=F #no help message is printed, overridden by quiet flag
+){
+  if(!quiet){
+    cat(note('Running db.compare.db.R ...\n'))
+    if(print.help){
+      cat(note('This function expects two registries as produced by db.registry()\n'))
+    }
+  }
+  
   #TODO db.is.db() voor beide dbs
   
   # Check date format

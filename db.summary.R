@@ -8,14 +8,22 @@ db.summary<-function(registry, #the previously saved registry
                      columns='all', #all / date / subject / field / value / source / by / verified
                      exclude=F, #values of fiels to be excluded from the output
                      save.STDOUT=F, #should the STOUT text output be saved to file?
+                     quiet=F, #absolutely no information is printed
+                     print.help=F, #no help message is printed, overridden by quiet flag
                      filename='debugging' #the base filename
 ){
-  cat(note('Running db.summary.R ...\n'))
-  cat(note('This function expects a registry as produced by db.registry()\n'))
+  if(!quiet){
+    cat(note('Running db.summary.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry()\n'))
+    }
+  }
   
   if(exclude[1]!=F){
-    print(paste(length(exclude),'values were excluded:'))
-    print(exclude)
+    if(!quiet){
+      print(paste(length(exclude),'values were excluded:'))
+      print(exclude)
+    }
   }
   
   # Checks before anything can be done

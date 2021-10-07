@@ -8,10 +8,16 @@ db.missing<-function(registry, #the previously saved registry
                      database, #the previously saved database
                      columns='all', #all / date / subject / field / value / source / by / verified  #NOT USED YET
                      exclude=F, #values of fiels to be excluded from the output  #NOT USED YET
+                     quiet=F, #absolutely no information is printed
+                     print.help=F, #no help message is printed, overridden by quiet flag
                      filename='debugging' #the base filename
 ){
-  cat(note('Running db.missing.R ...\n'))
-  cat(note('This function expects a registry as produced by db.registry() and the corresponding database as produced by db.build()\n'))
+  if(!quiet){
+    cat(note('Running db.missing.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry()\n and the corresponding database as produced by db.build()\n'))
+    }
+  }
   
   #   if(exclude[1]!=F){
   #     print(paste(length(exclude),'values were excluded:'))
@@ -58,6 +64,9 @@ db.missing<-function(registry, #the previously saved registry
   # Export table with missing fields
   write.table(result, file=paste(today,filename,'missing.csv',sep='.'), sep=';', row.names=F)
   
-  cat(note('A table with missing values is returned and has been exported as',paste(today,'.',filename,'.missing.csv',sep=''),'\n'))
+  if(!quiet){
+    cat(note('A table with missing values is returned and has been exported as',
+             paste(today,'.',filename,'.missing.csv',sep=''),'\n'))
+  }
   return(result)
 }

@@ -7,13 +7,15 @@
 db.last.records<-function(registry, #the previously saved registry
                           level='field', #subject, field or value
                           # filename='debugging', #the base filename
-                          quiet=F
+                          quiet=F, #absolutely no information is printed
+                          print.help=F #no help message is printed, overridden by quiet flag
 ){
   if(!quiet){
     cat(note('Running db.last.record.R ...\n'))
-    cat(note('This function expects a registry as produced by db.registry()\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry()\n'))
+    }
   }
-  
   
   # Checks before anything can be done
   if(db.is.registry(registry = registry, quiet=T)){

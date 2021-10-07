@@ -15,11 +15,14 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
                             colwidths=c(12,8,10,24,8), #preferred for pot_plant_db_new.xlsx
                             precomputed.records=F, #a dataframe with 5 columns with pre-filled information
                             extra.header.info=NA, #allows parsing this string to write.default.xlsx()
-                            quiet=F
+                            quiet=F, #absolutely no information is printed
+                            print.help=F #no help message is printed, overridden by quiet flag
 ){
   if(!quiet){
     cat(note('Running db.new.input.file.R ...\n'))
-    cat(note('This function expects a registry as created by db.registry()\n'))
+    if(print.help){
+      cat(note('This function expects a registry as created by db.registry()\n'))
+    }
   }
   
   #Check input registry

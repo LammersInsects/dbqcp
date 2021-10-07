@@ -9,11 +9,17 @@ db.multicol.import<-function(dataframe, #the records to be added
                              subject.col=F, #the column specifying the subject of the records
                              value.columns=F, #the column specifying the values associated with the records
                              source.col=F, #the source of the records
+                             quiet=F, #absolutely no information is printed
+                             print.help=F, #no help message is printed, overridden by quiet flag
                              filename='debugging' #the base filename
 ){
-  cat(note('Running db.multicol.import.R ...\n'))
-  cat(note('This function expects a dataframe with any number of columns:\n'))
-  cat(note('  Date recorded -- Subject -- Value-columns -- Source   (header is compulsory)\n'))
+  if(!quiet){
+    cat(note('Running db.multicol.import.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a dataframe with any number of columns:\n'))
+      cat(note('  Date recorded -- Subject -- Value-columns -- Source   (header is compulsory)\n'))
+    }
+  }
   
   ## Checks before the start
   df<-dataframe
@@ -54,7 +60,9 @@ db.multicol.import<-function(dataframe, #the records to be added
     if(length(subject.col)==1){
       if(subject.col %in% colnames(df)){
         nsubj<-length(unique(df[,subject.col]))
-        cat(note(nsubj,'unique subjects found in column',subject.col,'\n'))
+        if(!quiet){
+          cat(note(nsubj,'unique subjects found in column',subject.col,'\n'))
+        }
         if(nsubj<nrow(df)){
           cat(warn('WARNING: There are less unique subjects than rows in the dataframe\n'))
         }
@@ -74,14 +82,18 @@ db.multicol.import<-function(dataframe, #the records to be added
   if(value.columns[1]!=F){
     if(all(value.columns %in% colnames(df))){
       nvalcol<-length(value.columns)
-      cat(note(nvalcol,'columns with values are provided:\n'))
-      print(paste(value.columns,collapse = ', '))
+      if(quiet){
+        cat(note(nvalcol,'columns with values are provided:\n'))
+        print(paste(value.columns,collapse = ', '))
+      }
       
       #test whether there is columns in date format
       test<-sapply(df[,value.columns], class)=='Date'
       if(sum(test)>0){
-        cat(note('Some value columns contain dates, coercing these to character in format %d.%m.%Y:\n'))
-        print(head(df[,value.columns])[,test])
+        if(!quiet){
+          cat(note('Some value columns contain dates, coercing these to character in format %d.%m.%Y:\n'))
+          print(head(df[,value.columns])[,test])
+        }
         df[,value.columns][,test]<-sapply(df[,value.columns][,test], function(x){
           as.character(format(x, '%d.%m.%Y'))
         })
@@ -99,7 +111,9 @@ db.multicol.import<-function(dataframe, #the records to be added
     if(length(source.col)==1){ #it's only one value
       if(source.col %in% colnames(df)){ #it matches a column name
         nsources<-length(unique(df[,source.col]))
-        cat(note(nsources,'unique sources are found in column',source.col,'\n'))
+        if(!quiet){
+          cat(note(nsources,'unique sources are found in column',source.col,'\n'))
+        }
         df$Source<-df[,source.col]
         source.col.name<-source.col
       } else { #the value provided is not a column name
@@ -122,8 +136,10 @@ db.multicol.import<-function(dataframe, #the records to be added
   #   novalue<-emptyvalues(df[,value.columns])
   remove<-nosubject #| novalue
   if(sum(remove)>0){
-    cat(note(sum(remove),'records with missing Subject found. These are removed from the registry:\n'))
-    print(df[remove,])
+    if(!quiet){
+      cat(note(sum(remove),'records with missing Subject found. These are removed from the registry:\n'))
+      print(df[remove,])
+    }
     df<-df[!remove,]
   }
   
@@ -146,8 +162,10 @@ db.multicol.import<-function(dataframe, #the records to be added
   output<-output[order(output[,date.col.name],output[,subject.col.name]),]
   row.names(output)<-1:nrow(output)
   
-  # Return the standardized registry 
-  cat(note('The constructed standardized registry is returned\n'))
+  # Return the standardized registry
+  if(!quiet){
+    cat(note('The constructed standardized registry is returned\n'))
+  }
   return(output)
   
 }

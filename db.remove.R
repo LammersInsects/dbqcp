@@ -5,12 +5,18 @@
 #NA?
 
 db.remove<-function(registry, #the previously saved registry
-                     remove.IDs, #IDs of the records to remove
-                     invert=F, #include everything except the remove.IDs, invert=TRUE gives only the records that conform to remove.IDs
-                     filename='debugging' #the base filename
+                    remove.IDs, #IDs of the records to remove
+                    invert=F, #include everything except the remove.IDs, invert=TRUE gives only the records that conform to remove.IDs
+                    quiet=F, #absolutely no information is printed
+                    print.help=F, #no help message is printed, overridden by quiet flag
+                    filename='debugging' #the base filename
 ){
-  cat(note('Running db.remove.R ...\n'))
-  cat(note('This function expects a registry as produced by db.registry() and a set of values to remove\n'))
+  if(!quiet){
+    cat(note('Running db.remove.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry() and a set of values to remove\n'))
+    }
+  }
   
   # Checks before anything can be done
   if(db.is.registry(registry = registry, quiet=T)){
@@ -43,12 +49,16 @@ db.remove<-function(registry, #the previously saved registry
     remove<-!remove
     cat(warn('Only keeping records that would have been removed because invert=TRUE\n'))
   }
-  cat(note(sum(remove),'records were removed, but a backup of these is saved in',fullfilename,'\n'))
+  if(!quiet){
+    cat(note(sum(remove),'records were removed, but a backup of these is saved in',fullfilename,'\n'))
+  }
   omit<-df[remove,]
   
   # Produce the new registry
   keep<-df[!remove,]
-  cat(note('Registry without the removed records is returned\n'))
+  if(!quiet){
+    cat(note('Registry without the removed records is returned\n'))
+  }
   
   # Overwrite the old registry
   # OR MAYBE BETTER NOT?

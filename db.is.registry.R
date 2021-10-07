@@ -18,7 +18,16 @@
 # Reformat data
 
 # Define function
-db.is.registry<-function(registry, quiet=T){
+db.is.registry<-function(registry,
+                         quiet=F, #absolutely no information is printed
+                         print.help=F #no help message is printed, overridden by quiet flag
+){
+  if(!quiet){
+    cat(note('Running db.is.registry.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a registry that is presumed to be produced by db.registry()\n'))
+    }
+  }
   
   df<-registry
   

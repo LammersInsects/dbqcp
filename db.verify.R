@@ -6,12 +6,18 @@
 
 db.verify<-function(registry, #the previously saved registry
                     verified.IDs=F, #IDs of the records to remove
+                    quiet=F, #absolutely no information is printed
+                    print.help=F, #no help message is printed, overridden by quiet flag
                     filename='debugging' #the base filename
 ){
-  cat(note('Running db.verify.R ...\n'))
-  cat(note('This function expects a registry as produced by db.registry() and a 4-column table with the verified records and these column names:\n'))
-  cat(note('  ID -- Verified -- Verified.by -- Date.verified  (header is compulsory)\n'))
-  cat(note('If no table of verified records is provided, than a table for records verification is generated\n'))
+  if(!quiet){
+    cat(note('Running db.verify.R ...\n'))
+    if(print.help){
+      cat(note('This function expects a registry as produced by db.registry() and a 4-column table with the verified records and these column names:\n'))
+      cat(note('  ID -- Verified -- Verified.by -- Date.verified  (header is compulsory)\n'))
+      cat(note('If no table of verified records is provided, than a table for records verification is generated\n'))
+    }
+  }
   
   # Checks before anything can be done
   if(verified.IDs[[1]][1]==F){
@@ -54,7 +60,9 @@ db.verify<-function(registry, #the previously saved registry
   
   # Find and store the original records
   old<-df$ID %in% verified$ID
-  cat(note(sum(old),'records had their verification value changed. The verification was logged in',fullfilename,'\n'))
+  if(!quiet){
+    cat(note(sum(old),'records had their verification value changed. The verification was logged in',fullfilename,'\n'))
+  }
   done<-merge(df,verified,by='ID')
   verification<-rbind(verification,done)
   verification<-unique(verification)
