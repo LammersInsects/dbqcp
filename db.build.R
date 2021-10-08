@@ -27,22 +27,6 @@ db.build<-function(registry, #the previously saved registry
   
   # Limit registry to only the most recent records per field
   keep.df<-db.last.records(registry = df, level = 'field', quiet = quiet)
-  # df$combo<-paste(df[,3],df[,4],sep='_')
-  # table<-as.data.frame(table(df$combo))
-  # keep.df<-subset(df,df$combo %in% subset(table, table$Freq==1)[,1])
-  # process.df<-subset(df,df$combo %in% subset(table, table$Freq>1)[,1])
-  # process.df<-process.df[order(process.df$combo),]
-  # omit<-data.frame()
-  # for (i in unique(process.df$combo)){
-  #   todo<-subset(df,df$combo==i)
-  #   todo<-todo[order(as.Date(todo[,2],format='%Y-%m-%d'),decreasing=T),]
-  #   keep.df<-rbind(keep.df,todo[1,])
-  #   omit<-rbind(omit,todo[2:nrow(todo),])
-  # }
-  # 
-  # if(!quiet){
-  #   print(paste(nrow(omit),'records were omitted because newer records replace those'))
-  # }
   
   # Construct database
   # reshape(data=keep.df[,2:4], idvar='Soortnr', timevar=c('Kolom'), direction='wide')
@@ -62,16 +46,6 @@ db.build<-function(registry, #the previously saved registry
   
   #Sort database by subject
   db<-db[order(db[,1]),]
-  
-  # write.table(keep.df,file=paste(filename,'.registry.newonly.csv',sep=''), sep=';',row.names=F)
-  # if(!quiet){
-  #   print(paste('Filtered registry has been saved as',paste(filename,'.registry.newonly.csv',sep='')))
-  # }
-  # write.table(omit,file=paste(filename,'.registry.omitted.csv',sep=''), sep=';',row.names=F)
-  # if(!quiet){
-  #   print(paste('Omitted records have been saved as',paste(filename,'.registry.omitted.csv',sep='')))
-  # }
-  
   
   # Return database
   write.table(db,file=paste(filename,'db.csv',sep='.'),sep=';',row.names=F)

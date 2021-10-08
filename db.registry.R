@@ -250,11 +250,6 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   # Remove any trailing whitespaces in each column
   for(i in 3:6){
-    # print(paste(i, colnames(df)[i])) #use this to test where something goes wrong (I had an encoding issue in a legacy file)
-    # for(j in df[,i]){
-    #   print(j)
-    #   trailingspace(j)
-    # }
     df[,i]<-trailingspace(df[,i])
   }
   
