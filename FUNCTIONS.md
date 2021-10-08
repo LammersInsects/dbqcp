@@ -13,7 +13,6 @@ db.missing.R
 db.multicol.import.R
 db.new.R
 db.new.input.file.R
-db.plot.subjects.R
 db.registry.R
 db.remove.R
 db.reorder.R
