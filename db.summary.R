@@ -10,6 +10,7 @@ db.summary<-function(registry, #the previously saved registry
                      save.STDOUT=F, #should the STOUT text output be saved to file?
                      quiet=F, #absolutely no information is printed
                      print.help=F, #no help message is printed, overridden by quiet flag
+                     write.output=F, #flag whether output should be written to working directory
                      filename='debugging' #the base filename
 ){
   if(!quiet){
@@ -83,8 +84,13 @@ db.summary<-function(registry, #the previously saved registry
     cat(note('All printed output is saved to',con))
   }
   
-  write.table(subjects,file=paste(today,filename,'summary.subjects.csv',sep='.'),sep=';',row.names=F)
-  write.table(fields,file=paste(today,filename,'summary.fields.csv',sep='.'),sep=';',row.names=F)
-  write.table(values,file=paste(today,filename,'summary.values.csv',sep='.'),sep=';',row.names=F)
-  write.table(sources,file=paste(today,filename,'summary.sources.csv',sep='.'),sep=';',row.names=F)
+  if(write.output){
+    write.table(subjects,file=paste(today,filename,'summary.subjects.csv',sep='.'),sep=';',row.names=F)
+    write.table(fields,file=paste(today,filename,'summary.fields.csv',sep='.'),sep=';',row.names=F)
+    write.table(values,file=paste(today,filename,'summary.values.csv',sep='.'),sep=';',row.names=F)
+    write.table(sources,file=paste(today,filename,'summary.sources.csv',sep='.'),sep=';',row.names=F)
+    if(!quiet){
+      cat(note('Four files are written with summaries of the subjects, fields, values and sources'))
+    }
+  }
 }

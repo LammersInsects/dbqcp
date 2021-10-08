@@ -10,6 +10,7 @@ db.missing<-function(registry, #the previously saved registry
                      exclude=F, #values of fiels to be excluded from the output  #NOT USED YET
                      quiet=F, #absolutely no information is printed
                      print.help=F, #no help message is printed, overridden by quiet flag
+                     write.output=F, #flag whether output should be written to working directory 
                      filename='debugging' #the base filename
 ){
   if(!quiet){
@@ -62,11 +63,16 @@ db.missing<-function(registry, #the previously saved registry
   result<-result[order(result[,2]),]
   
   # Export table with missing fields
-  write.table(result, file=paste(today,filename,'missing.csv',sep='.'), sep=';', row.names=F)
+  if(write.output){
+    write.table(result, file=paste(today,filename,'missing.csv',sep='.'), sep=';', row.names=F)
+  }
   
   if(!quiet){
-    cat(note('A table with missing values is returned and has been exported as',
-             paste(today,'.',filename,'.missing.csv',sep=''),'\n'))
+    cat(note('A table with missing values is returned\n'))
+    if(write.output){
+      cat(note(' and has been exported as ',today,'.',filename,'.missing.csv\n',sep=''))
+    }
   }
+  
   return(result)
 }

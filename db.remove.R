@@ -9,6 +9,7 @@ db.remove<-function(registry, #the previously saved registry
                     invert=F, #include everything except the remove.IDs, invert=TRUE gives only the records that conform to remove.IDs
                     quiet=F, #absolutely no information is printed
                     print.help=F, #no help message is printed, overridden by quiet flag
+                    write.output=F, #flag whether output should be written to working directory
                     filename='debugging' #the base filename
 ){
   if(!quiet){
@@ -50,7 +51,7 @@ db.remove<-function(registry, #the previously saved registry
     cat(warn('Only keeping records that would have been removed because invert=TRUE\n'))
   }
   if(!quiet){
-    cat(note(sum(remove),'records were removed, but a backup of these is saved in',fullfilename,'\n'))
+    cat(note(sum(remove),'records were removed.\n'))
   }
   omit<-df[remove,]
   
@@ -66,7 +67,12 @@ db.remove<-function(registry, #the previously saved registry
   # Save removed records in a file
   removed<-rbind(removed,omit)
   removed<-unique(removed)
-  write.table(removed,file=fullfilename,sep=';',row.names=F)
+  if(write.output){
+    write.table(removed,file=fullfilename,sep=';',row.names=F)
+    if(!quiet){
+      cat(note(' but a backup of these is saved in',fullfilename,'\n'))
+    }
+  }
   
   return(keep)
 }

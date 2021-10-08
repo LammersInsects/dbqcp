@@ -10,6 +10,7 @@ db.mask<-function(registry, #the previously saved registry
                   invert=F, #get everything except the values.to.mask, invert=TRUE gives only the subjects that conform to values.to.mask
                   quiet=F, #absolutely no information is printed
                   print.help=F, #no help message is printed, overridden by quiet flag
+                  write.output=F, #flag whether output should be written to working directory
                   filename='debugging' #the base filename
 ){
   if(!quiet){
@@ -52,10 +53,14 @@ db.mask<-function(registry, #the previously saved registry
     omit<-df[!keep,]
     df.s<-df[keep,]
     if(!quiet){
-      cat(note(nrow(omit),'records were removed based on the values given. They are saved as',
-               paste(filename,'.masked.csv',sep=''),'\n'))
+      cat(note(nrow(omit),'records were removed based on the values given.\n'))
     }
-    write.table(omit,file=paste(filename,'.masked.csv',sep=''),row.names=F,sep=';')
+    if(write.output){
+      write.table(omit,file=paste(filename,'.masked.csv',sep=''),row.names=F,sep=';')
+      if(!quiet){
+        cat(note('They are saved as',paste(filename,'.masked.csv',sep=''),'\n'))
+      }
+    }
   } else {
     stop('No values to remove were provided')
   }  

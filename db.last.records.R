@@ -8,7 +8,8 @@ db.last.records<-function(registry, #the previously saved registry
                           level='field', #subject, field or value
                           # filename='debugging', #the base filename
                           quiet=F, #absolutely no information is printed
-                          print.help=F #no help message is printed, overridden by quiet flag
+                          print.help=F, #no help message is printed, overridden by quiet flag
+                          write.output=F #flag whether output should be written to working directory
 ){
   if(!quiet){
     cat(note('Running db.last.record.R ...\n'))
@@ -67,13 +68,13 @@ db.last.records<-function(registry, #the previously saved registry
   }
   
   # Write backups to disk
-  write.table(keep.df,file=paste(filename,'.registry.newonly.csv',sep=''), sep=';',row.names=F)
-  if(!quiet){
-    cat(note('Filtered registry has been saved as',paste(filename,'.registry.newonly.csv',sep=''),'\n'))
-  }
-  write.table(omit,file=paste(filename,'.registry.omitted.csv',sep=''), sep=';',row.names=F)
-  if(!quiet){
-    cat(note('Omitted records have been saved as',paste(filename,'.registry.omitted.csv',sep=''),'\n'))
+  if(write.output){
+    write.table(keep.df,file=paste(filename,'.registry.newonly.csv',sep=''), sep=';',row.names=F)
+    write.table(omit,file=paste(filename,'.registry.omitted.csv',sep=''), sep=';',row.names=F)
+    if(!quiet){
+      cat(note('Filtered registry has been saved as',paste(filename,'.registry.newonly.csv',sep=''),'\n'))
+      cat(note('Omitted records have been saved as',paste(filename,'.registry.omitted.csv',sep=''),'\n'))
+    }
   }
   
   # Prepare output
