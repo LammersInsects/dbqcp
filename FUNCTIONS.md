@@ -2,17 +2,6 @@
 
 ## Creating a registry
 
-### `db.new.R`
-- *Description*:
-- *Usage*:
-- *Arguments*:
-- *Details*:
-- *Value*:
-- *Note*:
-- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
-- *Examples*:
-
 ### `db.registry.R`
 - *Description*:
 - *Usage*:
