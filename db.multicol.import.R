@@ -11,6 +11,7 @@ db.multicol.import<-function(dataframe, #the records to be added
                              source.col=F, #the source of the records
                              quiet=F, #absolutely no information is printed
                              print.help=F, #no help message is printed, overridden by quiet flag
+                             write.output=F, #flag whether output should be written to working directory
                              filename='debugging' #the base filename
 ){
   if(!quiet){
@@ -166,6 +167,14 @@ db.multicol.import<-function(dataframe, #the records to be added
   if(!quiet){
     cat(note('The constructed standardized registry is returned\n'))
   }
+  
+  if(write.output){
+    write.table(output, file=paste(today,filename,'multicol.csv',sep='.'), sep=';', row.names=F)
+    if(!quiet){
+      cat(note(' and has been exported as ',today,'.',filename,'.multicol.csv\n',sep=''))
+    }
+  }
+  
   return(output)
   
 }

@@ -43,8 +43,8 @@ db.files<-function(database.folder, #The folder holding the database files to an
   files<-files[!unlist(file.infos[,2])] #exclude directories
   
   #Store package file name components
-  from.package<-c('registry','summary','subjects','fields','values','sources','db','newonly','omitted',
-                  'removed','missing','masked','nosource','verify','verification','log','backup')
+  from.package<-c('registry','summary','subjects','fields','values','sources','db','compare-db','newonly','omitted',
+                  'removed','missing','masked','found','multicol','nosource','verify','verification','log','backup')
   
   if(length(files)==0){
     filenames<-NA

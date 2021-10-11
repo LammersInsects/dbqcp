@@ -7,10 +7,10 @@
 db.missing<-function(registry, #the previously saved registry
                      database, #the previously saved database
                      columns='all', #all / date / subject / field / value / source / by / verified  #NOT USED YET
-                     exclude=F, #values of fiels to be excluded from the output  #NOT USED YET
+                     exclude=F, #values of fields to be excluded from the output  #NOT USED YET
                      quiet=F, #absolutely no information is printed
                      print.help=F, #no help message is printed, overridden by quiet flag
-                     write.output=F, #flag whether output should be written to working directory 
+                     write.output=F, #flag whether output should be written to working directory
                      filename='debugging' #the base filename
 ){
   if(!quiet){

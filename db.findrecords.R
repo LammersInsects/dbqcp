@@ -12,6 +12,7 @@ db.findrecords<-function(registry, #the previously saved registry
                          print.result=F,
                          quiet=F, #absolutely no information is printed
                          print.help=F, #no help message is printed, overridden by quiet flag
+                         write.output=F, #flag whether output should be written to working directory
                          filename='debugging' #the base filename
 ){
   if(!quiet){
@@ -81,6 +82,12 @@ db.findrecords<-function(registry, #the previously saved registry
   
   if(!quiet){
     cat(note('All matching records are returned as one registry\n'))
+  }
+  if(write.output){
+    write.table(output,file=paste(today,filename,'found.csv',sep='.'),sep=';',row.names=F)
+    if(!quiet){
+      cat(note(' and has been exported as ',today,'.',filename,'.found.csv\n',sep=''))
+    }
   }
   
   return(output)

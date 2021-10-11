@@ -24,7 +24,8 @@ db.compare.db<-function(existing.db,
                         source='db.compare.db',
                         filename='debugging', #TODO currently not used
                         quiet=F, #absolutely no information is printed
-                        print.help=F #no help message is printed, overridden by quiet flag
+                        print.help=F, #no help message is printed, overridden by quiet flag
+                        write.output=F #flag whether output should be written to working directory
 ){
   if(!quiet){
     cat(note('Running db.compare.db.R ...\n'))
@@ -159,6 +160,13 @@ db.compare.db<-function(existing.db,
     
     #restore row names
     row.names(new.records)<-1:nrow(new.records)
+  }
+  
+  if(write.output){
+    write.table(new.records,file = paste(today,filename,'compare-db.csv',sep='.'),sep=';',row.names = F)
+    if(!quiet){
+      cat(note(' and has been exported as ',today,'.',filename,'.compare-db.csv\n',sep=''))
+    }
   }
   
   # return new records

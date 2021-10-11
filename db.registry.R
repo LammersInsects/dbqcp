@@ -11,7 +11,8 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
                       filename='debugging', #the base filename
                       user=NA, #optional: if not entered here, the script will prompt you for a manual input
                       quiet=F, #absolutely no information is printed
-                      print.help=F #no help message is printed, overridden by quiet flag
+                      print.help=F, #no help message is printed, overridden by quiet flag
+                      write.output=T #flag whether output should be written to working directory
 ){
   if(!quiet){
     cat(note('Running db.registry.R ...\n'))
@@ -267,9 +268,11 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   }
   
   # Export registry
-  write.table(df, file=paste(filename,'.registry.csv',sep=''), sep=';',row.names=F)
-  if(!quiet){
-    cat(note('Registry has been saved as',paste(filename,'.registry.csv',sep=''),'\n'))
+  if(write.output){
+    write.table(df, file=paste(filename,'.registry.csv',sep=''), sep=';',row.names=F)
+    if(!quiet){
+      cat(note('Registry has been saved as',paste(filename,'.registry.csv',sep=''),'\n'))
+    }
   }
   
   # Return registry

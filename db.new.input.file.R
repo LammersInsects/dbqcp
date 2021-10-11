@@ -16,7 +16,9 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
                             precomputed.records=F, #a dataframe with 5 columns with pre-filled information
                             extra.header.info=NA, #allows parsing this string to write.default.xlsx()
                             quiet=F, #absolutely no information is printed
-                            print.help=F #no help message is printed, overridden by quiet flag
+                            print.help=F, #no help message is printed, overridden by quiet flag
+                            write.output=T, #flag whether output should be written to working directory
+                            return.df=F #flag whether the produced dataframe should be returned
 ){
   if(!quiet){
     cat(note('Running db.new.input.file.R ...\n'))
@@ -68,12 +70,18 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   filepath<-paste(gd.base, file.name,sep='')
   
   #Write to that path with a function from MLmisc
-  if(!quiet){
-    cat(note('Calling write.default.xlsx()\n'))
+  if(write.output){
+    if(!quiet){
+      cat(note('Calling write.default.xlsx()\n'))
+    }
+    write.default.xlsx(dataframe = df, file = filepath, filename = file.name, colwidths = colwidths,
+                       extra.header.info = extra.header.info, quiet = quiet)
+    if(!quiet){
+      cat(note('New input file is saved as ',filepath,'\n',sep=''))
+    }
   }
-  write.default.xlsx(dataframe = df, file = filepath, filename = file.name, colwidths = colwidths, 
-                     extra.header.info = extra.header.info, quiet = quiet)
-  if(!quiet){
-    cat(note('New input file is saved as ',filepath,'\n',sep=''))
+  
+  if(return.df){
+    return(df)
   }
 }
