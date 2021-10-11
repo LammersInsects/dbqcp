@@ -67,7 +67,7 @@ db.last.records<-function(registry, #the previously saved registry
     cat(warn(nrow(omit),'records were omitted because newer records replace those\n'))
   }
   
-  # Write backups to disk
+  # Write split registries to disk
   if(write.output){
     write.table(keep.df,file=paste(filename,'.registry.newonly.csv',sep=''), sep=';',row.names=F)
     write.table(omit,file=paste(filename,'.registry.omitted.csv',sep=''), sep=';',row.names=F)

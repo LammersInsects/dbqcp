@@ -70,7 +70,7 @@ db.remove<-function(registry, #the previously saved registry
   if(write.output){
     write.table(removed,file=fullfilename,sep=';',row.names=F)
     if(!quiet){
-      cat(note(' but a backup of these is saved in',fullfilename,'\n'))
+      cat(note(' but a copy of these records is saved in',fullfilename,'\n'))
     }
   }
   
