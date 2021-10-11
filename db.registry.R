@@ -71,12 +71,20 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
         existing.data.registry[,2]<-as.Date(existing.data.registry[,2],format='%d-%m-%Y')
       }
     } 
-    #test whether it's a registry
+    #test whether it's a registry, store a backup if it's not made yet today
     if(db.is.registry(registry = existing.data.registry, quiet = T)){
       if(!quiet){
-        cat(note('Existing registry is provided. A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
+        cat(note('Existing registry is provided.\n'))
       }
-      write.table(existing.data.registry,file=paste(today,filename,'registry.backup',sep='.'),row.names=F,sep=';')
+      if(!file.exists(paste(getwd(),'/',today,'.',filename,'.registry.backup',sep=''))){
+        if(!quiet){
+          write.table(existing.data.registry,file=paste(today,filename,'registry.backup',sep='.'),row.names=F,sep=';')
+          cat(note('A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
+        }
+      } else {
+        cat(warn('A backup is not saved as one was made already earlier today.\n'))
+      }
+      #store some essential information
       header<-colnames(existing.data.registry)
       id<-max(existing.data.registry$ID)
     } else {
