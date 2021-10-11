@@ -268,6 +268,17 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
+## `db.verify.R`
+- *Description*:
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*:
+- *Examples*:
+
 ## `users.R`
 - *Description*: Parse the users.csv file to store known user names in a hidden environment.
 - *Usage*:
