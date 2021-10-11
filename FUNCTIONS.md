@@ -188,17 +188,6 @@
 - *See also*:
 - *Examples*:
 
-### `db.verify.R`
-- *Description*:
-- *Usage*:
-- *Arguments*:
-- *Details*:
-- *Value*:
-- *Note*:
-- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
-- *Examples*:
-
 ### `users.R`
 - *Description*:
 - *Usage*:
