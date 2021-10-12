@@ -3,7 +3,7 @@
 ## Creating a registry
 
 ### `db.registry.R`
-- *Description*: Load an existing registry, commit new records to a registry, or start a new registry
+- *Description*: Load an existing registry, commit new records to a registry, or start a new registry.
 - *Usage*: db.registry(existing.data.registry=F, new.records=F, too.old=300, expected.missing=0, filename='debugging', user=NA, quiet=F, print.help=F, write.output=T)
 - *Arguments*:
 Argument | Specification
@@ -31,136 +31,136 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 ## Converting a registry to a "wide" format database
 
 ### `db.build.R`
-- *Description*:
+- *Description*: Convert a loaded registry into a "wide" format table with all subjects as rows and the fields as columns.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry, stats::reshape for definitions of long and wide format.
 - *Examples*:
 
 ## Preparing input to add to an existing registry
 
 ### `db.compare.db.R`
-- *Description*:
+- *Description*: Compare the contents of all cells of a "wide" database against all cells of a different "wide" database, and generate records from the differences that can directly be committed to a registry.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry, db.build, stats::reshape for definitions of long and wide format.
 - *Examples*:
 
 ### `db.multicol.import.R`
-- *Description*:
+- *Description*: Take a table in "wide" format and generate records from it, so that the same table would be reproduced if db.build() would be run with those records stored in a registry.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry, db.build
 - *Examples*:
 
 ### `db.new.input.file.R`
-- *Description*:
+- *Description*: Generate a new input file to facilitate recording new records for an existing registry.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ## Filtering records
 
 ### `db.findrecords.R`
-- *Description*:
+- *Description*: Search a registry for records that (not) match a search term in the subject, field, and/or value.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry, db.mask
 - *Examples*:
 
 ### `db.last.records.R`
-- *Description*:
+- *Description*: Filter a registry so that only the last record of each of the subjects/fields/values, is returned.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ### `db.mask.R`
-- *Description*:
+- *Description*: Search a registry for records that (not) match a search term in the subject or field, but then also include all other records from those subjects or fields.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry, db.findrecords
 - *Examples*:
 
 ## Analysis of the registry
 
 ### `db.missing.R`
-- *Description*:
+- *Description*: Evaluate a registry and generate partial new records for missing values of each subject-field combination.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ### `db.history.R`
-- *Description*:
+- *Description*: Evaluate the recording history of a registry and produce some plots to visualize that.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ### `db.summary.R`
-- *Description*:
+- *Description*: Summarize each of the data columns in a registry and print/save that information.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ## Plumbing
 
 ### `db.compress.R`
-- *Description*:
+- *Description*: Convert a loaded registry into a ragged array.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ### `db.files.R`
-- *Description*:
+- *Description*: Evaluate the files in the working directory and report which files were created, when and whether this was done by the package or not.
 - *Usage*:
 - *Arguments*:
 - *Details*:
@@ -171,40 +171,40 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *Examples*:
 
 ### `db.is.registry.R`
-- *Description*:
+- *Description*: Test whether a data frame matches the format of a registry.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ### `db.remove.R`
-- *Description*:
+- *Description*: Remove records from a registry based on their record IDs.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ### `db.translate.R`
-- *Description*:
+- *Description*: Translate a term to any other term in an entire registry.
 - *Usage*:
 - *Arguments*:
 - *Details*:
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.registry
 - *Examples*:
 
 ### `users.R`
-- *Description*:
+- *Description*: Parse the users.csv file to store known user names in a hidden environment.
 - *Usage*:
 - *Arguments*:
 - *Details*:
