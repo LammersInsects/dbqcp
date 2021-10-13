@@ -23,10 +23,13 @@ write.output | Should the output be written to working directory? Defaults to TR
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
 - *See also*: db.build
 - *Examples*:
+```R
 filename<-'ToDo'
 todo.existing<-read.table(paste(filename,'.registry.csv',sep=''),header=T,sep=';')
+#here the existing database could be edited manually, if one would wish to do so. Only recommended for experienced users, as the file format could become corrupted. Moreover, changes would be propagated throughout all future versions of the database. Usually it is better to use db.translate() or db.remove() to make permanent changes.
 todo.new<-read.xlsx(paste(filename,'.xlsx',sep=''), sheetIndex = 1, startRow = 3)
 registry<-db.registry(existing.data.registry = todo.existing, new.records = todo.new, filename = filename, user = 'MarkLammers')
+```
 
 ## Converting a registry to a "wide" format database
 
