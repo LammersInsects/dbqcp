@@ -114,12 +114,13 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     to.remove<-nosubject | nofield | novalue
     if(sum(to.remove)>expected.missing){
       cat(warn(sum(to.remove)-expected.missing,
-               'records with missing Subject, Field or Value found. These are removed from the registry.\n'))
+               'records with missing Subject, Field or Value found. These will be removed from the registry.\n'))
       cat(warn('NOTE: If this is unexpected; verify input and re-run db.registry without reloading the existing data registry!\n'))
       # print(new.records[to.remove,])
     }
     if(sum(to.remove>0)){
       new.records<-new.records[!to.remove,]
+      cat(warn(sum(to.remove),' records were removed from the input (expected.missing was set to ',expected.missing,').\n',sep=''))
       if(nrow(new.records)==0){
         cat(warn('No new records are remaining! Aborting... \n'))
         stop()
