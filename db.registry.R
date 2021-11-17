@@ -120,6 +120,10 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     }
     if(sum(to.remove>0)){
       new.records<-new.records[!to.remove,]
+      if(nrow(new.records)==0){
+        cat(warn('No new records are remaining! Aborting... \n'))
+        stop()
+      }
     }
     
     #Create to extra columns
