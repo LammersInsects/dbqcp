@@ -6,7 +6,9 @@
 debugging<-F
 
 
-db.files<-function(database.folder, #The folder holding the database files to analyse 
+db.files<-function(database.folder, #The folder holding the database files to analyse
+                   file.base.name=F, #The file base name by which to subset the folder (set to FALSE for all)
+                   exclude=F, #Any or multiple strings by which files can be excluded
                    split='.',
                    return.dates=F,
                    print.output=T,
@@ -41,6 +43,25 @@ db.files<-function(database.folder, #The folder holding the database files to an
   }
   file.infos<-t(sapply(files, file.info))
   files<-files[!unlist(file.infos[,2])] #exclude directories
+  
+  #Subset files by file.base.name, if any
+  if(file.base.name!=F){
+    if(!quiet){
+      cat(note('Subsetting files for those having [',file.base.name,'] in the file name\n'))
+    }
+    files<-files[grep(ifelse(substring(file.base.name,nchar(file.base.name))=='.',
+                             file.base.name,paste(file.base.name,'.',sep='')),files)]
+  }
+  
+  #Exclude other files, if any
+  if(exclude[1]!=F){
+    if(!quiet){
+      cat(note('Excluding files containing [',paste(exclude, collapse = ', '),']\n'))
+    }
+    for(i in exclude){
+      files<-files[grep(i,files,invert = T)]
+    }
+  }
   
   #Store package file name components
   from.package<-c('registry','summary','subjects','fields','values','sources','db','compare-db','newonly','omitted',
