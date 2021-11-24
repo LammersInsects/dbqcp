@@ -173,6 +173,17 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*:
 - *Examples*:
 
+### `db.dates.R`
+- *Description*: A wrapper for db.files.R to only extract the dates on which records were committed to the registry
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*:
+- *Examples*:
+
 ### `db.is.registry.R`
 - *Description*: Test whether a data frame matches the format of a registry.
 - *Usage*:
