@@ -49,8 +49,7 @@ db.files<-function(database.folder, #The folder holding the database files to an
     if(!quiet){
       cat(note('Subsetting files for those having [',file.base.name,'] in the file name\n'))
     }
-    files<-files[grep(ifelse(substring(file.base.name,nchar(file.base.name))=='.',
-                             file.base.name,paste(file.base.name,'.',sep='')),files)]
+    files<-files[grep(file.base.name,files,fixed=T)]
   }
   
   #Exclude other files, if any
@@ -59,7 +58,7 @@ db.files<-function(database.folder, #The folder holding the database files to an
       cat(note('Excluding files containing [',paste(exclude, collapse = ', '),']\n'))
     }
     for(i in exclude){
-      files<-files[grep(i,files,invert = T)]
+      files<-files[grep(i,files,fixed = T,invert = T)]
     }
   }
   
