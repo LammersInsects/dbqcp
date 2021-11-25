@@ -12,7 +12,8 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
                       user=NA, #optional: if not entered here, the script will prompt you for a manual input
                       quiet=F, #absolutely no information is printed
                       print.help=F, #no help message is printed, overridden by quiet flag
-                      write.output=T #flag whether output should be written to working directory
+                      write.output=T, #flag whether output should be written to working directory
+                      save.backup=T
 ){
   if(!quiet){
     cat(note('Running db.registry.R ...\n'))
@@ -77,13 +78,17 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       if(!quiet){
         cat(note('Existing registry is provided.\n'))
       }
-      if(!file.exists(paste(getwd(),'/',today,'.',filename,'.registry.backup',sep=''))){
-        if(!quiet){
-          write.table(existing.data.registry,file=paste(today,filename,'registry.backup',sep='.'),row.names=F,sep=';')
-          cat(note('A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
+      if(save.backup){
+        if(!file.exists(paste(getwd(),'/',today,'.',filename,'.registry.backup',sep=''))){
+          if(!quiet){
+            write.table(existing.data.registry,file=paste(today,filename,'registry.backup',sep='.'),row.names=F,sep=';')
+            cat(note('A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
+          }
+        } else {
+          cat(warn('A backup is not saved as one was made already earlier today.\n'))
         }
       } else {
-        cat(warn('A backup is not saved as one was made already earlier today.\n'))
+        cat(warn('A backup is not saved as this action was overridden by user.\n'))
       }
       #store some essential information
       header<-colnames(existing.data.registry)
