@@ -28,12 +28,16 @@ db.files<-function(database.folder, #The folder holding the database files to an
   
   # Checks before anything can be done
   if(length(database.folder==1)){
+    if(dir.exists(database.folder)){
     wd<-database.folder
     if(!quiet){
       cat(note('Analysing',wd,'using these splits',spl,'\n'))
     }
+    } else {
+      stop('Input working directory does not exist\n')
+    }
   } else {
-    stop('Input is not a working directory')
+    stop('Input is not a working directory\n')
   }
   
   # Load file names from folder
@@ -76,6 +80,9 @@ db.files<-function(database.folder, #The folder holding the database files to an
     #Extract file information using apply functions
     options(warn=-1)
     output<-sapply(files,function(f){
+      #next line is the source of the problem: if the split [spl] is also in the file.base.name,
+      #then the file.base.name will get split too!
+      #TODO think of an alternative approach in such cases: if(grep(spl,file.base.name)==1){}
       components<-unlist(strsplit(f, spl))
       datatype<-ifelse(!is.na(as.integer(components)),'integer','character')
       df<-data.frame(components=components)
