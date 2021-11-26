@@ -4,7 +4,7 @@
 
 ### `db.registry.R`
 - *Description*: Load an existing registry, commit new records to a registry, or start a new registry.
-- *Usage*: db.registry(existing.data.registry=F, new.records=F, too.old=300, expected.missing=0, filename='debugging', user=NA, quiet=F, print.help=F, write.output=T)
+- *Usage*: db.registry(existing.data.registry=F, new.records=F, too.old=300, expected.missing=0, filename='debugging', user=NA, quiet=F, print.help=F, write.output=T, save.backup=T)
 - *Arguments*:
 Argument | Specification
 -------- | -------------
@@ -17,6 +17,7 @@ user | The user who recorded the data. Optional argument: if not entered here, t
 quiet | Absolutely no information is printed if set to TRUE
 print.help | A help message is printed is set to TRUE, overridden by quiet flag
 write.output | Should the output be written to working directory? Defaults to TRUE
+save.backup | Should a backup of the existing registry be saved? Defaults to TRUE
 - *Details*: This function is the workhorse of any database maintained using this package. It is the sole function to write a new version of the registry to be stored permanently.
 - *Value*: A dataframe of 8 variables
 - *Note*: NA
@@ -30,6 +31,19 @@ todo.existing<-read.table(paste(filename,'.registry.csv',sep=''),header=T,sep=';
 todo.new<-read.xlsx(paste(filename,'.xlsx',sep=''), sheetIndex = 1, startRow = 3)
 registry<-db.registry(existing.data.registry = todo.existing, new.records = todo.new, filename = filename, user = 'MarkLammers')
 ```
+
+## Working with an existing registry
+
+### `db.load.backup.R`
+- *Description*: Load a backup of an existing registry as it was stored at the beginning of a given date, or the closest earlier date if no backup was saved on the given date.
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*: db.registry
+- *Examples*:
 
 ## Converting a registry to a "wide" format database
 
@@ -178,10 +192,10 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *Usage*:
 - *Arguments*:
 - *Details*:
-- *Value*:
+- *Value*: A vector of all dates of class "Date" for the files matching the query of the registry history
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*:
+- *See also*: db.files
 - *Examples*:
 
 ### `db.is.registry.R`
