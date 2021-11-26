@@ -1,13 +1,6 @@
 # Written by Mark Lammers; Institute for Evolution and Biodiversity, University of Muenster; marklammers6@gmail.com
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
-# file.base.name='pot'
-# #try different dates
-# backup.date=as.Date('20211009',format='%Y%m%d') #expected is 20211008
-# backup.date=as.Date('20180101',format='%Y%m%d') #expected is no success
-# backup.date=as.Date('20211127',format='%Y%m%d') #expected is 20211127
-# test<-db.load.backup(database.folder = database.folder, file.base.name = file.base.name, backup.date = backup.date)
-
 # Define function
 db.load.backup<-function(database.folder, #The folder holding the database files to analyse
                          file.base.name,
@@ -51,9 +44,16 @@ db.load.backup<-function(database.folder, #The folder holding the database files
   
   #Load that registry
   backup<-read.table(target.backup,header=T,sep=';')
-  registry<-db.registry(existing.data.registry = backup, filename = 'restore', user = 'admin', write.output = F, save.backup=F,
+  backup.registry<-db.registry(existing.data.registry = backup, filename = 'restore', user = 'admin', write.output = F, save.backup=F,
                         quiet = quiet, print.help = print.help)
   
   #Return it
-  return(registry)
+  if(exists('backup.registry')){
+    if(!quiet){
+      cat(note('Backup of registry is successfully loaded\n'))
+    }
+    return(backup.registry)
+  } else {
+    cat(error('Loading the backup of the registry of the requested date failed due to unknown reasons\n'))
+  }
 }
