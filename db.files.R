@@ -80,9 +80,6 @@ db.files<-function(database.folder, #The folder holding the database files to an
     #Extract file information using apply functions
     options(warn=-1)
     output<-sapply(files,function(f){
-      #next line is the source of the problem: if the split [spl] is also in the file.base.name,
-      #then the file.base.name will get split too!
-      #TODO think of an alternative approach in such cases: if(grep(spl,file.base.name)==1){}
       components<-unlist(strsplit(f, spl))
       datatype<-ifelse(!is.na(as.integer(components)),'integer','character')
       df<-data.frame(components=components)
@@ -115,17 +112,17 @@ db.files<-function(database.folder, #The folder holding the database files to an
     } else {
       filenames<-unique(unname(sapply(mapply(`[`,
                                              output['components',],
-                                             sapply(output['identity',],`==`,'filename')),
+                                             lapply(output['identity',],`==`,'filename')),
                                       paste, collapse='.')))
       filetypes<-unique(unname(unlist(mapply(`[`,
                                              output['components',],
-                                             sapply(output['identity',],`==`,'filetype')))))
+                                             lapply(output['identity',],`==`,'filetype')))))
       package.components<-unique(unname(unlist(mapply(`[`,
                                                       output['components',],
-                                                      sapply(output['identity',],`==`,'package')))))
+                                                      lapply(output['identity',],`==`,'package')))))
       dates<-unique(unname(unlist(mapply(`[`,
                                          output['components',],
-                                         sapply(output['identity',],`==`,'date')))))
+                                         lapply(output['identity',],`==`,'date')))))
     }
   }
   

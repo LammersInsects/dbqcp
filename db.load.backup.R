@@ -1,14 +1,12 @@
 # Written by Mark Lammers; Institute for Evolution and Biodiversity, University of Muenster; marklammers6@gmail.com
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
-database.folder=setwd(paste(wd.base, 'Projects_home/Planten/database_v2', sep=''))
-file.base.name='pot'
-
-#try different dates
-backup.date=as.Date('20211009',format='%Y%m%d')
-backup.date=as.Date('20180101',format='%Y%m%d')
-backup.date=as.Date('20211127',format='%Y%m%d')
-test<-db.load.backup(database.folder = database.folder, file.base.name = file.base.name, backup.date = backup.date)
+# file.base.name='pot'
+# #try different dates
+# backup.date=as.Date('20211009',format='%Y%m%d') #expected is 20211008
+# backup.date=as.Date('20180101',format='%Y%m%d') #expected is no success
+# backup.date=as.Date('20211127',format='%Y%m%d') #expected is 20211127
+# test<-db.load.backup(database.folder = database.folder, file.base.name = file.base.name, backup.date = backup.date)
 
 # Define function
 db.load.backup<-function(database.folder, #The folder holding the database files to analyse
@@ -36,7 +34,6 @@ db.load.backup<-function(database.folder, #The folder holding the database files
   #Use db.dates to get all dates in the registry
   dates<-db.dates(database.folder = database.folder, file.base.name = paste(file.base.name,'registry.backup',sep='.'),
                   return.dates = T, quiet = T)
-  #TODO Fix bug that also some NAs are returned. Probably due to bug in db.files()
   
   #Find the date that is closest to the requested date
   comp.date<-sort(dates-backup.date, decreasing = T)
