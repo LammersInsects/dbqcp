@@ -9,7 +9,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # existing.db<-read.table('pot.db_20201106.csv', header=T, sep = ';')
 # new.db<-read.xlsx(paste(gd.base,'Pot-plant_current_database_20201107.xlsx', sep=''), sheetIndex = 1, startRow = 3)
 # output<-db.compare.db(existing.db = existing.db, new.db = new.db, date = '06.11.2020', filename = 'pot', quiet = F)
@@ -18,8 +18,8 @@
 # Reformat data
 
 # Define function
-db.compare.db<-function(existing.db, 
-                        new.db, 
+db.compare.db<-function(existing.db,
+                        new.db,
                         date=Sys.Date(),
                         source='db.compare.db',
                         filename='debugging', #TODO currently not used
@@ -37,7 +37,7 @@ db.compare.db<-function(existing.db,
   #TODO db.is.db() voor beide dbs
   
   # Check date format
-  # read.date.format(date) 
+  # read.date.format(date)
   #else #take today's date for these new records
   # head(existing.db)
   # head(new.db)
@@ -50,7 +50,7 @@ db.compare.db<-function(existing.db,
     new.db[,i]<-trailingspace(new.db[,i])
   }
   
-  # sort both databases by subject 
+  # sort both databases by subject
   sort.col<-colnames(existing.db)[1] #this definitely works for databases from db, but is not an all-over solution for other dfs
   existing.db<-existing.db[order(existing.db[,sort.col]),]
   new.db<-new.db[order(new.db[,sort.col]),]
@@ -89,13 +89,13 @@ db.compare.db<-function(existing.db,
     subject<-process[,sort.col]
     for(col in colnames(process)[colnames(process)!=sort.col]){
       new.records<-rbind(new.records,
-                         data.frame(date=date, 
+                         data.frame(date=date,
                                     subject=subject,
                                     field=col,
                                     value=process[,col],
                                     source=source))
     }
-  }  
+  } 
   
   if(any(new.columns)){
     if(!quiet){
@@ -112,7 +112,7 @@ db.compare.db<-function(existing.db,
     }
     #the cells that happen to be both in new rows and new columns get added twice, so remove duplicates
     new.records<-unique(new.records)
-  } 
+  }
   
   if(any(changed.values)){
     if(!quiet){
@@ -130,7 +130,7 @@ db.compare.db<-function(existing.db,
                                     source=source)) #not sure whether this is useful
     }
     
-  } 
+  }
   
   if(!any(new.subjects) & !any(new.columns) & !any(changed.values)){
     if(!quiet){

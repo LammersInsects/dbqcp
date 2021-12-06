@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 
 # Reformat data
 
@@ -42,7 +42,7 @@ db.compress<-function(registry,
   # compressed[,1]$Plant=='Aantal'
   # mapply(`==`,compressed,compressed[,1]$Pot==173)
   # sapply(compressed['Plant',],`[`) #now we are getting somewhere
-  # sapply(compressed['Plant',],`[`,3) #doesn't seem right 
+  # sapply(compressed['Plant',],`[`,3) #doesn't seem right
   # sapply(compressed['Pot',2],`[`,1) #specific record
   
   #Second attempt was more concrete:
@@ -79,7 +79,7 @@ db.compress<-function(registry,
       tmp<-tmp[order(tmp$Datum),]
       return(tmp) #return data frame for this field
     }) #produces a 3-dimensional matrix with all values, dates and sources per field
-    # res<-rbind(db.tmp[i,1],partim) 
+    # res<-rbind(db.tmp[i,1],partim)
     colnames(partim)<-colnames(db.tmp)[2:ncol(db.tmp)] #seems like we loose these labels later
     return(partim) #produces a 4-dimensional matrix if I'm not mistaken
   })

@@ -28,7 +28,7 @@ db.translate<-function(registry, #the previously saved registry
   
   # Limit to only the newest values
   table<-as.data.frame(table(tr[,2]))
-  tr$keep1<-tr[,2] %in% table[table$Freq==1,1] 
+  tr$keep1<-tr[,2] %in% table[table$Freq==1,1]
   tr$keep2<-tr[,3] %in% tr[,2]
   tr$keep<-tr$keep1&!tr$keep2
   

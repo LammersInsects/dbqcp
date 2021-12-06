@@ -63,7 +63,7 @@ db.mask<-function(registry, #the previously saved registry
     }
   } else {
     stop('No values to remove were provided')
-  }  
+  } 
   
   if(!quiet){
     cat(note('Masked register is returned\n'))

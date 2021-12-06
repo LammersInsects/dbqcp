@@ -38,7 +38,7 @@ db.history<-function(registry, #the previously saved registry
          yaxs='r',
          xaxs='r')
     axis.Date(1, at = seq(min(df[,2]), max(df[,2]), length.out=20),
-              format= "%m-%Y", las = 2) 
+              format= "%m-%Y", las = 2)
     axis(2)
     if(!quiet){
       cat(note('A barplot of recording activities is drawn\n'))

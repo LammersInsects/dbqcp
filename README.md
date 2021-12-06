@@ -6,25 +6,25 @@ By Mark Lammers, @LammersInsects
 
 ## Getting started
 
-### Language 
+### Language
 
-The entire set of functions is written in R, my native programming language. 
+The entire set of functions is written in R, my native programming language.
 Your system requires:
 
 - [R](https://www.r-project.org/) installed
 - [RStudio](https://www.rstudio.com) installed (preferably, although not essential)
 
-I have not tested in which range of R versions the scripts work. Since most use only base R, it should work out-of-the-box on yours. As a rule, strive to always work in the latest full release. Please open an issue if your combination of OS and R doesn't work while you think it should. 
+I have not tested in which range of R versions the scripts work. Since most use only base R, it should work out-of-the-box on yours. As a rule, strive to always work in the latest full release. Please open an issue if your combination of OS and R doesn't work while you think it should.
 
 Perhaps you prefer python? I think it is possible to make everything work in python using [Rpy2](https://rpy2.github.io/doc/latest/html/)
 If anyone feels like writing code to use an API for python or any other language: you're most welcome to contribute!
 
-### Operating System 
+### Operating System
 
 All functions were written on Windows OS with Git taking care of line break conversion. Therefore the code should work on any OS as long as you retrieved it from GitHub.
-Please open an issue if you find a piece of code that is Windows-specific. 
+Please open an issue if you find a piece of code that is Windows-specific.
 
-### Downloading the set of functions 
+### Downloading the set of functions
 
 Ideal situation (requires a GitHub account and basic understanding of git): Make a GitHub `fork` and use `git clone` to get a copy of the repository.
 
@@ -34,7 +34,7 @@ All other usage cases: use `github2r()`. This way you will always be using the l
 
 ### Loading the package
 
-CHECK my load function 
+CHECK my load function
 
 ### Dependencies
 
@@ -63,6 +63,6 @@ See CONTRIBUTING.md for details on ways to contribute.
 
 ## To Do
 
-- [ ] Add LICENSE 
+- [ ] Add LICENSE
 - [ ] Write CONTRIBUTING.md
 - [ ] Write description of the functions

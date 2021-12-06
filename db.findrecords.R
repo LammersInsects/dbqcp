@@ -8,7 +8,7 @@ db.findrecords<-function(registry, #the previously saved registry
                          to.find=F,
                          exact=F,
                          level='all', # all, subject, field or value
-                         invert=F, #get everything except the to.find, invert=TRUE gives only the records that conform to to.find 
+                         invert=F, #get everything except the to.find, invert=TRUE gives only the records that conform to to.find
                          print.result=F,
                          quiet=F, #absolutely no information is printed
                          print.help=F, #no help message is printed, overridden by quiet flag

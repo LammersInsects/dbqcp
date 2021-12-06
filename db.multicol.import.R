@@ -185,7 +185,7 @@ db.multicol.import<-function(dataframe, #the records to be added
 #   subject.col='Ingredient'
 #   value.columns=c('Naam','Verpakkingsgrootte','Eenheid','Aantal','Prijs')
 #   source.col='Verkoper'
-#   
+#  
 #   load.db.package()
 #   db.multicol.import(dataframe,
 #                      date.col='Aanschafdatum',

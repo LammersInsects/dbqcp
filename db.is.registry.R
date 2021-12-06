@@ -5,7 +5,7 @@
 # if(!require('')){install.packages('')}
 # library('')
 
-# Load data 
+# Load data
 # df<-register
 # head(df)
 # db.is.registry(registry = register, quiet = F)

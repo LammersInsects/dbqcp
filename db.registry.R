@@ -40,7 +40,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     }
   } else {
     stop('Given user name is not validated')
-  }      
+  }     
   
   # Checks before anything can be done
   #is any input provided?
@@ -72,7 +72,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       } else {
         existing.data.registry[,2]<-as.Date(existing.data.registry[,2],format='%d-%m-%Y')
       }
-    } 
+    }
     #test whether it's a registry, store a backup if it's not made yet today
     if(db.is.registry(registry = existing.data.registry, quiet = T)){
       if(!quiet){
