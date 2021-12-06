@@ -40,7 +40,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     }
   } else {
     stop('Given user name is not validated')
-  }     
+  }
   
   # Checks before anything can be done
   #is any input provided?

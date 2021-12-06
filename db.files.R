@@ -133,11 +133,11 @@ db.files<-function(database.folder, #The folder holding the database files to an
   if(print.output){
     cat(note('Folder contains',length(files),'files\n'))
     cat(note('File base names in the folder are:\n'))
-    print(filenames)   
+    print(filenames)
     cat(note('File extensions in the folder are:\n'))
-    print(filetypes)   
+    print(filetypes)
     cat(note('Package-generated files in the folder are:\n'))
-    print(package.components)   
+    print(package.components)
     cat(note('Dates on which files were saved in the folder by the package are:\n'))
     print(dates)
   }

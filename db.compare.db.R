@@ -95,7 +95,7 @@ db.compare.db<-function(existing.db,
                                     value=process[,col],
                                     source=source))
     }
-  } 
+  }
   
   if(any(new.columns)){
     if(!quiet){
