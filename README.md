@@ -63,6 +63,5 @@ See CONTRIBUTING.md for details on ways to contribute.
 
 ## To Do
 
-- [ ] Add LICENSE
 - [ ] Write CONTRIBUTING.md
 - [ ] Write description of the functions
