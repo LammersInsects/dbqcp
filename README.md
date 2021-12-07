@@ -22,13 +22,14 @@ If anyone feels like writing code to use an API for python or any other language
 ### Operating System
 
 All functions were written on Windows OS with Git taking care of line break conversion. Therefore the code should work on any OS as long as you retrieved it from GitHub.
-Please open an issue if you find a piece of code that is Windows-specific.
+
+Please open an [issue](https://github.com/LammersInsects/dbpq/issues) if you find a piece of code that is Windows-specific.
 
 ### Downloading the set of functions
 
 Ideal situation (requires a GitHub account and basic understanding of git): Make a GitHub `fork` and use `git clone` to get a copy of the repository.
 
-Manual download method: Go to @LammersInsects (link) and download the files.
+Manual download method: Go to @LammersInsects [package page](https://github.com/LammersInsects/dbpq) and download the files.
 
 Alternatively: use `github2R()` from my repo [MLmisc](https://github.com/LammersInsects/MLmisc/blob/main/github2R.R). This way you will always be using the latest stable version.
 
@@ -56,6 +57,14 @@ Open an issue in GitHub's [issue tracker for this repo](https://github.com/Lamme
 
 See [FUNCTIONS.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md) for the help files of all functions in the package.
 
+## Contributing
+
+YES PLEASE!
+
+Please use GitHub's [Issue](https://github.com/LammersInsects/dbpq/issues) and [Pull Request](https://github.com/LammersInsects/dbpq/pulls) functions for suggestions and patches. I get automatic notifications on issues and pull requests. Please refrain from contacting me through email.
+
+See [CONTRIBUTING.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md) for details on ways to contribute.
+
 ## Example work flows
 
 ### Initiating a database
@@ -63,9 +72,3 @@ See [FUNCTIONS.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md
 ### Maintaining a database
 
 ### Maintaining a todo-list
-
-## Contributing
-
-YES PLEASE!
-Please use GitHub's [Issue](https://github.com/LammersInsects/dbpq/issues) and [Pull Request](https://github.com/LammersInsects/dbpq/pulls) functions for suggestions and patches. I get automatic notifications on issues and pull requests. Please refrain from contacting me through email.
-See [CONTRIBUTING.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md) for details on ways to contribute.
