@@ -28,9 +28,11 @@ Please open an issue if you find a piece of code that is Windows-specific.
 
 Ideal situation (requires a GitHub account and basic understanding of git): Make a GitHub `fork` and use `git clone` to get a copy of the repository.
 
-Alternative download method: Go to @LammersInsects (link) and download the files.
+Manual download method: Go to @LammersInsects (link) and download the files.
 
-All other usage cases: use `github2r()`. This way you will always be using the latest stable version.
+Alternatively: use `github2R()` from my repo [MLmisc](https://github.com/LammersInsects/MLmisc/blob/main/github2R.R). This way you will always be using the latest stable version.
+
+Further suggestions on https://stackoverflow.com/questions/48612676/how-to-download-entire-repository-from-github-using-r/48613007
 
 ### Loading the package
 
