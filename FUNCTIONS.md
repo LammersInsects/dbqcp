@@ -6,6 +6,7 @@
 - *Description*: Load an existing registry, commit new records to a registry, or start a new registry.
 - *Usage*: db.registry(existing.data.registry=F, new.records=F, too.old=300, expected.missing=0, filename='debugging', user=NA, quiet=F, print.help=F, write.output=T, save.backup=T)
 - *Arguments*:
+
 Argument | Specification
 -------- | -------------
 existing.data.registry | The previously saved registry, set to FALSE if no registry exists yet (default)
@@ -18,6 +19,7 @@ quiet | Absolutely no information is printed if set to TRUE
 print.help | A help message is printed is set to TRUE, overridden by quiet flag
 write.output | Should the output be written to working directory? Defaults to TRUE
 save.backup | Should a backup of the existing registry be saved? Defaults to TRUE
+
 - *Details*: This function is the workhorse of any database maintained using this package. It is the sole function to write a new version of the registry to be stored permanently.
 - *Value*: A dataframe of 8 variables
 - *Note*: NA
