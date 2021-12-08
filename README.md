@@ -45,7 +45,7 @@ In my programming philosophy, a script should have as little dependencies as pos
 
 - R base packages: `stats graphics grDevices utils datasets methods base`
 - package `crayon` version 1.3.4 or higher
-- package `xlsx` version 0.6.4.2 or higher
+- package `xlsx` version 0.6.4.2 or higher (only used in the convenience function `db.new.input.file.R`, everything else is independent of package `xlsx`)
 
 Use `if(!require('<package name>')){install.packages('<package name>')}` to install a missing package, and `library('<package name>')` to attach it.
 
