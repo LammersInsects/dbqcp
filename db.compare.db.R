@@ -1,22 +1,6 @@
 # Written by Mark Lammers; Institute for Evolution and Biodiversity, University of Muenster; marklammers6@gmail.com
 # (c) 2020. Released under the terms of the GNU General Public License v3.
 
-# Load data and packages
-# load.db.package()
-# setwd(paste(wd.base, 'Projects_home/Planten/database_v2', sep=''))
-
-# Load packages
-# if(!require('')){install.packages('')}
-# library('')
-
-# Load data
-# existing.db<-read.table('pot.db_20201106.csv', header=T, sep = ';')
-# new.db<-read.xlsx(paste(gd.base,'Pot-plant_current_database_20201107.xlsx', sep=''), sheetIndex = 1, startRow = 3)
-# output<-db.compare.db(existing.db = existing.db, new.db = new.db, date = '06.11.2020', filename = 'pot', quiet = F)
-# output<-db.compare.db(existing.db = existing.db[,1:10], new.db = existing.db[,10:1], date = '06.11.2020', filename = 'pot', quiet = F)
-
-# Reformat data
-
 # Define function
 db.compare.db<-function(existing.db,
                         new.db,
@@ -173,5 +157,3 @@ db.compare.db<-function(existing.db,
   return(new.records)
   
 }
-# Explore and plot data
-
