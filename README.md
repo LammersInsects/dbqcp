@@ -4,6 +4,16 @@ By Mark Lammers, @LammersInsects
 
 ## Introduction
 
+TODO
+Here write about:
+- philosophy of data management (automation, no deletion)
+- automation of basic tasks and repetitive work
+- if it doesn't exist, write it
+
+The registry **never** removes any data. To remove a previous record, a new record specifying the removal should be added (this is not implemented yet!)
+
+As a consequence, this package is not suitable for recording any privacy-sensitive data that must be removed as specified in any applicable regulations!
+
 ## Getting started
 
 ### Language
