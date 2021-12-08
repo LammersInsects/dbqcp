@@ -53,6 +53,73 @@ Use `if(!require('<package name>')){install.packages('<package name>')}` to inst
 
 Open an issue in GitHub's [issue tracker for this repo](https://github.com/LammersInsects/dbpq/issues) if you encounter a bug or any other issue. Please add the output of `sessionInfo()` to your issue report. Using GitHub's issue labels is encouraged.
 
+## File format
+
+All data is recorded in a continuous registry, with a new line for each new value recorded. The metadata associated to the record are stored on the same line as the value. See below for specifics at different stages of recording and storing data.
+
+Prior to recording, it is wise to consider the subject identifiers. The subject should be practical, and be the lowest level of the unit of analysis. Each subject should be assigned a unique identifier, so that records belonging to the same subject share an identifier in this column.
+
+### New records
+
+A table with five columns. The columns should have names, but these names are not actually verified upon committing the records. The columns must be in the order as given in this table:
+
+Column name | Explanation
+----------- | -----------
+Date | The date on which the record was recorded in format `%d.%m.%Y` or `%d/%m/%Y` or `%d/%m/%Y`
+Subject | Specifies the subject of which the value of an attribute is recorded
+Field | The attribute for which a value is recorded.
+Value | The value of the given attribute.
+Source | The source of the record.
+
+Take care that field names do not contain typos, it would be interpreted as a new field name! Some provided functions can remedy such errors at later stages (`db.remove`, `db.translate`), but it is cumbersome to fix situations.
+
+### Stored registry
+
+The data is stored in eight columns in semicolon-separated CSV format as `<filename>.registry.csv` in the working directory. Many columns can be renamed to basically any other string when a registry is initiated, see the table below which columns this (not) applies to.
+
+Primarily, each record specifies the value of an attribute of a subject. For each subject, many atrributes can be recorded, and for each attribute, multiple values can be given.
+
+Column name | Explanation | Can be renamed
+----------- | ----------- | --------------
+ID | The unique identifier automatically assigned to the record by `db.registry`, always an integer ascending by 1 for each new record.| no
+Date | The date on which a record was recorded in format `%Y-%m-%d` (R default format in most locales). Defaults to today if left empty prior to committing the record. | yes
+Subject | Specifies the subject for which the value of an attribute is recorded. | yes
+Field | The attribute for which a value is recorded. | yes
+Value | The value of the given attribute. | yes
+Source | The source of the record. | yes
+Recorded.by | The person who entered the data. | no
+Verified | This is a legacy column, due to be removed in future versions. Currently, no parts of of the code use this column. | no
+
+The first three lines of such a file could look like this:
+```R
+"ID";"Date";"Subject";"Field";"Value";"Source";"Recorded.by";"Verified"
+1;2018-12-22;"Agave americana";"Spines";"many at leaf margin";"a book";"MarkLammers";0
+2;2018-12-22;"Agave americana";"Type";"succulent";"a book";"MarkLammers";0
+3;2019-02-21;"Trichodiadema spp.";"Type";"Succulent";"another book";"MarkLammers";0
+4;2019-02-21;"Trichodiadema spp.";"Spines";"many at leaf tip";"another book";"MarkLammers";0
+```
+
+### A compressed registry
+
+Can be created in R using `db.compress`. It contains all the same data as a stored registry, but reorganizes it into a ragged array. This format may be more convenient for certain analyses.
+
+Function db.compress seems to have a bug while I am writing this... TODO!
+
+### Output "wide format" database
+
+The function `db.build` outputs a table in "wide format" where all rows are the subjects, with the subject name in the first column. The remaining columns are all the fields of the registry. The cells are filled with the values of the attributes of the subjects.
+
+There can be duplicity, i.e. multiple values for the same attribute (=field) of the same subject. How this duplicity is handled, is controlled by the user. By default, the latest record for each subject-field-value combination is used.
+
+The database output is written in semicolon-separated CSV format to the disk as `<filename>.db.csv` in the working directory.
+
+Using the same example as above, the file would look like this:
+```R
+"Subject";"Type;"Spines"
+"Agave americana";"succulent";"many at leaf margin"
+"Trichdiadema sp";"succulent";"many at leaf tip"
+```
+
 ## Functions
 
 See [FUNCTIONS.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md) for the help files of all functions in the package.
