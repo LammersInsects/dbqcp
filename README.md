@@ -8,13 +8,13 @@ By Mark Lammers, @LammersInsects
 
 ### Language
 
-The entire set of functions is written in R, my native programming language.
+The entire set of functions is written in `R`, my native programming language.
 Your system requires:
 
 - [R](https://www.r-project.org/) v4.0.3 or higher
 - [RStudio](https://www.rstudio.com) installed (preferably, although not essential)
 
-I have not tested in which range of R versions the scripts work. Since most use only base R, it should work out-of-the-box on yours. As a rule, strive to always work in the latest full release. Please open an issue if your combination of OS and R doesn't work while you think it should.
+I have not tested in which range of R versions the scripts work. Since most use only `base` R, it should work out-of-the-box on yours. As a rule, strive to always work in the latest full release. Please open an issue if your combination of OS and R doesn't work while you think it should.
 
 Perhaps you prefer python? I think it is possible to make everything work in python using [Rpy2](https://rpy2.github.io/doc/latest/html/)
 If anyone feels like writing code to use an API for python or any other language: you're most welcome to contribute!
@@ -49,7 +49,7 @@ In my programming philosophy, a script should have as little dependencies as pos
 
 Use `if(!require('<package name>')){install.packages('<package name>')}` to install a missing package, and `library('<package name>')` to attach it.
 
-## Issues?
+### Issues?
 
 Open an issue in GitHub's [issue tracker for this repo](https://github.com/LammersInsects/dbpq/issues) if you encounter a bug or any other issue. Please add the output of `sessionInfo()` to your issue report. Using GitHub's issue labels is encouraged.
 
