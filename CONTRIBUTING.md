@@ -12,7 +12,7 @@ Many thanks for your time!
 
 Please use the [issue tracker](https://github.com/LammersInsects/dbpq/issues) for basically everything to bring to my attention.
 
-Please use [pull requests](https://github.com/LammersInsects/dbpq/pulls) for new code, features, and enhancements.
+Please use [pull requests](https://github.com/LammersInsects/dbpq/pulls) for new code, features, and enhancements. Please make sure to first rebase your topic branch on the latest status of the main branch.
 
 Using GitHub's label system is encouraged.
 
