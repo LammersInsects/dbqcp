@@ -59,6 +59,8 @@ In my programming philosophy, a script should have as little dependencies as pos
 
 Use `if(!require('<package name>')){install.packages('<package name>')}` to install a missing package, and `library('<package name>')` to attach it.
 
+All code was written in Rstudio with the Editor Theme set to `Cobalt` (under Global Options > Appearance), in other words, all output looks best against a dark background. If something is unreadable in your system, please submit an issue with a specification of the problem.
+
 ### Issues?
 
 Open an issue in GitHub's [issue tracker for this repo](https://github.com/LammersInsects/dbpq/issues) if you encounter a bug or any other issue. Please add the output of `sessionInfo()` to your issue report. Using GitHub's issue labels is encouraged.

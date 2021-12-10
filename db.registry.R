@@ -29,7 +29,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     user<-readline(prompt='Who has recorded the data? Name: ')
   }
   if(!quiet){
-    print(paste('New data is recorded by',user))
+    cat(note('New data is recorded by'),white(user),'\n')
   }
   #   if(user %in% users){
   if(user %in% local(users,env=hidden.env)){
