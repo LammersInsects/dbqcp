@@ -109,11 +109,10 @@ db.compare.db<-function(existing.db,
     
   }
   
-  if(!any(new.subjects) & !any(new.columns) & !any(changed.values)){
+  if((!any(new.subjects) & !any(new.columns) & !any(changed.values)) | nrow(new.records)==0){
     if(!quiet){
       cat(note('No new lines, columns, or changed cell values found. It seems that both databases are identical...\n'))
       cat(note('Returning an empty data frame\n'))
-      
     }
     
   } else {
