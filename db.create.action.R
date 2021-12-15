@@ -119,8 +119,11 @@ db.create.action<-function(registry, #the previously saved registry
   rownames(record)<-NULL
   
   #write this to a file with pending new records 
-  
   #these should be imported at the next run of db.registry with the same filename
+  #TODO
+  #first check whether a staging file exists
+  #if so, append the created record(s)
+  #if not, make such a file from the here created records
   
   return(record)
   
