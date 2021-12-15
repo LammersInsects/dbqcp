@@ -12,12 +12,16 @@
 
 
 db.create.action<-function(registry, #the previously saved registry
-                    remove.IDs, #IDs of the records to remove
-                    invert=F, #include everything except the remove.IDs, invert=TRUE gives only the records that conform to remove.IDs
-                    quiet=F, #absolutely no information is printed
-                    print.help=F, #no help message is printed, overridden by quiet flag
-                    write.output=F, #flag whether output should be written to working directory
-                    filename='debugging' #the base filename
+                           action, #remove or translate
+                           record.ID, #IDs of the record(s) to remove
+                           reason, #the reason to remove record(s)
+                           original, #the term to be translated
+                           translation, #what the original should be changed into
+                           user, #the user who provides the input
+                           quiet=F, #absolutely no information is printed
+                           print.help=F, #no help message is printed, overridden by quiet flag
+                           write.output=F, #flag whether output should be written to working directory
+                           filename='debugging' #the base filename
 ){
   if(!quiet){
     cat(note('Running db.create.action.R ...\n'))
@@ -34,7 +38,15 @@ db.create.action<-function(registry, #the previously saved registry
     stop()
   }
   
+  #check user
+  #TODO
+  
   if(action=='remove'){
+    if(missing(record.ID) | missing(reason)){
+      cat(error('Please provide a record.ID and a reason when using < action = remove >\n'))
+      stop()
+    }
+    
     action.name<-'db~remove'
     
     #check provided record ID
@@ -42,7 +54,10 @@ db.create.action<-function(registry, #the previously saved registry
       cat(error('Please provide the record ID as a number\n'))
       stop()
     } else {
-      #TODO check here whether it is a non-decimal number
+      if(!record.ID%%1==0){
+        cat(error('Please provide the record idea as a whole number\n'))
+        stop()
+      }
     }
     
     #check reason provided
@@ -53,19 +68,21 @@ db.create.action<-function(registry, #the previously saved registry
       stop()
     }
     
-    #check user
-    #TODO
-    
     #create new record
     record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,record.ID,reason.ok,"db.create.action",user)
     
   } else if(action=='translate'){
-    action.name<-'db.translate'
+    if(missing(original) | missing(translation)){
+      cat(error('Please provide the original text and the desired translation when using < action = translate >\n'))
+      stop()
+    }
+    
+    action.name<-'db~translate'
     
     #TODO here write script to create a translate action
     
   } else {
-    cat('\n')
+    cat(error('Currently, only the actions <remove> and <translate> are supported\n'))
     stop()
   }
   
