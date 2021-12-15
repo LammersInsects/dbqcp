@@ -82,7 +82,28 @@ db.create.action<-function(registry, #the previously saved registry
     
     action.name<-'db~translate'
     
-    #TODO here write script to create a translate action
+    #check reason provided
+    if(!emptyvalues(as.character(original))){
+      original.ok<-original
+      if(!any(sapply(registry[,3:6],`%in%`,original.ok))){
+        cat(warn('WARNING: The provided original to be translated does not exist
+                 as subject, field, value or source in the provided registry'))
+      }
+    } else {
+      cat(error('Please provide an original text to be translated\n'))
+      stop()
+    }
+    
+    if(!emptyvalues(translation)){
+      translation.ok<-translation
+    } else {
+      cat(error('Please provide a translation for the original text\n'))
+      stop()
+    }
+    
+    #create new record
+    record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,original.ok,translation.ok,"db.create.action",user,0)
+    #TODO remove last zero from record once column Verified is purged from the package
     
   } else {
     cat(error('Currently, only the actions <remove> and <translate> are supported\n'))
