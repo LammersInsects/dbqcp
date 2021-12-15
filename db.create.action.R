@@ -50,6 +50,7 @@ db.create.action<-function(registry, #the previously saved registry
     action.name<-'db~remove'
     
     #check provided record ID
+    #TODO add support for multiple records to remove for the same reason
     if(!is.numeric(record.ID)){
       cat(error('Please provide the record ID as a number\n'))
       stop()
@@ -69,7 +70,8 @@ db.create.action<-function(registry, #the previously saved registry
     }
     
     #create new record
-    record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,record.ID,reason.ok,"db.create.action",user)
+    record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,record.ID,reason.ok,"db.create.action",user,0)
+    #TODO remove last zero from record once column Verified is purged from the package
     
   } else if(action=='translate'){
     if(missing(original) | missing(translation)){
@@ -86,10 +88,19 @@ db.create.action<-function(registry, #the previously saved registry
     stop()
   }
   
+  #reformat record
+  record<-as.data.frame(record)
+  if(ncol(record)==1){
+    record<-t(record)
+    record<-data.frame(record)
+  }
+  colnames(record)<-colnames(registry)
+  rownames(record)<-NULL
   
   #write this to a file with pending new records 
   
   #these should be imported at the next run of db.registry with the same filename
   
+  return(record)
   
 }
