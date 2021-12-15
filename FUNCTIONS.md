@@ -1,5 +1,36 @@
 # Functions that are part of the R database package
 
+Table of Contents
+=================
+
+* [Functions that are part of the R database package](#functions-that-are-part-of-the-r-database-package)
+   * [Creating a registry](#creating-a-registry)
+      * [db.registry.R](#dbregistryr)
+   * [Working with an existing registry](#working-with-an-existing-registry)
+      * [db.load.backup.R](#dbloadbackupr)
+   * [Converting a registry to a "wide" format database](#converting-a-registry-to-a-wide-format-database)
+      * [db.build.R](#dbbuildr)
+   * [Preparing input to add to an existing registry](#preparing-input-to-add-to-an-existing-registry)
+      * [db.compare.db.R](#dbcomparedbr)
+      * [db.multicol.import.R](#dbmulticolimportr)
+      * [db.new.input.file.R](#dbnewinputfiler)
+   * [Filtering records](#filtering-records)
+      * [db.findrecords.R](#dbfindrecordsr)
+      * [db.last.records.R](#dblastrecordsr)
+      * [db.mask.R](#dbmaskr)
+   * [Analysis of the registry](#analysis-of-the-registry)
+      * [db.missing.R](#dbmissingr)
+      * [db.history.R](#dbhistoryr)
+      * [db.summary.R](#dbsummaryr)
+   * [Plumbing](#plumbing)
+      * [db.compress.R](#dbcompressr)
+      * [db.files.R](#dbfilesr)
+      * [db.dates.R](#dbdatesr)
+      * [db.is.registry.R](#dbisregistryr)
+      * [db.remove.R](#dbremover)
+      * [db.translate.R](#dbtranslater)
+      * [users.R](#usersr)
+
 ## Creating a registry
 
 ### `db.registry.R`

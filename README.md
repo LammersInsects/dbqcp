@@ -2,6 +2,31 @@
 
 By Mark Lammers, @LammersInsects
 
+
+Table of Contents
+=================
+
+* [R package "dbpq"](#r-package-dbpq)
+   * [Introduction](#introduction)
+   * [Getting started](#getting-started)
+      * [Language](#language)
+      * [Operating System](#operating-system)
+      * [Downloading the set of functions](#downloading-the-set-of-functions)
+      * [Loading the package](#loading-the-package)
+      * [Dependencies](#dependencies)
+      * [Issues?](#issues)
+   * [File format](#file-format)
+      * [New records](#new-records)
+      * [Stored registry](#stored-registry)
+      * [A compressed registry](#a-compressed-registry)
+      * [Output "wide format" database](#output-wide-format-database)
+   * [Functions](#functions)
+   * [Contributing](#contributing)
+   * [Example work flows](#example-work-flows)
+      * [Initiating a database](#initiating-a-database)
+      * [Maintaining a database](#maintaining-a-database)
+      * [Maintaining a todo-list](#maintaining-a-todo-list)
+
 ## Introduction
 
 TODO
