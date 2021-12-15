@@ -54,11 +54,12 @@ db.create.action<-function(registry, #the previously saved registry
     if(!is.numeric(record.ID)){
       cat(error('Please provide the record ID as a number\n'))
       stop()
-    } else {
-      if(!record.ID%%1==0){
-        cat(error('Please provide the record idea as a whole number\n'))
-        stop()
-      }
+    } else if(!record.ID%%1==0){
+      cat(error('Please provide the record idea as a whole number\n'))
+      stop()
+    } else if(!record.ID %in% registry$ID){
+      cat(error('Provided record ID does not exist in the provided registry\n'))
+      stop()
     }
     
     #check reason provided
