@@ -36,36 +36,39 @@ db.create.action<-function(registry, #the previously saved registry
   
   if(action=='remove'){
     action.name<-'db~remove'
+    
+    #check provided record ID
+    if(!is.numeric(record.ID)){
+      cat(error('Please provide the record ID as a number\n'))
+      stop()
+    } else {
+      #TODO check here whether it is a non-decimal number
+    }
+    
+    #check reason provided
+    if(!emptyvalues(as.character(reason))){
+      reason.ok<-reason
+    } else {
+      cat(error('Please provide a reason why the action should be added\n'))
+      stop()
+    }
+    
+    #check user
+    #TODO
+    
+    #create new record
+    record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,record.ID,reason.ok,"db.create.action",user)
+    
   } else if(action=='translate'){
     action.name<-'db.translate'
+    
+    #TODO here write script to create a translate action
+    
   } else {
     cat('\n')
     stop()
   }
   
-  #check provided record ID
-  #TODO: db.translate would not work with record IDs!
-  if(!is.numeric(record.ID)){
-    cat(error('Please provide the record ID as a number\n'))
-    stop()
-  } else {
-    #TODO check here whether it is a non-decimal number
-  }
-  
-  #check reason provided
-  #TODO: db.translate would not need a reason!
-  if(!emptyvalues(as.character(reason))){
-    reason.ok<-reason
-  } else {
-    cat(error('Please provide a reason why the action should be added\n'))
-    stop()
-  }
-  
-  #check user
-  #TODO
-  
-  #create new record
-  record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,record.ID,reason.ok,"db.create.action",user)
   
   #write this to a file with pending new records 
   
