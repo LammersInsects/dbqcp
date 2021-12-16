@@ -1,39 +1,43 @@
-# Functions that are part of the R database package
+Functions that are part of the R database package
+=================================================
 
 Table of Contents
 =================
 
 * [Functions that are part of the R database package](#functions-that-are-part-of-the-r-database-package)
-   * [Creating a registry](#creating-a-registry)
-      * [db.registry.R](#dbregistryr)
-   * [Working with an existing registry](#working-with-an-existing-registry)
-      * [db.load.backup.R](#dbloadbackupr)
-   * [Converting a registry to a "wide" format database](#converting-a-registry-to-a-wide-format-database)
-      * [db.build.R](#dbbuildr)
-   * [Preparing input to add to an existing registry](#preparing-input-to-add-to-an-existing-registry)
-      * [db.compare.db.R](#dbcomparedbr)
-      * [db.multicol.import.R](#dbmulticolimportr)
-      * [db.new.input.file.R](#dbnewinputfiler)
-   * [Filtering records](#filtering-records)
-      * [db.findrecords.R](#dbfindrecordsr)
-      * [db.last.records.R](#dblastrecordsr)
-      * [db.mask.R](#dbmaskr)
-   * [Analysis of the registry](#analysis-of-the-registry)
-      * [db.missing.R](#dbmissingr)
-      * [db.history.R](#dbhistoryr)
-      * [db.summary.R](#dbsummaryr)
-   * [Plumbing](#plumbing)
-      * [db.compress.R](#dbcompressr)
-      * [db.files.R](#dbfilesr)
-      * [db.dates.R](#dbdatesr)
-      * [db.is.registry.R](#dbisregistryr)
-      * [db.remove.R](#dbremover)
-      * [db.translate.R](#dbtranslater)
-      * [users.R](#usersr)
+* [Table of Contents](#table-of-contents)
+* [Creating a registry](#creating-a-registry)
+   * [db.registry.R](#dbregistryr)
+* [Working with an existing registry](#working-with-an-existing-registry)
+   * [db.load.backup.R](#dbloadbackupr)
+* [Converting a registry to a "wide" format database](#converting-a-registry-to-a-wide-format-database)
+   * [db.build.R](#dbbuildr)
+* [Preparing input to add to an existing registry](#preparing-input-to-add-to-an-existing-registry)
+   * [db.compare.db.R](#dbcomparedbr)
+   * [db.multicol.import.R](#dbmulticolimportr)
+   * [db.new.input.file.R](#dbnewinputfiler)
+* [Filtering records](#filtering-records)
+   * [db.findrecords.R](#dbfindrecordsr)
+   * [db.last.records.R](#dblastrecordsr)
+   * [db.mask.R](#dbmaskr)
+* [Analysis of the registry](#analysis-of-the-registry)
+   * [db.missing.R](#dbmissingr)
+   * [db.history.R](#dbhistoryr)
+   * [db.summary.R](#dbsummaryr)
+* [Plumbing](#plumbing)
+   * [db.compress.R](#dbcompressr)
+   * [db.files.R](#dbfilesr)
+   * [db.dates.R](#dbdatesr)
+   * [db.is.registry.R](#dbisregistryr)
+   * [db.remove.R](#dbremover)
+   * [db.translate.R](#dbtranslater)
+   * [users.R](#usersr)
 
-## Creating a registry
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
-### `db.registry.R`
+# Creating a registry
+
+## `db.registry.R`
 - *Description*: Load an existing registry, commit new records to a registry, or start a new registry.
 - *Usage*: db.registry(existing.data.registry=F, new.records=F, too.old=300, expected.missing=0, filename='debugging', user=NA, quiet=F, print.help=F, write.output=T, save.backup=T)
 - *Arguments*:
@@ -65,9 +69,9 @@ todo.new<-read.xlsx(paste(filename,'.xlsx',sep=''), sheetIndex = 1, startRow = 3
 registry<-db.registry(existing.data.registry = todo.existing, new.records = todo.new, filename = filename, user = 'MarkLammers')
 ```
 
-## Working with an existing registry
+# Working with an existing registry
 
-### `db.load.backup.R`
+## `db.load.backup.R`
 - *Description*: Load a backup of an existing registry as it was stored at the beginning of a given date, or the closest earlier date if no backup was saved on the given date.
 - *Usage*:
 - *Arguments*:
@@ -78,9 +82,9 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-## Converting a registry to a "wide" format database
+# Converting a registry to a "wide" format database
 
-### `db.build.R`
+## `db.build.R`
 - *Description*: Convert a loaded registry into a "wide" format table with all subjects as rows and the fields as columns.
 - *Usage*:
 - *Arguments*:
@@ -91,9 +95,9 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry, stats::reshape for definitions of long and wide format.
 - *Examples*:
 
-## Preparing input to add to an existing registry
+# Preparing input to add to an existing registry
 
-### `db.compare.db.R`
+## `db.compare.db.R`
 - *Description*: Compare the contents of all cells of a "wide" database against all cells of a different "wide" database, and generate records from the differences that can directly be committed to a registry.
 - *Usage*:
 - *Arguments*:
@@ -104,7 +108,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry, db.build, stats::reshape for definitions of long and wide format.
 - *Examples*:
 
-### `db.multicol.import.R`
+## `db.multicol.import.R`
 - *Description*: Take a table in "wide" format and generate records from it, so that the same table would be reproduced if db.build() would be run with those records stored in a registry.
 - *Usage*:
 - *Arguments*:
@@ -115,7 +119,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry, db.build
 - *Examples*:
 
-### `db.new.input.file.R`
+## `db.new.input.file.R`
 - *Description*: Generate a new input file to facilitate recording new records for an existing registry.
 - *Usage*:
 - *Arguments*:
@@ -126,9 +130,9 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-## Filtering records
+# Filtering records
 
-### `db.findrecords.R`
+## `db.findrecords.R`
 - *Description*: Search a registry for records that (not) match a search term in the subject, field, and/or value.
 - *Usage*:
 - *Arguments*:
@@ -139,7 +143,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry, db.mask
 - *Examples*:
 
-### `db.last.records.R`
+## `db.last.records.R`
 - *Description*: Filter a registry so that only the last record of each of the subjects/fields/values, is returned.
 - *Usage*:
 - *Arguments*:
@@ -150,7 +154,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-### `db.mask.R`
+## `db.mask.R`
 - *Description*: Search a registry for records that (not) match a search term in the subject or field, but then also include all other records from those subjects or fields.
 - *Usage*:
 - *Arguments*:
@@ -161,9 +165,9 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry, db.findrecords
 - *Examples*:
 
-## Analysis of the registry
+# Analysis of the registry
 
-### `db.missing.R`
+## `db.missing.R`
 - *Description*: Evaluate a registry and generate partial new records for missing values of each subject-field combination.
 - *Usage*:
 - *Arguments*:
@@ -174,7 +178,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-### `db.history.R`
+## `db.history.R`
 - *Description*: Evaluate the recording history of a registry and produce some plots to visualize that.
 - *Usage*:
 - *Arguments*:
@@ -185,7 +189,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-### `db.summary.R`
+## `db.summary.R`
 - *Description*: Summarize each of the data columns in a registry and print/save that information.
 - *Usage*:
 - *Arguments*:
@@ -196,9 +200,9 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-## Plumbing
+# Plumbing
 
-### `db.compress.R`
+## `db.compress.R`
 - *Description*: Convert a loaded registry into a ragged array.
 - *Usage*:
 - *Arguments*:
@@ -209,7 +213,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-### `db.files.R`
+## `db.files.R`
 - *Description*: Evaluate the files in the working directory and report which files were created, when and whether this was done by the package or not.
 - *Usage*:
 - *Arguments*:
@@ -220,7 +224,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*:
 - *Examples*:
 
-### `db.dates.R`
+## `db.dates.R`
 - *Description*: A wrapper for db.files.R to only extract the dates on which records were committed to the registry
 - *Usage*:
 - *Arguments*:
@@ -231,7 +235,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.files
 - *Examples*:
 
-### `db.is.registry.R`
+## `db.is.registry.R`
 - *Description*: Test whether a data frame matches the format of a registry.
 - *Usage*:
 - *Arguments*:
@@ -242,7 +246,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-### `db.remove.R`
+## `db.remove.R`
 - *Description*: Remove records from a registry based on their record IDs.
 - *Usage*:
 - *Arguments*:
@@ -253,7 +257,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-### `db.translate.R`
+## `db.translate.R`
 - *Description*: Translate a term to any other term in an entire registry.
 - *Usage*:
 - *Arguments*:
@@ -264,7 +268,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
-### `users.R`
+## `users.R`
 - *Description*: Parse the users.csv file to store known user names in a hidden environment.
 - *Usage*:
 - *Arguments*:

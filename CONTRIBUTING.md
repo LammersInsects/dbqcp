@@ -1,6 +1,7 @@
-# Contributing to R package "dbpq"
+Contributing to R package "dbpq"
+================================
 
-## Introduction
+# Introduction
 
 Welcome! 
 
@@ -8,7 +9,7 @@ Any help would be highly appreciated. Help could include anything from bringing 
 
 Many thanks for your time!
 
-## How can I contribute?
+# How can I contribute?
 
 Please use the [issue tracker](https://github.com/LammersInsects/dbpq/issues) for basically everything to bring to my attention.
 
@@ -16,11 +17,11 @@ Please use [pull requests](https://github.com/LammersInsects/dbpq/pulls) for new
 
 Using GitHub's label system is encouraged.
 
-## Version management
+# Version management
 
 Versions are recorded using `tags` and follow rules set by [SemVer 2.0.0](https://semver.org/).
 
-## What are you (@LammersInsects) working with?
+# What are you (@LammersInsects) working with?
 
 This is the output from my `sessionInfo()`:
 ```R

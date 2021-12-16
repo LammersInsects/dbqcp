@@ -1,4 +1,5 @@
-# R package "dbpq"
+R package "dbpq"
+================
 
 By Mark Lammers, @LammersInsects
 
@@ -7,27 +8,30 @@ Table of Contents
 =================
 
 * [R package "dbpq"](#r-package-dbpq)
-   * [Introduction](#introduction)
-   * [Getting started](#getting-started)
-      * [Language](#language)
-      * [Operating System](#operating-system)
-      * [Downloading the set of functions](#downloading-the-set-of-functions)
-      * [Loading the package](#loading-the-package)
-      * [Dependencies](#dependencies)
-      * [Issues?](#issues)
-   * [File format](#file-format)
-      * [New records](#new-records)
-      * [Stored registry](#stored-registry)
-      * [A compressed registry](#a-compressed-registry)
-      * [Output "wide format" database](#output-wide-format-database)
-   * [Functions](#functions)
-   * [Contributing](#contributing)
-   * [Example work flows](#example-work-flows)
-      * [Initiating a database](#initiating-a-database)
-      * [Maintaining a database](#maintaining-a-database)
-      * [Maintaining a todo-list](#maintaining-a-todo-list)
+* [Table of Contents](#table-of-contents)
+* [Introduction](#introduction)
+* [Getting started](#getting-started)
+   * [Language](#language)
+   * [Operating System](#operating-system)
+   * [Downloading the set of functions](#downloading-the-set-of-functions)
+   * [Loading the package](#loading-the-package)
+   * [Dependencies](#dependencies)
+   * [Issues?](#issues)
+* [File format](#file-format)
+   * [New records](#new-records)
+   * [Stored registry](#stored-registry)
+   * [A compressed registry](#a-compressed-registry)
+   * [Output "wide format" database](#output-wide-format-database)
+* [Functions](#functions)
+* [Contributing](#contributing)
+* [Example work flows](#example-work-flows)
+   * [Initiating a database](#initiating-a-database)
+   * [Maintaining a database](#maintaining-a-database)
+   * [Maintaining a todo-list](#maintaining-a-todo-list)
 
-## Introduction
+Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+
+# Introduction
 
 TODO
 Here write about:
@@ -39,9 +43,9 @@ The registry **never** removes any data. To remove a previous record, a new reco
 
 As a consequence, this package is not suitable for recording any privacy-sensitive data that must be removed as specified in any applicable regulations!
 
-## Getting started
+# Getting started
 
-### Language
+## Language
 
 The entire set of functions is written in `R`, my native programming language.
 Your system requires:
@@ -54,13 +58,13 @@ I have not tested in which range of R versions the scripts work. Since most use 
 Perhaps you prefer python? I think it is possible to make everything work in python using [Rpy2](https://rpy2.github.io/doc/latest/html/)
 If anyone feels like writing code to use an API for python or any other language: you're most welcome to contribute!
 
-### Operating System
+## Operating System
 
 All functions were written on Windows OS with Git taking care of line break conversion. Therefore the code should work on any OS as long as you retrieved it from GitHub.
 
 Please open an [issue](https://github.com/LammersInsects/dbpq/issues) if you find a piece of code that is Windows-specific.
 
-### Downloading the set of functions
+## Downloading the set of functions
 
 Ideal situation (requires a GitHub account and basic understanding of git): Make a GitHub `fork` and use `git clone` to get a copy of the repository.
 
@@ -70,11 +74,11 @@ Alternatively: use `github2R()` from my repo [MLmisc](https://github.com/Lammers
 
 Further suggestions on https://stackoverflow.com/questions/48612676/how-to-download-entire-repository-from-github-using-r/48613007
 
-### Loading the package
+## Loading the package
 
 CHECK my load function
 
-### Dependencies
+## Dependencies
 
 In my programming philosophy, a script should have as little dependencies as possible. However, sometimes you simply cannot do without one. Make sure to have the latest version of these R packages installed:
 
@@ -86,17 +90,17 @@ Use `if(!require('<package name>')){install.packages('<package name>')}` to inst
 
 All code was written in Rstudio with the Editor Theme set to `Cobalt` (under Global Options > Appearance), in other words, all output looks best against a dark background. If something is unreadable in your system, please submit an issue with a specification of the problem.
 
-### Issues?
+## Issues?
 
 Open an issue in GitHub's [issue tracker for this repo](https://github.com/LammersInsects/dbpq/issues) if you encounter a bug or any other issue. Please add the output of `sessionInfo()` to your issue report. Using GitHub's issue labels is encouraged.
 
-## File format
+# File format
 
 All data is recorded in a continuous registry, with a new line for each new value recorded. The metadata associated to the record are stored on the same line as the value. See below for specifics at different stages of recording and storing data.
 
 Prior to recording, it is wise to consider the subject identifiers. The subject should be practical, and be the lowest level of the unit of analysis. Each subject should be assigned a unique identifier, so that records belonging to the same subject share an identifier in this column.
 
-### New records
+## New records
 
 A table with five columns. The columns should have names, but these names are not actually verified upon committing the records. The columns must be in the order as given in this table:
 
@@ -110,7 +114,7 @@ Source | The source of the record.
 
 Take care that field names do not contain typos, it would be interpreted as a new field name! Some provided functions can remedy such errors at later stages (`db.remove`, `db.translate`), but it is cumbersome to fix situations.
 
-### Stored registry
+## Stored registry
 
 The data is stored in eight columns in semicolon-separated CSV format as `<filename>.registry.csv` in the working directory. Many columns can be renamed to basically any other string when a registry is initiated, see the table below which columns this (not) applies to.
 
@@ -136,13 +140,13 @@ The first three lines of such a file could look like this:
 4;2019-02-21;"Trichodiadema spp.";"Spines";"many at leaf tip";"another book";"MarkLammers";0
 ```
 
-### A compressed registry
+## A compressed registry
 
 Can be created in R using `db.compress`. It contains all the same data as a stored registry, but reorganizes it into a ragged array. This format may be more convenient for certain analyses.
 
 Function db.compress seems to have a bug while I am writing this... TODO!
 
-### Output "wide format" database
+## Output "wide format" database
 
 The function `db.build` outputs a table in "wide format" where all rows are the subjects, with the subject name in the first column. The remaining columns are all the fields of the registry. The cells are filled with the values of the attributes of the subjects.
 
@@ -157,11 +161,11 @@ Using the same example as above, the file would look like this:
 "Trichdiadema sp";"succulent";"many at leaf tip"
 ```
 
-## Functions
+# Functions
 
 See [FUNCTIONS.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md) for the help files of all functions in the package.
 
-## Contributing
+# Contributing
 
 YES PLEASE!
 
@@ -169,10 +173,12 @@ Please use GitHub's [Issue](https://github.com/LammersInsects/dbpq/issues) and [
 
 See [CONTRIBUTING.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md) for details on ways to contribute.
 
-## Example work flows
+# Example work flows
 
-### Initiating a database
+TODO
 
-### Maintaining a database
+## Initiating a database
 
-### Maintaining a todo-list
+## Maintaining a database
+
+## Maintaining a todo-list
