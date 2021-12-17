@@ -127,21 +127,25 @@ db.create.action<-function(registry, #the previously saved registry
   rownames(record)<-NULL
   
   #write this to a file with pending new records 
-  #these should be imported at the next run of db.registry with the same filename
-  #first check whether a staging file exists
-  full.file.path<-paste(getwd(),'/',filename,'.staged.csv',sep='')
-  if(file.exists(full.file.path)){
-    #if so, append the created record(s)
-    if(!quiet){
-      cat(note('File for storing staged records already exists, new record with the action is appended\n'))
+  if(write.output){
+    #these should be imported at the next run of db.registry with the same filename
+    #first check whether a staging file exists
+    full.file.path<-paste(getwd(),'/',filename,'.staged.csv',sep='')
+    if(file.exists(full.file.path)){
+      #if so, append the created record(s)
+      if(!quiet){
+        cat(note('File for storing staged records already exists, new record with the action is appended\n'))
+      }
+      staged<-read.table(full.file.path, sep=';', header=T)
+      staged<-unique(rbind(staged,record))
+      write.table(staged, full.file.path, sep=';', row.names = F)
+    } else {
+      #if not, make such a file from the here created records
+      cat(note('No records have been staged yet, new record with the action is stored in the staging file\n'))
+      write.table(record, full.file.path, sep=';', row.names = F)
     }
-    staged<-read.table(full.file.path, sep=';', header=T)
-    staged<-unique(rbind(staged,record))
-    write.table(staged, full.file.path, sep=';', row.names = F)
   } else {
-    #if not, make such a file from the here created records
-    cat(note('No records have been staged yet, new record with the action is stored in the staging file\n'))
-    write.table(record, full.file.path, sep=';', row.names = F)
+    cat(warn('The new record is not written to a staging file as this has been overridden by the user!\n'))
   }
   
   #also return the record
