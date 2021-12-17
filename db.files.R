@@ -1,11 +1,6 @@
 # Written by Mark Lammers; Animal Ecology, Vrije Universiteit Amsterdam; marklammers6@gmail.com
 # (c) 2018. Released under the terms of the GNU General Public License v3.
 
-# Load data and packages
-#NA?
-debugging<-F
-
-
 db.files<-function(database.folder, #The folder holding the database files to analyse
                    file.base.name=F, #The file base name by which to subset the folder (set to FALSE for all)
                    exclude=F, #Any or multiple strings by which files can be excluded
@@ -68,7 +63,7 @@ db.files<-function(database.folder, #The folder holding the database files to an
   
   #Store package file name components
   from.package<-c('registry','summary','subjects','fields','values','sources','db','compare-db','newonly','omitted',
-                  'removed','missing','masked','found','multicol','nosource','verify','verification','log','backup')
+                  'removed','missing','masked','found','multicol','nosource','verify','verification','log','backup','staged')
   
   if(length(files)==0){
     filenames<-NA
@@ -147,10 +142,3 @@ db.files<-function(database.folder, #The folder holding the database files to an
   }
   
 }
-
-
-
-# if(debugging){
-#   wd<-setwd(paste(wd.base, 'Projects_home/Stokerij/database', sep=''))
-#   split=c('.','_')
-# }
