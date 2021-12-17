@@ -14,6 +14,7 @@ db.translate<-function(registry, #the previously saved registry
     cat(note('Running db.translate.R ...\n'))
     if(print.help){
       cat(note('This function expects a registry as produced by db.registry() and a 3-column dataframe with dates, original and replacement values\n'))
+      cat(warn('Functionality of this function will be taken over by implementation of db.create.action and db.process.action'))
     }
   }
   
