@@ -16,6 +16,7 @@ db.remove<-function(registry, #the previously saved registry
     cat(note('Running db.remove.R ...\n'))
     if(print.help){
       cat(note('This function expects a registry as produced by db.registry() and a set of values to remove\n'))
+      cat(warn('Functionality of this function will be taken over by db.create.action and db.process.actions!\n'))
     }
   }
   
