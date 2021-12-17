@@ -2,9 +2,8 @@
 # (c) 2018. Released under the terms of the GNU General Public License v3.
 
 #To create a removal
-# record<-db.create.action(registry = register, action = 'remove', record.ID = 90, reason = 'invoerfout', user='MarkLammers')
-# rbind(as.character(head(register, n=1)),as.character(record))
-# write.table(record,'test.csv',sep=';',row.names = F)
+record<-db.create.action(registry = register, action = 'remove', record.ID = 90, reason = 'invoerfout', user='MarkLammers')
+db.staged(database.folder = getwd(), return.staged.records = T)
 
 #To create a translation
 # record<-db.create.action(registry = register, action = 'translate',
@@ -73,6 +72,10 @@ db.create.action<-function(registry, #the previously saved registry
     record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,record.ID,reason.ok,"db.create.action",user,0)
     #TODO remove last zero from record once column Verified is purged from the package
     
+    if(!quiet){
+      cat(note('New action to remove record <',record.ID,'> has been created\n'))
+    }
+    
   } else if(action=='translate'){
     if(missing(original) | missing(translation)){
       cat(error('Please provide the original text and the desired translation when using < action = translate >\n'))
@@ -104,6 +107,10 @@ db.create.action<-function(registry, #the previously saved registry
     record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,original.ok,translation.ok,"db.create.action",user,0)
     #TODO remove last zero from record once column Verified is purged from the package
     
+    if(!quiet){
+      cat(note('New record action to translate <',original,'> to <',translation,'> has been created\n'))
+    }
+    
   } else {
     cat(error('Currently, only the actions <remove> and <translate> are supported\n'))
     stop()
@@ -120,11 +127,22 @@ db.create.action<-function(registry, #the previously saved registry
   
   #write this to a file with pending new records 
   #these should be imported at the next run of db.registry with the same filename
-  #TODO
   #first check whether a staging file exists
-  #if so, append the created record(s)
-  #if not, make such a file from the here created records
+  full.file.path<-paste(getwd(),'/',filename,'.staged.csv',sep='')
+  if(file.exists(full.file.path)){
+    #if so, append the created record(s)
+    if(!quiet){
+      cat(note('File for storing staged records already exists, new record with the action is appended\n'))
+    }
+    staged<-read.table(full.file.path, sep=';', header=T)
+    staged<-unique(rbind(staged,record))
+    write.table(staged, full.file.path, sep=';', row.names = F)
+  } else {
+    #if not, make such a file from the here created records
+    cat(note('No records have been staged yet, new record with the action is stored in the staging file\n'))
+    write.table(record, full.file.path, sep=';', row.names = F)
+  }
   
+  #also return the record
   return(record)
-  
 }
