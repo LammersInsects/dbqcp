@@ -1,13 +1,5 @@
 # Written by Mark Lammers; Animal Ecology, Vrije Universiteit Amsterdam; marklammers6@gmail.com
-# (c) 2018. Released under the terms of the GNU General Public License v3.
-
-#To create a removal
-record<-db.create.action(registry = register, action = 'remove', record.ID = 90, reason = 'invoerfout', user='MarkLammers')
-db.staged(database.folder = getwd(), return.staged.records = T)
-
-#To create a translation
-# record<-db.create.action(registry = register, action = 'translate',
-#                          user = 'MarkLammers', original = 'gedaan', translation = 'done')
+# (c) 2021. Released under the terms of the GNU General Public License v3.
 
 db.create.action<-function(registry, #the previously saved registry
                            action, #remove or translate
@@ -82,7 +74,7 @@ db.create.action<-function(registry, #the previously saved registry
     #TODO remove last zero from record once column Verified is purged from the package
     
     if(!quiet){
-      cat(note('New action to remove record <',record.ID,'> has been created\n'))
+      cat(note('New action to remove record number <',record.ID,'> has been created\n'))
     }
     
   } else if(action=='translate'){

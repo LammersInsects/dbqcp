@@ -2,7 +2,7 @@
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
 # Define function
-db.staged<-function(database.folder, #The folder holding the database files
+db.staged<-function(database.folder=getwd(), #The folder holding the database files
                     file.base.name='debugging', #the base name of the database files
                     return.staged.records=F, #whether the staged records should be returned
                     quiet=F, #absolutely no information is printed
@@ -27,7 +27,9 @@ db.staged<-function(database.folder, #The folder holding the database files
     return(FALSE)
   } else {
     df<-read.table(full.file.path, sep=';', header=T)
-    cat(note('Found a file with',nrow(df),'staged records in the database folder\n'))
+    if(!quiet){
+      cat(note('Found a file with',nrow(df),'staged records in the database folder\n'))
+    }
     
     if(return.staged.records){
       return(df)
