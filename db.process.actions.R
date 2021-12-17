@@ -51,10 +51,12 @@ db.process.actions<-function(registry, #the previously saved registry
       df<-df[df[,1]!=as.numeric(do[,4]),]
       rm.count<-rm.count+1
     } else if(do[,3]=='db~translate'){
-      #TODO here do the translate task
-      #use db.translate() ?
+      #translate for the subject, field, value, and source column all values according to the action
+      for(column in 3:6){
+        translated<-translated+sum(df[,column]==record[,4],na.rm = T)
+        df[,column]<-gsub(do[,4],do[,5],df[,column],fixed = T)
+      }
       tr.count<-tr.count+1
-      translated<-translated+nrow()
     } else {
       cat(error('ERROR: This line of code should should never be triggered! The following record causes a problem:\n'))
       print(do)
@@ -65,7 +67,8 @@ db.process.actions<-function(registry, #the previously saved registry
   
   #report success
   if((rm.count+tr.count)==nrow(actions.todo)){
-    cat(note(rm.count,'records were successfully removed and',translated,'were translated\n'))
+    cat(note(rm.count,'records were successfully removed and',translated,'cells had their contents translated by',
+             tr.count,'translation actions\n'))
   } else {
     cat(warn(nrow(actions.todo)-(rm.count+tr.count),'out of',nrow(actions.todo),
              'actions were not executed. Most likely these actions are removed by more recent actions\n'))
