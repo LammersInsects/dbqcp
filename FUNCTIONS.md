@@ -257,6 +257,17 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *See also*: db.registry
 - *Examples*:
 
+## `db.staged.R`
+- *Description*: Read the staged records from the database folder.
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*: db.registry
+- *Examples*:
+
 ## `db.translate.R`
 - *Description*: Translate a term to any other term in an entire registry.
 - *Usage*:
