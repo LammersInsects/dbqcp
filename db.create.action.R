@@ -15,7 +15,7 @@ db.create.action<-function(registry, #the previously saved registry
                            reason, #the reason to remove record(s)
                            original, #the term to be translated
                            translation, #what the original should be changed into
-                           user, #the user who provides the input
+                           user=NA, #the user who provides the input
                            quiet=F, #absolutely no information is printed
                            print.help=F, #no help message is printed, overridden by quiet flag
                            write.output=F, #flag whether output should be written to working directory
@@ -37,7 +37,16 @@ db.create.action<-function(registry, #the previously saved registry
   }
   
   #check user
-  #TODO
+  if(is.na(user)){
+    user<-readline(prompt='Who has recorded the data? Name: ')
+  }
+  if(!quiet){
+    cat(note('New data is recorded by'),white(user),'\n')
+  }
+  if(!user %in% local(users,env=hidden.env)){
+    cat(error('Given user name is not validated\n'))
+    stop()
+  }
   
   if(action=='remove'){
     if(missing(record.ID) | missing(reason)){
