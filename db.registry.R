@@ -5,6 +5,7 @@
 #NA?
 
 db.registry<-function(existing.data.registry=F, #the previously saved registry
+                      import.staged.records=T, #whether the staged records should be imported and added to the existing registry
                       new.records=F, #the records to be added
                       too.old=300, #a number of days against which new records' dates are checked for age
                       expected.missing=0, #use this if the default new input always has a fixed number of incomplete records
@@ -78,11 +79,30 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       if(!quiet){
         cat(note('Existing registry is provided.\n'))
       }
+      if(import.staged.records){
+        if(db.staged(file.base.name = filename, quiet = T)){ #check whether a staging file exists
+          #load staged records
+          staged<-db.staged(file.base.name = filename, return.staged.records = T)
+          #reformat records
+          staged$ID<-seq(max(existing.data.registry$ID)+1,max(existing.data.registry$ID)+nrow(staged))
+          staged[,2]<-as.Date(staged[,2], format = '%d.%m.%Y')
+          #append the staged records
+          if(all(colnames(existing.data.registry)==colnames(staged))){
+            existing.data.registry<-rbind(existing.data.registry,staged, make.row.names=F)
+            #remove the staging file
+            file.remove(paste(getwd(),'/',filename,'.staged.csv',sep=''))
+          } else {
+            cat(error('ERROR: Column names from the staging file do not match with the registry! Staged records are not processed\n'))
+          }
+        } else {
+          cat(warn('No file holding staged records is found\n'))
+        }
+      }
       if(save.backup){
         if(!file.exists(paste(getwd(),'/',format(Sys.Date(),'%Y%m%d'),'.',filename,'.registry.backup',sep=''))){
           if(!quiet){
             write.table(existing.data.registry,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.backup',sep='.'),row.names=F,sep=';')
-            cat(note('A backup of it is saved as',paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.backup',sep='.'),'\n'))
+            cat(note('A backup of the existing registry is saved as',paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.backup',sep='.'),'\n'))
           }
         } else {
           cat(warn('A backup is not saved as one was made already earlier today.\n'))
