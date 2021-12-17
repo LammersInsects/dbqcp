@@ -18,13 +18,9 @@ db.compare.db<-function(existing.db,
     }
   }
   
-  #TODO db.is.db() voor beide dbs
-  
   # Check date format
   # read.date.format(date)
   #else #take today's date for these new records
-  # head(existing.db)
-  # head(new.db)
   
   # Change empty values into NAs
   new.db[sapply(new.db,emptyvalues)]<-NA
@@ -48,9 +44,6 @@ db.compare.db<-function(existing.db,
   new.db<-new.db[,sort(colnames(new.db))]
   
   # compare databases
-  #TODO I could use a separate script for this! It's useful to be able to compare data frames like this!!!
-  #it should then return a logical matrix with all the fields that have been changed or added.
-  #however, that will not work well with the present way of generating the new records
   new.subjects<-!new.db[,sort.col] %in% existing.db[,sort.col] #test whether any new lines have been added
   new.columns<-!colnames(new.db) %in% colnames(existing.db)#test whether any new columns have been added
   new.db.s<-new.db[!new.subjects,!new.columns] #if so, both of these have to be excluded in the next tests
