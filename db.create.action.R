@@ -1,4 +1,4 @@
-# Written by Mark Lammers; Animal Ecology, Vrije Universiteit Amsterdam; marklammers6@gmail.com
+# Written by Mark Lammers; Institute for Evolution and Biodiversity, University of Muenster; marklammers6@gmail.com
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
 db.create.action<-function(registry, #the previously saved registry

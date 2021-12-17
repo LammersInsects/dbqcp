@@ -2,4 +2,4 @@ Action;Subject;Field;Value;Does
 remove;db~remove;[the record ID to be removed];[reason why the record should be removed];running db.action removes the flagged records in antechronological order, also removing the record listing the action as it goes
 approve;db~approve;[the record ID for which verification is given];[reason why the record has been approved];to be determined
 doubtful;db~doubt;[the ID of the record that is flagged as doubtful];[source of doubt];to be determined
-translate;db~translate;[the term to be translated];[the translation];running db.action translates the terms across the whole registry in chronological order, also removing the record listing the action as it goes
+translate;db~translate;[the term to be translated];[the translation];running db.action translates the terms across the whole registry in antechronological order, also removing the record listing the action as it goes
