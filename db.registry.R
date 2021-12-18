@@ -86,6 +86,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
           #reformat records
           staged$ID<-seq(max(existing.data.registry$ID)+1,max(existing.data.registry$ID)+nrow(staged))
           staged[,2]<-as.Date(staged[,2], format = '%d.%m.%Y')
+          for(column in 3:6){
+            staged[,column]<-trailingspace(staged[,column])
+          }
           #append the staged records
           if(all(colnames(existing.data.registry)==colnames(staged))){
             existing.data.registry<-rbind(existing.data.registry,staged, make.row.names=F)
