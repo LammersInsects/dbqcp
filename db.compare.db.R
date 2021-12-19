@@ -140,9 +140,9 @@ db.compare.db<-function(existing.db,
   }
   
   if(write.output){
-    write.table(new.records,file = paste(today,filename,'compare-db.csv',sep='.'),sep=';',row.names = F)
+    write.table(new.records,file = paste(format(Sys.Date(),'%Y%m%d'),filename,'compare-db.csv',sep='.'),sep=';',row.names = F)
     if(!quiet){
-      cat(note(' and has been exported as ',today,'.',filename,'.compare-db.csv\n',sep=''))
+      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',filename,'.compare-db.csv\n',sep=''))
     }
   }
   

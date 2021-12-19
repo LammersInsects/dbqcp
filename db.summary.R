@@ -85,10 +85,10 @@ db.summary<-function(registry, #the previously saved registry
   }
   
   if(write.output){
-    write.table(subjects,file=paste(today,filename,'summary.subjects.csv',sep='.'),sep=';',row.names=F)
-    write.table(fields,file=paste(today,filename,'summary.fields.csv',sep='.'),sep=';',row.names=F)
-    write.table(values,file=paste(today,filename,'summary.values.csv',sep='.'),sep=';',row.names=F)
-    write.table(sources,file=paste(today,filename,'summary.sources.csv',sep='.'),sep=';',row.names=F)
+    write.table(subjects,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'summary.subjects.csv',sep='.'),sep=';',row.names=F)
+    write.table(fields,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'summary.fields.csv',sep='.'),sep=';',row.names=F)
+    write.table(values,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'summary.values.csv',sep='.'),sep=';',row.names=F)
+    write.table(sources,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'summary.sources.csv',sep='.'),sep=';',row.names=F)
     if(!quiet){
       cat(note('Four files are written with summaries of the subjects, fields, values and sources'))
     }

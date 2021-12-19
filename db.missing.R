@@ -64,13 +64,13 @@ db.missing<-function(registry, #the previously saved registry
   
   # Export table with missing fields
   if(write.output){
-    write.table(result, file=paste(today,filename,'missing.csv',sep='.'), sep=';', row.names=F)
+    write.table(result, file=paste(format(Sys.Date(),'%Y%m%d'),filename,'missing.csv',sep='.'), sep=';', row.names=F)
   }
   
   if(!quiet){
     cat(note('A table with missing values is returned\n'))
     if(write.output){
-      cat(note(' and has been exported as ',today,'.',filename,'.missing.csv\n',sep=''))
+      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',filename,'.missing.csv\n',sep=''))
     }
   }
   

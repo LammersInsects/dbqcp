@@ -79,10 +79,10 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
         cat(note('Existing registry is provided.\n'))
       }
       if(save.backup){
-        if(!file.exists(paste(getwd(),'/',today,'.',filename,'.registry.backup',sep=''))){
+        if(!file.exists(paste(getwd(),'/',format(Sys.Date(),'%Y%m%d'),'.',filename,'.registry.backup',sep=''))){
           if(!quiet){
-            write.table(existing.data.registry,file=paste(today,filename,'registry.backup',sep='.'),row.names=F,sep=';')
-            cat(note('A backup of it is saved as',paste(today,filename,'registry.backup',sep='.'),'\n'))
+            write.table(existing.data.registry,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.backup',sep='.'),row.names=F,sep=';')
+            cat(note('A backup of it is saved as',paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.backup',sep='.'),'\n'))
           }
         } else {
           cat(warn('A backup is not saved as one was made already earlier today.\n'))
@@ -164,7 +164,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     if(sum(nodate)>0){
       cat(warn(sum(nodate),"records have no date. Today's date is imputed in these records:\n"))
       print(new.records[nodate,])
-      new.records[nodate,2]<-as.Date(today, format='%Y%m%d')
+      new.records[nodate,2]<-Sys.Date()
     }
     
     # If new records contain records from more than 300 days ago, give a warning; they are most likely typos
@@ -172,13 +172,13 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     if(no.new | no.existing){ #this should not get triggered if only an existing registry is loaded!
       
     } else {
-      veryold<-new.records[,2] <= as.Date(today, format='%Y%m%d')-too.old
+      veryold<-new.records[,2] <= Sys.Date()-too.old
       if(sum(veryold)>0){
         cat(warn('WARNING!',sum(veryold),'records have dates over',too.old,"days old. Do these records' dates contain typos?\n"))
         print(new.records[veryold,])
       }
       
-      future<-new.records[,2] > as.Date(today, format='%Y%m%d')
+      future<-new.records[,2] > Sys.Date()
       if(sum(future)>0){
         cat(warn('WARNING!',sum(future),"records have dates that are in the future! Do these records' dates contain typos?\n"))
         print(new.records[future,])
@@ -191,8 +191,8 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       cat(warn('WARNING!',sum(nosource),'records have no source. Records:\n'))
       print(new.records[nosource,])
       cat(warn('Source can be added by reading it as a new record with a later date. They have been saved as',
-               paste(today,filename,'registry.nosource.csv\n',sep='.')))
-      write.table(new.records[nosource,],file=paste(today,filename,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
+               paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.nosource.csv\n',sep='.')))
+      write.table(new.records[nosource,],file=paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
     }
     
     # Check whether any are adding new subjects or fields

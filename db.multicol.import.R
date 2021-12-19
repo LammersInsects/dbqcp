@@ -38,7 +38,7 @@ db.multicol.import<-function(dataframe, #the records to be added
         if(sum(nodate)>0){
           cat(warn(sum(nodate),"records have no date. Today's date is imputed in these records:\n"))
           print(df[nodate,])
-          df[nodate,date.col]<-as.Date(today, format='%Y%m%d')
+          df[nodate,date.col]<-Sys.Date()
         }
         df$Date<-as.Date(df[,date.col], format='%d-%m-%Y') #assumes Excel-formatted short date
         date.col.name<-date.col
@@ -52,7 +52,7 @@ db.multicol.import<-function(dataframe, #the records to be added
     }
   } else {
     cat(warn("No column specifying the date recorded is provided. Today's date is imputed in all records\n"))
-    df$Date<-as.Date(today, format='%Y%m%d')
+    df$Date<-Sys.Date()
     date.col.name='Date'
   }
   
@@ -169,9 +169,9 @@ db.multicol.import<-function(dataframe, #the records to be added
   }
   
   if(write.output){
-    write.table(output, file=paste(today,filename,'multicol.csv',sep='.'), sep=';', row.names=F)
+    write.table(output, file=paste(format(Sys.Date(),'%Y%m%d'),filename,'multicol.csv',sep='.'), sep=';', row.names=F)
     if(!quiet){
-      cat(note(' and has been exported as ',today,'.',filename,'.multicol.csv\n',sep=''))
+      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',filename,'.multicol.csv\n',sep=''))
     }
   }
   

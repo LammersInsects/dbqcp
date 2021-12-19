@@ -84,9 +84,9 @@ db.findrecords<-function(registry, #the previously saved registry
     cat(note('All matching records are returned as one registry\n'))
   }
   if(write.output){
-    write.table(output,file=paste(today,filename,'found.csv',sep='.'),sep=';',row.names=F)
+    write.table(output,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'found.csv',sep='.'),sep=';',row.names=F)
     if(!quiet){
-      cat(note(' and has been exported as ',today,'.',filename,'.found.csv\n',sep=''))
+      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',filename,'.found.csv\n',sep=''))
     }
   }
   

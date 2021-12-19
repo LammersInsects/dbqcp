@@ -30,7 +30,7 @@ db.remove<-function(registry, #the previously saved registry
   
   # Check if today files under the same filename have already been removed If so, load that file and append
   files<-list.files(getwd())
-  fullfilename<-paste(today,filename,'removed.csv',sep='.')
+  fullfilename<-paste(format(Sys.Date(),'%Y%m%d'),filename,'removed.csv',sep='.')
   if(fullfilename %in% files){
     cat(warn('Records were already removed earlier today. The newly removed records are appended.\n'))
     removed<-read.table(fullfilename,header=T,sep=';')
