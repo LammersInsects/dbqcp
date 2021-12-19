@@ -23,7 +23,9 @@ db.staged<-function(database.folder=getwd(), #The folder holding the database fi
   
   full.file.path<-paste(database.folder,'/',file.base.name,'.staged.csv',sep='')
   if(!file.exists(full.file.path)){
-    cat(warn('No file holding staged records is found\n'))
+    if(!quiet){
+      cat(warn('No file holding staged records is found\n'))
+    }
     return(FALSE)
   } else {
     df<-read.table(full.file.path, sep=';', header=T)

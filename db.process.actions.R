@@ -36,7 +36,7 @@ db.process.actions<-function(registry, #the previously saved registry
   }
   
   #subset actions for those that are of the type requested to be processed
-  actions.todo<-actions[actions$Categorie %in% todo,]
+  actions.todo<-actions[actions[,3] %in% todo,]
   #process in antechronological order
   actions.todo<-actions.todo[rev(rownames(actions.todo)),]
   
@@ -45,7 +45,7 @@ db.process.actions<-function(registry, #the previously saved registry
   tr.count<-0
   translated<-0
   for(i in actions.todo$ID){
-    do<-df[df$ID==i,]
+    do<-actions.todo[actions.todo$ID==i,]
     if(do[,3]=='db~remove'){
       #remove target record
       df<-df[df[,1]!=as.numeric(do[,4]),]
@@ -53,7 +53,7 @@ db.process.actions<-function(registry, #the previously saved registry
     } else if(do[,3]=='db~translate'){
       #translate for the subject, field, value, and source column all values according to the action
       for(column in 3:6){
-        translated<-translated+sum(df[,column]==record[,4],na.rm = T)
+        translated<-translated+sum(df[,column]==do[,4],na.rm = T)
         df[,column]<-gsub(do[,4],do[,5],df[,column],fixed = T)
       }
       tr.count<-tr.count+1
@@ -91,7 +91,7 @@ db.process.actions<-function(registry, #the previously saved registry
         cat(warn(nrow(actions.todo)-tr.count,'out of',nrow(actions.todo),
                  'actions were not executed. Most likely these actions are removed by more recent actions\n'))
       }
-      cat(note('Translated registry  is returned\n'))
+      cat(note('Translated registry is returned\n'))
     } else {
       if(nrow(actions.todo)>0){
         cat(warn('No actions were executed, while actions were requested. Something went wrong?\n'))
