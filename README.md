@@ -131,7 +131,7 @@ Source | The source of the record. | yes
 Recorded.by | The person who entered the data. | no
 Verified | This is a legacy column, due to be removed in future versions. Currently, no parts of of the code use this column. | no
 
-The first three lines of such a file could look like this:
+The first three lines of such a file containing records of plant species' traits could look like this:
 ```R
 "ID";"Date";"Subject";"Field";"Value";"Source";"Recorded.by";"Verified"
 1;2018-12-22;"Agave americana";"Spines";"many at leaf margin";"a book";"MarkLammers";0
