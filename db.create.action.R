@@ -10,7 +10,7 @@ db.create.action<-function(registry, #the previously saved registry
                            user=NA, #the user who provides the input
                            quiet=F, #absolutely no information is printed
                            print.help=F, #no help message is printed, overridden by quiet flag
-                           write.output=F, #flag whether output should be written to working directory
+                           write.output=T, #flag whether output should be written to working directory
                            filename='debugging' #the base filename
 ){
   if(!quiet){
