@@ -24,14 +24,19 @@ Table of Contents
    * [db.missing.R](#dbmissingr)
    * [db.history.R](#dbhistoryr)
    * [db.summary.R](#dbsummaryr)
+* [Working with actions](#working-with-actions)
+   * [`db.create.action.R'](#dbcreateactionr)
+   * [`db.process.actions.R'](#dbprocessactionsr)
 * [Plumbing](#plumbing)
    * [db.compress.R](#dbcompressr)
    * [db.files.R](#dbfilesr)
    * [db.dates.R](#dbdatesr)
    * [db.is.registry.R](#dbisregistryr)
    * [db.remove.R](#dbremover)
+   * [db.staged.R](#dbstagedr)
    * [db.translate.R](#dbtranslater)
    * [users.R](#usersr)
+
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -191,6 +196,30 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 
 ## `db.summary.R`
 - *Description*: Summarize each of the data columns in a registry and print/save that information.
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*: db.registry
+- *Examples*:
+
+# Working with actions
+
+## `db.create.action.R'
+- *Description*: Create a removal action or a translation action, and store the created records in the staging file.
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*: db.registry, db.staged
+- *Examples*:
+
+## `db.process.actions.R'
+- *Description*: Process actions that are stored in the registry in antechronological order.
 - *Usage*:
 - *Arguments*:
 - *Details*:
