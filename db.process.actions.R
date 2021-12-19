@@ -66,18 +66,42 @@ db.process.actions<-function(registry, #the previously saved registry
   }
   
   #report success
-  if((rm.count+tr.count)==nrow(actions.todo)){
-    cat(note(rm.count,'records were successfully removed and',translated,'cells had their contents translated by',
-             tr.count,'translation actions\n'))
-  } else {
-    cat(warn(nrow(actions.todo)-(rm.count+tr.count),'out of',nrow(actions.todo),
-             'actions were not executed. Most likely these actions are removed by more recent actions\n'))
+  if(!quiet){
+    if(rm.count>0 & tr.count>0){
+      if((rm.count+tr.count)==nrow(actions.todo)){
+        cat(note(rm.count,'records were successfully removed and',translated,'cells had their contents translated by',
+                 tr.count,'translation actions\n'))
+      } else {
+        cat(warn(nrow(actions.todo)-(rm.count+tr.count),'out of',nrow(actions.todo),
+                 'actions were not executed. Most likely these actions are removed by more recent actions\n'))
+      }
+      cat(note('Translated registry without the removed records is returned\n'))
+    } else if(rm.count>0){
+      if(rm.count==nrow(actions.todo)){
+        cat(note(rm.count,'records were successfully removed\n'))
+      } else {
+        cat(warn(nrow(actions.todo)-rm.count,'out of',nrow(actions.todo),
+                 'actions were not executed. Most likely these actions are removed by more recent actions\n'))
+      }
+      cat(note('Registry without the removed records is returned\n'))
+    } else if(tr.count>0){
+      if(tr.count==nrow(actions.todo)){
+        cat(note(translated,'cells had their contents translated by',tr.count,'translation actions\n'))
+      } else {
+        cat(warn(nrow(actions.todo)-tr.count,'out of',nrow(actions.todo),
+                 'actions were not executed. Most likely these actions are removed by more recent actions\n'))
+      }
+      cat(note('Translated registry  is returned\n'))
+    } else {
+      if(nrow(actions.todo)>0){
+        cat(warn('No actions were executed, while actions were requested. Something went wrong?\n'))
+      } else {
+        cat(warn('No actions were executed because none of type',type,'is present in the registry\n'))
+      }
+      cat(note('Unchanged registry is returned\n'))
+    }
   }
   
   #return the new registry
-  if(!quiet){
-    cat(note('Registry without the removed records is returned\n'))
-  }
-  
   return(df)
 }
