@@ -2,7 +2,7 @@
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
 # Define function
-db.load.backup<-function(database.folder, #The folder holding the database files to analyse
+db.load.backup<-function(database.folder=getwd(), #The folder holding the database files to analyse
                          file.base.name,
                          backup.date, #date as object of class "Date"
                          quiet=F, #absolutely no information is printed
