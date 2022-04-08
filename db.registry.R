@@ -86,6 +86,8 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
           #reformat records
           staged$ID<-seq(max(existing.data.registry$ID)+1,max(existing.data.registry$ID)+nrow(staged))
           staged[,2]<-as.Date(staged[,2], format = '%d.%m.%Y')
+          #TODO this is assuming that dates are always perfectly recorded in staged records!!!
+          #requires QC before staging!
           for(column in 3:6){
             staged[,column]<-trailingspace(staged[,column])
           }
