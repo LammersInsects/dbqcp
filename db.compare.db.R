@@ -4,8 +4,8 @@
 # Define function
 db.compare.db<-function(existing.db,
                         new.db,
-                        date=Sys.Date(),
-                        source='db.compare.db',
+                        commit.date=Sys.Date(),
+                        commit.source='db.compare.db',
                         filename='debugging', #TODO currently not used
                         quiet=F, #absolutely no information is printed
                         print.help=F, #no help message is printed, overridden by quiet flag
@@ -19,7 +19,8 @@ db.compare.db<-function(existing.db,
   }
   
   # Check date format
-  # read.date.format(date)
+  #TODO
+  # read.date.format(commit.date)
   #else #take today's date for these new records
   
   # Change empty values into NAs
@@ -66,11 +67,11 @@ db.compare.db<-function(existing.db,
     subject<-process[,sort.col]
     for(col in colnames(process)[colnames(process)!=sort.col]){
       new.records<-rbind(new.records,
-                         data.frame(date=date,
+                         data.frame(date=commit.date,
                                     subject=subject,
                                     field=col,
                                     value=process[,col],
-                                    source=source))
+                                    source=commit.source))
     }
   }
   
@@ -81,11 +82,11 @@ db.compare.db<-function(existing.db,
     }
     #if so, get those lines and generate new records from those
     for(col in colnames(new.db)[new.columns]){
-      new.records<-rbind(new.records,data.frame(date=date,
+      new.records<-rbind(new.records,data.frame(date=commit.date,
                                                 subject=new.db[!emptyvalues(new.db[,col]),sort.col],
                                                 field=colnames(new.db)[new.columns],
                                                 value=new.db[!emptyvalues(new.db[,col]),new.columns],
-                                                source=source))
+                                                source=commit.source))
     }
     #the cells that happen to be both in new rows and new columns get added twice, so remove duplicates
     new.records<-unique(new.records)
@@ -100,11 +101,11 @@ db.compare.db<-function(existing.db,
     # n.cols[!new.columns]
     for(col in colnames(new.db.s)[edited.cols>0]){ #these are the fields for which we need to make new records
       new.records<-rbind(new.records,
-                         data.frame(date=date, #take today's date for these new records
+                         data.frame(date=commit.date, #take today's date for these new records
                                     subject=new.db.s[changed.values[,col],sort.col],
                                     field=col,
                                     value=new.db.s[changed.values[,col],col],
-                                    source=source)) #not sure whether this is useful
+                                    source=commit.source)) #not sure whether this is useful
     }
     
   }
