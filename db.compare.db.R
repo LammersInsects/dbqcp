@@ -4,24 +4,34 @@
 # Define function
 db.compare.db<-function(existing.db,
                         new.db,
-                        commit.date=Sys.Date(),
+                        commit.date=Sys.Date(), #date in format YYYY-mm-dd
                         commit.source='db.compare.db',
-                        filename='debugging', #TODO currently not used
+                        filename='debugging',
                         quiet=F, #absolutely no information is printed
                         print.help=F, #no help message is printed, overridden by quiet flag
                         write.output=F #flag whether output should be written to working directory
 ){
+  
+  # Enforce data formats
+  commit.date<-as.Date(commit.date[[1]])
+  #TODO if this fails use today's date for these new records
+  commit.source<-as.character(commit.source[[1]])
+  filename<-as.character(filename[[1]])
+  if(!is.logical(c(quiet,print.help,write.output))){
+    cat(error('ERROR: All the variables quiet & print.help & write.output must be of class logical !'))
+    stop()
+  }
+  if(!is.data.frame(existing.db) | !is.data.frame(new.db)){
+    cat(error('ERROR: Both the existing database and the new database must be in data.frame format !'))
+    stop()
+  }
+  
   if(!quiet){
     cat(note('Running db.compare.db.R ...\n'))
     if(print.help){
-      cat(note('This function expects two registries as produced by db.registry()\n'))
+      cat(note('This function expects two databases as produced by db.build()\n'))
     }
   }
-  
-  # Check date format
-  #TODO
-  # read.date.format(commit.date)
-  #else #take today's date for these new records
   
   # Change empty values into NAs
   new.db[sapply(new.db,emptyvalues)]<-NA
