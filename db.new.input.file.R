@@ -74,7 +74,7 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
     if(!quiet){
       cat(note('Calling write.default.xlsx()\n'))
     }
-    write.default.xlsx(dataframe = df, file = filepath, filename = full.file.name, colwidths = colwidths,
+    write.default.xlsx(dataframe = df, filepath = filepath, full.file.name = full.file.name, colwidths = colwidths,
                        extra.header.info = extra.header.info, quiet = quiet)
     if(!quiet){
       cat(note('New input file is saved as ',filepath,'\n',sep=''))
