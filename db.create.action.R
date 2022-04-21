@@ -11,7 +11,7 @@ db.create.action<-function(registry, #the previously saved registry
                            quiet=F, #absolutely no information is printed
                            print.help=F, #no help message is printed, overridden by quiet flag
                            write.output=T, #flag whether output should be written to working directory
-                           filename='debugging' #the base filename
+                           file.base.name='debugging'
 ){
   if(!quiet){
     cat(note('Running db.create.action.R ...\n'))
@@ -128,9 +128,9 @@ db.create.action<-function(registry, #the previously saved registry
   
   #write this to a file with pending new records 
   if(write.output){
-    #these should be imported at the next run of db.registry with the same filename
+    #these should be imported at the next run of db.registry with the same file.base.name
     #first check whether a staging file exists
-    full.file.path<-paste(getwd(),'/',filename,'.staged.csv',sep='')
+    full.file.path<-paste(getwd(),'/',file.base.name,'.staged.csv',sep='')
     if(file.exists(full.file.path)){
       #if so, append the created record(s)
       if(!quiet){

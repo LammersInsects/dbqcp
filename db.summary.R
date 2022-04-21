@@ -11,7 +11,7 @@ db.summary<-function(registry, #the previously saved registry
                      quiet=F, #absolutely no information is printed
                      print.help=F, #no help message is printed, overridden by quiet flag
                      write.output=F, #flag whether output should be written to working directory
-                     filename='debugging' #the base filename
+                     file.base.name='debugging'
 ){
   if(!quiet){
     cat(note('Running db.summary.R ...\n'))
@@ -85,10 +85,10 @@ db.summary<-function(registry, #the previously saved registry
   }
   
   if(write.output){
-    write.table(subjects,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'summary.subjects.csv',sep='.'),sep=';',row.names=F)
-    write.table(fields,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'summary.fields.csv',sep='.'),sep=';',row.names=F)
-    write.table(values,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'summary.values.csv',sep='.'),sep=';',row.names=F)
-    write.table(sources,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'summary.sources.csv',sep='.'),sep=';',row.names=F)
+    write.table(subjects,file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'summary.subjects.csv',sep='.'),sep=';',row.names=F)
+    write.table(fields,file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'summary.fields.csv',sep='.'),sep=';',row.names=F)
+    write.table(values,file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'summary.values.csv',sep='.'),sep=';',row.names=F)
+    write.table(sources,file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'summary.sources.csv',sep='.'),sep=';',row.names=F)
     if(!quiet){
       cat(note('Four files are written with summaries of the subjects, fields, values and sources'))
     }

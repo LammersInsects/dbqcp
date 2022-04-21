@@ -66,7 +66,7 @@ db.files<-function(database.folder, #The folder holding the database files to an
                   'removed','missing','masked','found','multicol','nosource','verify','verification','log','backup','staged')
   
   if(length(files)==0){
-    filenames<-NA
+    file.base.names<-NA
     filetypes<-NA
     package.components<-NA
     dates<-NA
@@ -89,8 +89,8 @@ db.files<-function(database.folder, #The folder holding the database files to an
       by.package<-df$components %in% from.package
       df$identity[by.package]<-'package'
       
-      # Find the base filename and extension in file names
-      df$identity[is.na(df$identity)]<-'filename'
+      # Find the file.base.name and extension in file names
+      df$identity[is.na(df$identity)]<-'file.base.name'
       df$identity[nrow(df)]<-'filetype' #overwrites "backup is from package"
       
       return(df)
@@ -100,14 +100,14 @@ db.files<-function(database.folder, #The folder holding the database files to an
     # Store output
     if(length(files)==1){
       output<-as.data.frame(output[,1])
-      filenames<-output[output[,'identity']=='filename','components']
+      file.base.names<-output[output[,'identity']=='file.base.name','components']
       filetypes<-output[output[,'identity']=='filetype','components']
       package.components<-output[output[,'identity']=='package','components']
       dates<-output[output[,'identity']=='date','components']
     } else {
-      filenames<-unique(unname(sapply(mapply(`[`,
+      file.base.names<-unique(unname(sapply(mapply(`[`,
                                              output['components',],
-                                             lapply(output['identity',],`==`,'filename')),
+                                             lapply(output['identity',],`==`,'file.base.name')),
                                       paste, collapse='.')))
       filetypes<-unique(unname(unlist(mapply(`[`,
                                              output['components',],
@@ -121,14 +121,14 @@ db.files<-function(database.folder, #The folder holding the database files to an
     }
   }
   
-  #Also, for every filename, print when it was last updated
+  #Also, for every file.base.name, print when it was last updated
   #TODO
   
   # Print output
   if(print.output){
     cat(note('Folder contains',length(files),'files\n'))
     cat(note('File base names in the folder are:\n'))
-    print(filenames)
+    print(file.base.names)
     cat(note('File extensions in the folder are:\n'))
     print(filetypes)
     cat(note('Package-generated files in the folder are:\n'))

@@ -6,7 +6,7 @@
 
 db.build<-function(registry, #the previously saved registry
                    include.date=T, #whether the date of each record should be displayed in the database
-                   filename='debugging', #the base filename
+                   file.base.name='debugging',
                    quiet=F, #absolutely no information is printed
                    print.help=F, #no help message is printed, overridden by quiet flag
                    write.output=T #flag whether output should be written to working directory
@@ -54,9 +54,9 @@ db.build<-function(registry, #the previously saved registry
     cat(note('Constructed database is returned\n'))
   }
   if(write.output){
-    write.table(db,file=paste(filename,'db.csv',sep='.'),sep=';',row.names=F)
+    write.table(db,file=paste(file.base.name,'db.csv',sep='.'),sep=';',row.names=F)
     if(!quiet){
-      cat(note(' and saved as ',filename,'.db.csv\n',sep=''))
+      cat(note(' and saved as ',file.base.name,'.db.csv\n',sep=''))
     }
   }
   

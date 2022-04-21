@@ -11,7 +11,7 @@
 
 # Define function
 db.new.input.file<-function(registry=F, #the registry for which an input file needs to be generated
-                            filename='debugging', #the base filename
+                            file.base.name='debugging',
                             colwidths=c(12,8,10,24,8), #preferred for pot_plant_db_new.xlsx
                             precomputed.records=F, #a dataframe with 5 columns with pre-filled information
                             extra.header.info=NA, #allows parsing this string to write.default.xlsx()
@@ -66,15 +66,15 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   }
   
   #Store the full path where to store the new input file
-  file.name<-paste(filename, '.input.xlsx' ,sep='')
-  filepath<-paste(gd.base, file.name,sep='')
+  full.file.name<-paste(file.base.name, '.input.xlsx' ,sep='')
+  filepath<-paste(gd.base, full.file.name,sep='')
   
   #Write to that path with a function from MLmisc
   if(write.output){
     if(!quiet){
       cat(note('Calling write.default.xlsx()\n'))
     }
-    write.default.xlsx(dataframe = df, file = filepath, filename = file.name, colwidths = colwidths,
+    write.default.xlsx(dataframe = df, file = filepath, filename = full.file.name, colwidths = colwidths,
                        extra.header.info = extra.header.info, quiet = quiet)
     if(!quiet){
       cat(note('New input file is saved as ',filepath,'\n',sep=''))

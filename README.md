@@ -116,7 +116,7 @@ Take care that field names do not contain typos, it would be interpreted as a ne
 
 ## Stored registry
 
-The data is stored in eight columns in semicolon-separated CSV format as `<filename>.registry.csv` in the working directory. Many columns can be renamed to basically any other string when a registry is initiated, see the table below which columns this (not) applies to.
+The data is stored in eight columns in semicolon-separated CSV format as `<file.base.name>.registry.csv` in the working directory. Many columns can be renamed to basically any other string when a registry is initiated, see the table below which columns this (not) applies to.
 
 Primarily, each record specifies the value of an attribute of a subject. For each subject, many atrributes can be recorded, and for each attribute, multiple values can be given.
 
@@ -152,7 +152,7 @@ The function `db.build` outputs a table in "wide format" where all rows are the 
 
 There can be duplicity, i.e. multiple values for the same attribute (=field) of the same subject. How this duplicity is handled, is controlled by the user. By default, the latest record for each subject-field-value combination is used.
 
-The database output is written in semicolon-separated CSV format to the disk as `<filename>.db.csv` in the working directory.
+The database output is written in semicolon-separated CSV format to the disk as `<file.base.name>.db.csv` in the working directory.
 
 Using the same example as above, the file would look like this:
 ```R

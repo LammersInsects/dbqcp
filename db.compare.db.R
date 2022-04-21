@@ -6,7 +6,7 @@ db.compare.db<-function(existing.db,
                         new.db,
                         commit.date=Sys.Date(), #date in format YYYY-mm-dd
                         commit.source='db.compare.db',
-                        filename='debugging',
+                        file.base.name='debugging',
                         quiet=F, #absolutely no information is printed
                         print.help=F, #no help message is printed, overridden by quiet flag
                         write.output=F #flag whether output should be written to working directory
@@ -16,7 +16,7 @@ db.compare.db<-function(existing.db,
   commit.date<-as.Date(commit.date[[1]])
   #TODO if this fails use today's date for these new records
   commit.source<-as.character(commit.source[[1]])
-  filename<-as.character(filename[[1]])
+  file.base.name<-as.character(file.base.name[[1]])
   if(!is.logical(c(quiet,print.help,write.output))){
     cat(error('ERROR: All the variables quiet & print.help & write.output must be of class logical !'))
     stop()
@@ -132,7 +132,7 @@ db.compare.db<-function(existing.db,
     new.records<-new.records[order(new.records[,2]),]
     
     #restore column names to existing db names
-    file<-paste(filename,'.registry.csv', sep='')
+    file<-paste(file.base.name,'.registry.csv', sep='')
     if(file %in% list.files(getwd())){
       if(!quiet){
         cat(note('Found the registry in the working directory. Copying column names from those...\n'))
@@ -150,9 +150,9 @@ db.compare.db<-function(existing.db,
   }
   
   if(write.output){
-    write.table(new.records,file = paste(format(Sys.Date(),'%Y%m%d'),filename,'compare-db.csv',sep='.'),sep=';',row.names = F)
+    write.table(new.records,file = paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'compare-db.csv',sep='.'),sep=';',row.names = F)
     if(!quiet){
-      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',filename,'.compare-db.csv\n',sep=''))
+      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',file.base.name,'.compare-db.csv\n',sep=''))
     }
   }
   

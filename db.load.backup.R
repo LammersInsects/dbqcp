@@ -44,7 +44,7 @@ db.load.backup<-function(database.folder=getwd(), #The folder holding the databa
   
   #Load that registry
   backup<-read.table(target.backup,header=T,sep=';')
-  backup.registry<-db.registry(existing.data.registry = backup, filename = 'restore', user = 'admin', write.output = F, save.backup=F,
+  backup.registry<-db.registry(existing.data.registry = backup, file.base.name = 'restore', user = 'admin', write.output = F, save.backup=F,
                         quiet = quiet, print.help = print.help)
   
   #Return it

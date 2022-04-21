@@ -63,7 +63,7 @@ db.compress<-function(registry,
   if(!quiet){
     cat(note('Running db.compress.R with a registry as input. Calling db.build.R ...\n'))
   }
-  db.tmp<-db.build(registry = registry, include.date = F, filename = 'tmp', quiet = quiet) #first build the database so that this is independent
+  db.tmp<-db.build(registry = registry, include.date = F, file.base.name = 'tmp', quiet = quiet) #first build the database so that this is independent
   
   if(!quiet){
     cat(note('Compressing database ...\n'))

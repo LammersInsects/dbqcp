@@ -11,7 +11,7 @@ db.missing<-function(registry, #the previously saved registry
                      quiet=F, #absolutely no information is printed
                      print.help=F, #no help message is printed, overridden by quiet flag
                      write.output=F, #flag whether output should be written to working directory
-                     filename='debugging' #the base filename
+                     file.base.name='debugging'
 ){
   if(!quiet){
     cat(note('Running db.missing.R ...\n'))
@@ -64,13 +64,13 @@ db.missing<-function(registry, #the previously saved registry
   
   # Export table with missing fields
   if(write.output){
-    write.table(result, file=paste(format(Sys.Date(),'%Y%m%d'),filename,'missing.csv',sep='.'), sep=';', row.names=F)
+    write.table(result, file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'missing.csv',sep='.'), sep=';', row.names=F)
   }
   
   if(!quiet){
     cat(note('A table with missing values is returned\n'))
     if(write.output){
-      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',filename,'.missing.csv\n',sep=''))
+      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',file.base.name,'.missing.csv\n',sep=''))
     }
   }
   

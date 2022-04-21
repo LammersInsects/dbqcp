@@ -11,7 +11,7 @@ db.mask<-function(registry, #the previously saved registry
                   quiet=F, #absolutely no information is printed
                   print.help=F, #no help message is printed, overridden by quiet flag
                   write.output=F, #flag whether output should be written to working directory
-                  filename='debugging' #the base filename
+                  file.base.name='debugging'
 ){
   if(!quiet){
     cat(note('Running db.mask.R ...\n'))
@@ -56,9 +56,9 @@ db.mask<-function(registry, #the previously saved registry
       cat(note(nrow(omit),'records were removed based on the values given.\n'))
     }
     if(write.output){
-      write.table(omit,file=paste(filename,'.masked.csv',sep=''),row.names=F,sep=';')
+      write.table(omit,file=paste(file.base.name,'.masked.csv',sep=''),row.names=F,sep=';')
       if(!quiet){
-        cat(note('They are saved as',paste(filename,'.masked.csv',sep=''),'\n'))
+        cat(note('They are saved as',paste(file.base.name,'.masked.csv',sep=''),'\n'))
       }
     }
   } else {

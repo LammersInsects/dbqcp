@@ -9,7 +9,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
                       new.records=F, #the records to be added
                       too.old=300, #a number of days against which new records' dates are checked for age
                       expected.missing=0, #use this if the default new input always has a fixed number of incomplete records
-                      filename='debugging', #the base filename
+                      file.base.name='debugging',
                       user=NA, #optional: if not entered here, the script will prompt you for a manual input
                       quiet=F, #absolutely no information is printed
                       print.help=F, #no help message is printed, overridden by quiet flag
@@ -80,9 +80,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
         cat(note('Existing registry is provided.\n'))
       }
       if(import.staged.records){
-        if(db.staged(file.base.name = filename, quiet = T)){ #check whether a staging file exists
+        if(db.staged(file.base.name = file.base.name, quiet = T)){ #check whether a staging file exists
           #load staged records
-          staged<-db.staged(file.base.name = filename, return.staged.records = T)
+          staged<-db.staged(file.base.name = file.base.name, return.staged.records = T)
           #reformat records
           staged$ID<-seq(max(existing.data.registry$ID)+1,max(existing.data.registry$ID)+nrow(staged))
           staged[,2]<-as.Date(staged[,2], format = '%d.%m.%Y')
@@ -95,7 +95,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
           if(all(colnames(existing.data.registry)==colnames(staged))){
             existing.data.registry<-rbind(existing.data.registry,staged, make.row.names=F)
             #remove the staging file
-            file.remove(paste(getwd(),'/',filename,'.staged.csv',sep=''))
+            file.remove(paste(getwd(),'/',file.base.name,'.staged.csv',sep=''))
           } else {
             cat(error('ERROR: Column names from the staging file do not match with the registry! Staged records are not processed\n'))
           }
@@ -104,10 +104,10 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
         }
       }
       if(save.backup){
-        if(!file.exists(paste(getwd(),'/',format(Sys.Date(),'%Y%m%d'),'.',filename,'.registry.backup',sep=''))){
+        if(!file.exists(paste(getwd(),'/',format(Sys.Date(),'%Y%m%d'),'.',file.base.name,'.registry.backup',sep=''))){
           if(!quiet){
-            write.table(existing.data.registry,file=paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.backup',sep='.'),row.names=F,sep=';')
-            cat(note('A backup of the existing registry is saved as',paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.backup',sep='.'),'\n'))
+            write.table(existing.data.registry,file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'registry.backup',sep='.'),row.names=F,sep=';')
+            cat(note('A backup of the existing registry is saved as',paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'registry.backup',sep='.'),'\n'))
           }
         } else {
           cat(warn('A backup is not saved as one was made already earlier today.\n'))
@@ -216,8 +216,8 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       cat(warn('WARNING!',sum(nosource),'records have no source. Records:\n'))
       print(new.records[nosource,])
       cat(warn('Source can be added by reading it as a new record with a later date. They have been saved as',
-               paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.nosource.csv\n',sep='.')))
-      write.table(new.records[nosource,],file=paste(format(Sys.Date(),'%Y%m%d'),filename,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
+               paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'registry.nosource.csv\n',sep='.')))
+      write.table(new.records[nosource,],file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'registry.nosource.csv',sep='.'),sep=';',row.names=F)
     }
     
     # Check whether any are adding new subjects or fields
@@ -304,9 +304,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   # Export registry
   if(write.output){
-    write.table(df, file=paste(filename,'.registry.csv',sep=''), sep=';',row.names=F)
+    write.table(df, file=paste(file.base.name,'.registry.csv',sep=''), sep=';',row.names=F)
     if(!quiet){
-      cat(note('Registry has been saved as',paste(filename,'.registry.csv',sep=''),'\n'))
+      cat(note('Registry has been saved as',paste(file.base.name,'.registry.csv',sep=''),'\n'))
     }
   }
   

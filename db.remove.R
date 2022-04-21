@@ -10,7 +10,7 @@ db.remove<-function(registry, #the previously saved registry
                     quiet=F, #absolutely no information is printed
                     print.help=F, #no help message is printed, overridden by quiet flag
                     write.output=F, #flag whether output should be written to working directory
-                    filename='debugging' #the base filename
+                    file.base.name='debugging'
 ){
   if(!quiet){
     cat(note('Running db.remove.R ...\n'))
@@ -29,12 +29,12 @@ db.remove<-function(registry, #the previously saved registry
   }
   to.remove<-remove.IDs
   
-  # Check if today files under the same filename have already been removed If so, load that file and append
+  # Check if today files under the same file.base.name have already been removed If so, load that file and append
   files<-list.files(getwd())
-  fullfilename<-paste(format(Sys.Date(),'%Y%m%d'),filename,'removed.csv',sep='.')
-  if(fullfilename %in% files){
+  full.file.name<-paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'removed.csv',sep='.')
+  if(full.file.name %in% files){
     cat(warn('Records were already removed earlier today. The newly removed records are appended.\n'))
-    removed<-read.table(fullfilename,header=T,sep=';')
+    removed<-read.table(full.file.name,header=T,sep=';')
     test<-is.na(as.Date(removed[1,2], format='%d-%m-%Y'))
     if(test){
       removed[,2]<-as.Date(removed[,2], format='%d-%m-%Y')
@@ -69,9 +69,9 @@ db.remove<-function(registry, #the previously saved registry
   removed<-rbind(removed,omit)
   removed<-unique(removed)
   if(write.output){
-    write.table(removed,file=fullfilename,sep=';',row.names=F)
+    write.table(removed,file=full.file.name,sep=';',row.names=F)
     if(!quiet){
-      cat(note(' but a copy of these records is saved in',fullfilename,'\n'))
+      cat(note(' but a copy of these records is saved in',full.file.name,'\n'))
     }
   }
   

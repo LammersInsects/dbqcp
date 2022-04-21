@@ -12,7 +12,7 @@ db.multicol.import<-function(dataframe, #the records to be added
                              quiet=F, #absolutely no information is printed
                              print.help=F, #no help message is printed, overridden by quiet flag
                              write.output=F, #flag whether output should be written to working directory
-                             filename='debugging' #the base filename
+                             file.base.name='debugging'
 ){
   if(!quiet){
     cat(note('Running db.multicol.import.R ...\n'))
@@ -169,9 +169,9 @@ db.multicol.import<-function(dataframe, #the records to be added
   }
   
   if(write.output){
-    write.table(output, file=paste(format(Sys.Date(),'%Y%m%d'),filename,'multicol.csv',sep='.'), sep=';', row.names=F)
+    write.table(output, file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'multicol.csv',sep='.'), sep=';', row.names=F)
     if(!quiet){
-      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',filename,'.multicol.csv\n',sep=''))
+      cat(note(' and has been exported as ',format(Sys.Date(),'%Y%m%d'),'.',file.base.name,'.multicol.csv\n',sep=''))
     }
   }
   

@@ -8,7 +8,7 @@ db.translate<-function(registry, #the previously saved registry
                        translate, #the previously saved database
                        quiet=F, #absolutely no information is printed
                        print.help=F, #no help message is printed, overridden by quiet flag
-                       filename='debugging' #the base filename
+                       file.base.name='debugging'
 ){
   if(!quiet){
     cat(note('Running db.translate.R ...\n'))

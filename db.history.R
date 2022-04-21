@@ -6,7 +6,7 @@
 
 db.history<-function(registry, #the previously saved registry
                      do='recording.activities', #recording.activities, time.first.last, or a combination of those using c()
-                     filename='debugging', #the base filename
+                     file.base.name='debugging',
                      quiet=F, #absolutely no information is printed
                      print.help=F #no help message is printed, overridden by quiet flag
 ){
