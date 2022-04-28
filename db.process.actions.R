@@ -22,7 +22,7 @@ db.process.actions<-function(registry, #the previously saved registry
     stop()
   }
   
-  actions<-df[grep('db~',df[,3]),]
+  actions<-df[grep('db~',df[,3], fixed = T),]
   
   if(type=='remove' | type=='db~remove'){
     todo<-'db~remove'
