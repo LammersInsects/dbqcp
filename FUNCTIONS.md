@@ -27,6 +27,7 @@ Table of Contents
    * [db.summary.R](#dbsummaryr)
 * [Working with actions](#working-with-actions)
    * [`db.create.action.R'](#dbcreateactionr)
+   * [`db.has.actions.R'](#dbhasactionsr)
    * [`db.process.actions.R'](#dbprocessactionsr)
 * [Plumbing](#plumbing)
    * [db.compress.R](#dbcompressr)
@@ -227,7 +228,18 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*: db.registry, db.staged
+- *See also*: db.registry, db.staged, db.has.actions, db.process.actions
+- *Examples*:
+
+## `db.has.actions.R'
+- *Description*: Test whether actions are stored in the registry.
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*: Returns `TRUE` if the registry contains any actions, and `FALSE` if it has none.
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*: db.registry, db.create.action, db.process.actions
 - *Examples*:
 
 ## `db.process.actions.R'
@@ -238,7 +250,7 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *Value*:
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
-- *See also*: db.registry
+- *See also*: db.registry, db.has.actions
 - *Examples*:
 
 # Plumbing
