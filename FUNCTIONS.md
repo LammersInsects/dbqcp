@@ -9,6 +9,7 @@ Table of Contents
 * [Creating a registry](#creating-a-registry)
    * [db.registry.R](#dbregistryr)
 * [Working with an existing registry](#working-with-an-existing-registry)
+   * [db.load.current.R](#dbloadcurrentr)
    * [db.load.backup.R](#dbloadbackupr)
 * [Converting a registry to a "wide" format database](#converting-a-registry-to-a-wide-format-database)
    * [db.build.R](#dbbuildr)
@@ -75,6 +76,17 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 ```
 
 # Working with an existing registry
+
+## `db.load.current.R`
+- *Description*: Load the current version of an existing registry.
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*: db.registry
+- *Examples*:
 
 ## `db.load.backup.R`
 - *Description*: Load a backup of an existing registry as it was stored at the beginning of a given date, or the closest earlier date if no backup was saved on the given date.
