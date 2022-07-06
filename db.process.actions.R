@@ -21,6 +21,10 @@ db.process.actions<-function(registry, #the previously saved registry
     db.is.registry(registry = registry, quiet=F)
     stop()
   }
+  if(!db.has.actions(registry = registry, quiet = T)){
+    cat(error('ERROR: No actions were found in the registry! Aborting...\n'))
+    stop()
+  }
   
   actions<-df[grep('db~',df[,3], fixed = T),]
   
