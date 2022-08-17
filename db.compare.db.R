@@ -40,6 +40,8 @@ db.compare.db<-function(existing.db,
   for(i in 1:ncol(new.db)){
     new.db[,i]<-trailingspace(new.db[,i])
   }
+  # And also from the column names (normally not an issue, but sometimes new columns have a trailing space)
+  colnames(new.db)<-trailingspace(colnames(new.db))
   
   # sort both databases by subject
   sort.col<-colnames(existing.db)[1] #this definitely works for databases from db, but is not an all-over solution for other dfs
@@ -94,8 +96,8 @@ db.compare.db<-function(existing.db,
     for(col in colnames(new.db)[new.columns]){
       new.records<-rbind(new.records,data.frame(date=commit.date,
                                                 subject=new.db[!emptyvalues(new.db[,col]),sort.col],
-                                                field=colnames(new.db)[new.columns],
-                                                value=new.db[!emptyvalues(new.db[,col]),new.columns],
+                                                field=col,
+                                                value=new.db[!emptyvalues(new.db[,col]),col],
                                                 source=commit.source))
     }
     #the cells that happen to be both in new rows and new columns get added twice, so remove duplicates
