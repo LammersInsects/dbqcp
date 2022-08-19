@@ -3,6 +3,7 @@
 
 db.create.action<-function(registry, #the previously saved registry
                            action, #remove or translate
+                           action.date=format(Sys.Date(),'%d.%m.%Y'), #the date to store with the action
                            record.ID, #IDs of the record(s) to remove
                            reason, #the reason to remove record(s)
                            original, #the term to be translated
@@ -25,6 +26,14 @@ db.create.action<-function(registry, #the previously saved registry
     df<-registry
   } else {
     db.is.registry(registry = registry, quiet=F)
+    stop()
+  }
+  
+  if(class(action.date)!='character'){
+    stop()
+  } else if(length(action.date)!=1){
+    stop()
+  } else if(grep('^[:digit:{8}]*',action.date)!=1){
     stop()
   }
   
@@ -70,7 +79,7 @@ db.create.action<-function(registry, #the previously saved registry
     }
     
     #create new record
-    record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,record.ID,reason.ok,"db.create.action",user,0)
+    record<-c('?', action.date, action.name, record.ID, reason.ok, "db.create.action", user, 0)
     #TODO remove last zero from record once column Verified is purged from the package
     
     if(!quiet){
@@ -105,7 +114,7 @@ db.create.action<-function(registry, #the previously saved registry
     }
     
     #create new record
-    record<-c('?',format(Sys.Date(),'%d.%m.%Y'),action.name,original.ok,translation.ok,"db.create.action",user,0)
+    record<-c('?', action.date, action.name, original.ok, translation.ok, "db.create.action", user,0)
     #TODO remove last zero from record once column Verified is purged from the package
     
     if(!quiet){
