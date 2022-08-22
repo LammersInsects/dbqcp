@@ -80,9 +80,9 @@ db.compare.db<-function(existing.db,
     for(col in colnames(process)[colnames(process)!=sort.col]){
       new.records<-rbind(new.records,
                          data.frame(date=commit.date,
-                                    subject=subject,
+                                    subject=subject[!emptyvalues(process[,col])],
                                     field=col,
-                                    value=process[,col],
+                                    value=process[,col][!emptyvalues(process[,col])],
                                     source=commit.source))
     }
   }
