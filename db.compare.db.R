@@ -94,11 +94,17 @@ db.compare.db<-function(existing.db,
     }
     #if so, get those lines and generate new records from those
     for(col in colnames(new.db)[new.columns]){
-      new.records<-rbind(new.records,data.frame(date=commit.date,
-                                                subject=new.db[!emptyvalues(new.db[,col]),sort.col],
-                                                field=col,
-                                                value=new.db[!emptyvalues(new.db[,col]),col],
-                                                source=commit.source))
+      if(!all(emptyvalues(new.db[,col]))){
+        new.records<-rbind(new.records,data.frame(date=commit.date,
+                                                  subject=new.db[!emptyvalues(new.db[,col]),sort.col],
+                                                  field=col,
+                                                  value=new.db[!emptyvalues(new.db[,col]),col],
+                                                  source=commit.source))
+      } else {
+        if(!quiet){
+          cat(warn('Column <',col,'> is completely empty !\n'))
+        }
+      }
     }
     #the cells that happen to be both in new rows and new columns get added twice, so remove duplicates
     new.records<-unique(new.records)
