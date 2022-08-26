@@ -67,11 +67,11 @@ db.is.registry<-function(registry,
   tests<-rbind(nc,cn,dt,nna,nd)
   res<-data.frame(abbreviation=row.names(tests),
                   outcome=tests,
-                  name=c('number of colums != 8',
-                         'column 1, 2 or 8 have invalid names',
-                         'data types do not match expectations',
-                         'NAs in cells that should not have any',
-                         'more unique values per column than there are rows'))
+                  explanation=c('number of colums != 8',
+                                'column 1, 2 or 8 have invalid names',
+                                'data types do not match expectations',
+                                'NAs in cells that should not have any',
+                                'more unique values per column than there are rows'))
   
   # Report output
   if(all(res$outcome)){
@@ -83,7 +83,7 @@ db.is.registry<-function(registry,
     if(!quiet){
       cat(error("ERROR: Some criteria are not met, thus input is not a registry as produced by MarkLammers' database package\n"))
       cat(warn('Criteria not met are:\n'))
-      print(bad$name)
+      print(bad[,2:3])
     }
     if('dt' %in% bad$abbreviation){
       cat(error('CHECKPOINT triggered, unusual data in registry?\n'))
