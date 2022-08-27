@@ -49,21 +49,23 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   #Check input registry, if it is provided
   if(registry[[1]][1]!=F){
     if(db.is.registry(registry = registry, quiet=T)){
-      df<-registry
+      df.new<-registry
       
       #Create dataframe for the new input file with all field names that are used in the registry
-      df<-data.frame('','',unique(registry[,4]),'','')
-      colnames(df)<-colnames(registry[2:6])
+      df.new<-data.frame('','',unique(registry[,4]),'','')
+      colnames(df.new)<-colnames(registry[2:6])
       
       #If a df was already generated from a predefined table, than prioritise that one
       #but append extra fields from registry, if any
       if(exists('tmp.df')){
-        df<-rbind(tmp.df, df[!df[,3] %in% tmp.df[,3],])
+        df.new<-rbind(tmp.df, df.new[!df.new[,3] %in% tmp.df[,3],])
       }
     } else {
       db.is.registry(registry = registry, quiet=F)
       stop()
     }
+  } else {
+    df.new<-tmp.df
   }
   
   #Append with precomputed records if those are provided
@@ -78,10 +80,10 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
       if(!quiet){
         cat(note('Adding ',nrow(precomputed.records),' records to the new input file\n',sep=''))
       }
-      df<-rbind(df,precomputed.records[,1:5]) #then add them to the new input file
+      df.new<-rbind(df.new,precomputed.records[,1:5]) #then add them to the new input file
       for(x in 1:5){
         if(class(precomputed.records[,x])=='integer'){ #if we have integers in the precomputed records
-          df[,x]<-as.integer(df[,x]) #then pass that on to the new input file
+          df.new[,x]<-as.integer(df.new[,x]) #then pass that on to the new input file
         }
       }
     } else {
@@ -104,7 +106,7 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
     if(!quiet){
       cat(note('Calling write.default.xlsx()\n'))
     }
-    write.default.xlsx(dataframe = df, filepath = filepath, full.file.name = full.file.name, colwidths = colwidths,
+    write.default.xlsx(dataframe = df.new, filepath = filepath, full.file.name = full.file.name, colwidths = colwidths,
                        extra.header.info = extra.header.info, quiet = quiet)
     if(!quiet){
       cat(note('New input file is saved as ',filepath,'\n',sep=''))
@@ -112,6 +114,6 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   }
   
   if(return.df){
-    return(df)
+    return(df.new)
   }
 }
