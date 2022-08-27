@@ -11,6 +11,7 @@
 
 # Define function
 db.new.input.file<-function(registry=F, #the registry for which an input file needs to be generated
+                            new.table=F, #OR: use a predefined table for the new input file
                             file.base.name='debugging',
                             full.file.name=F,
                             colwidths=c(12,8,10,24,8), #preferred for pot_plant_db_new.xlsx
@@ -24,21 +25,46 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   if(!quiet){
     cat(note('Running db.new.input.file.R ...\n'))
     if(print.help){
-      cat(note('This function expects a registry as created by db.registry()\n'))
+      cat(note('This function expects a registry as created by db.registry(), or a predefined new table\n'))
     }
   }
   
-  #Check input registry
-  if(db.is.registry(registry = registry, quiet=T)){
-    df<-registry
-  } else {
-    db.is.registry(registry = registry, quiet=F)
+  #A new.table and/or a registry must be provided
+  if(!(new.table[[1]][1]!=F | registry[[1]][1]!=F)){
+    cat(error('ERROR: A new.table and/or a registry must be provided !\n'))
     stop()
   }
   
-  #Create dataframe for the new input file with all field names that are used in the registry
-  df<-data.frame('','',unique(registry[,4]),'','')
-  colnames(df)<-colnames(registry[2:6])
+  #Check the predefined new.table, if it is provided
+  if(new.table[[1]][1]!=F){
+    #Check new table
+    if(ncol(new.table)==5){
+      tmp.df<-new.table
+    } else {
+      cat(error('ERROR: The predefined new table does not have 5 columns'))
+      stop()
+    }
+  }
+  
+  #Check input registry, if it is provided
+  if(registry[[1]][1]!=F){
+    if(db.is.registry(registry = registry, quiet=T)){
+      df<-registry
+      
+      #Create dataframe for the new input file with all field names that are used in the registry
+      df<-data.frame('','',unique(registry[,4]),'','')
+      colnames(df)<-colnames(registry[2:6])
+      
+      #If a df was already generated from a predefined table, than prioritise that one
+      #but append extra fields from registry, if any
+      if(exists('tmp.df')){
+        df<-rbind(tmp.df, df[!df[,3] %in% tmp.df[,3],])
+      }
+    } else {
+      db.is.registry(registry = registry, quiet=F)
+      stop()
+    }
+  }
   
   #Append with precomputed records if those are provided
   if(class(precomputed.records)!='logical'){ #if precomputed records are provided
