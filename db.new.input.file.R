@@ -42,10 +42,11 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   #Append with precomputed records if those are provided
   if(class(precomputed.records)!='logical'){ #if precomputed records are provided
     if(is.data.frame(precomputed.records)){ #and it is a data frame
-      if(ncol(precomputed.records)==5){ #with 5 columns
-        
-      } else {
+      if(ncol(precomputed.records)>5){ #with 5 columns
         cat(warn('The dataframe of precomputed records does not have 5 columns. Only the first five columns are used\n'))
+      } else if(ncol(precomputed.records)<5){
+        cat(warn('The dataframe of precomputed records does not have 5 columns. Extra empty columns are added\n'))
+        precomputed.records[,(ncol(precomputed.records)+1):5]<-''
       }
       if(!quiet){
         cat(note('Adding ',nrow(precomputed.records),' records to the new input file\n',sep=''))
