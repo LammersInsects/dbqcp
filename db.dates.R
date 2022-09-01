@@ -2,7 +2,7 @@
 # (c) 2021. Released under the terms of the GNU General Public License v3.
 
 # Define function
-db.dates<-function(database.folder, #The folder holding the database files to analyse
+db.dates<-function(database.folder=getwd(), #The folder holding the database files to analyse
                    file.base.name=F,
                    exclude=F,
                    return.dates=T,

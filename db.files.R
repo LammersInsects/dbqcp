@@ -1,7 +1,7 @@
 # Written by Mark Lammers; Animal Ecology, Vrije Universiteit Amsterdam; marklammers6@gmail.com
 # (c) 2018. Released under the terms of the GNU General Public License v3.
 
-db.files<-function(database.folder, #The folder holding the database files to analyse
+db.files<-function(database.folder=getwd(), #The folder holding the database files to analyse
                    file.base.name=F, #The file base name by which to subset the folder (set to FALSE for all)
                    exclude=F, #Any or multiple strings by which files can be excluded
                    split='.',
