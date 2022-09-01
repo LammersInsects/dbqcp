@@ -297,7 +297,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     df[,i]<-trailingspace(df[,i])
   }
   
-  if(!db.is.registry(df)){
+  if(!db.is.registry(df, quiet = T)){
     db.is.registry(df, quiet = F)
     stop('An unexpected ERROR occurred. The registry has to be checked and recreated!')
   }
