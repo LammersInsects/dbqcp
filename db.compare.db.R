@@ -136,8 +136,14 @@ db.compare.db<-function(existing.db,
     
   } else {
     
-    # sort new records by subject
+    #sort new records by subject
     new.records<-new.records[order(new.records[,2]),]
+    
+    #exclude records that have empty values
+    # they get introduced when cells in new.db were emptied of all contents
+    # which is not a valid method of removing data from a registry-based database
+    # instead, the user should make a removal action with db.create.action()
+    new.records<-new.records[!rowSums(sapply(new.records[,2:4], emptyvalues))>0,]
     
     #restore column names to existing db names
     file<-paste(file.base.name,'.registry.csv', sep='')
