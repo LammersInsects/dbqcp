@@ -143,7 +143,13 @@ db.compare.db<-function(existing.db,
     # they get introduced when cells in new.db were emptied of all contents
     # which is not a valid method of removing data from a registry-based database
     # instead, the user should make a removal action with db.create.action()
-    new.records<-new.records[!rowSums(sapply(new.records[,2:4], emptyvalues))>0,]
+    if(nrow(new.records)==1){
+      if(sum(emptyvalues(new.records[,2:4]))>0){
+        new.records<-new.records[-1,]
+      }
+    } else {
+      new.records<-new.records[!rowSums(sapply(new.records[,2:4], emptyvalues))>0,]
+    }
     
     #restore column names to existing db names
     file<-paste(file.base.name,'.registry.csv', sep='')
@@ -160,7 +166,9 @@ db.compare.db<-function(existing.db,
     }
     
     #restore row names
-    row.names(new.records)<-1:nrow(new.records)
+    if(nrow(new.records)>0){
+      row.names(new.records)<-1:nrow(new.records)
+    }
   }
   
   if(write.output){
