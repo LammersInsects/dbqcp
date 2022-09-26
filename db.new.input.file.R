@@ -87,7 +87,7 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
         }
       }
     } else {
-      cat(warn('The precomputed recods are not a dataframe; the input is ignored!\n'))
+      cat(warn('The precomputed records are not a dataframe; the input is ignored!\n'))
     }
   } else {
     if(!quiet){

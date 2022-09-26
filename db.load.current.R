@@ -15,7 +15,7 @@ db.load.current<-function(database.folder=getwd(), #The folder holding the datab
   }
   
   #Check that the target registry file actually exists
-  file.name<-paste(file.base.name,'.registry.csv',sep='')
+  file.name<-paste(database.folder,file.base.name,'.registry.csv',sep='')
   if(file.exists(file.name)){
     if(!quiet){
       cat(note('Found registry named ',file.name,'. Loading it...\n',sep=''))
