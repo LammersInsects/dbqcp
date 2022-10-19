@@ -55,8 +55,8 @@ db.process.actions<-function(registry, #the previously saved registry
         df<-df[df[,1]!=as.numeric(do[,4]),]
         rm.count<-rm.count+1
       } else if(do[,3]=='db~translate'){
-        #translate for the subject, field, value, and source column all values according to the action
-        for(column in 3:6){
+        #translate for the field, value, and source column all values according to the action
+        for(column in 4:6){
           translated<-translated+sum(df[,column]==do[,4],na.rm = T)
           df[,column]<-gsub(do[,4],do[,5],df[,column],fixed = T)
         }
