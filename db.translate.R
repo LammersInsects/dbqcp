@@ -60,7 +60,7 @@ db.translate<-function(registry, #the previously saved registry
   }
   
   # Find values to be translated
-  for(i in 3:6){
+  for(i in 4:6){
     todo<-df[,i] %in% keep.tr[,2]
     if(sum(todo>0)){
       if(!quiet){
