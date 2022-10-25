@@ -3,6 +3,7 @@
 
 db.has.actions<-function(registry, #the previously saved registry
                          type='all', #remove, translate, or all actions
+                         store.actions=F, #should actions be stored in the Global Env?
                          quiet=F, #absolutely no information is printed
                          print.help=F #no help message is printed, overridden by quiet flag
 ){
@@ -38,6 +39,12 @@ db.has.actions<-function(registry, #the previously saved registry
   if(nrow(actions)>0){
     if(!quiet){
       cat(note('Found',paste(do.call(paste,as.data.frame(table(actions[,3]))[,c(2,1)]), collapse = ' + '),'actions\n'))
+    }
+    if(store.actions){
+      list2env(list(registry.actions=actions), envir = .GlobalEnv)
+      if(!quiet){
+        cat(note('All records with actions are stored in the Global Environment as [ registry.actions ]\n'))
+      }
     }
     return(T)
   } else {
