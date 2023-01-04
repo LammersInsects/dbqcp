@@ -100,20 +100,26 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
             cat(error('ERROR: Column names from the staging file do not match with the registry! Staged records are not processed\n'))
           }
         } else {
-          cat(warn('No file holding staged records is found\n'))
+          if(!quiet){
+            cat(warn('No file holding staged records is found\n'))
+          }
         }
       }
       if(save.backup){
         if(!file.exists(paste(getwd(),'/',format(Sys.Date(),'%Y%m%d'),'.',file.base.name,'.registry.backup',sep=''))){
+          write.table(existing.data.registry,file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'registry.backup',sep='.'),row.names=F,sep=';')
           if(!quiet){
-            write.table(existing.data.registry,file=paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'registry.backup',sep='.'),row.names=F,sep=';')
             cat(note('A backup of the existing registry is saved as',paste(format(Sys.Date(),'%Y%m%d'),file.base.name,'registry.backup',sep='.'),'\n'))
           }
         } else {
-          cat(warn('A backup is not saved as one was made already earlier today.\n'))
+          if(!quiet){
+            cat(warn('A backup is not saved as one was made already earlier today.\n'))
+          }
         }
       } else {
-        cat(warn('A backup is not saved as this action was overridden by user.\n'))
+        if(!quiet){
+          cat(warn('A backup is not saved as this action was overridden by user.\n'))
+        }
       }
       #store some essential information
       header<-colnames(existing.data.registry)
