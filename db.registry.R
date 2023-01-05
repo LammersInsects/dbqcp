@@ -92,7 +92,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
             staged[,column]<-trimws(staged[,column])
           }
           # Address the possibility that data may be stored in inappropriate data types
-          staged<-type.convert(staged, as.is=T)
+          staged[,3:6]<-type.convert(staged[,3:6], as.is=T)
           #append the staged records
           if(all(colnames(existing.data.registry)==colnames(staged))){
             existing.data.registry<-rbind(existing.data.registry,staged, make.row.names=F)
@@ -306,7 +306,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   }
   
   # Address the possibility that data may be stored in inappropriate data types
-  df<-type.convert(df, as.is=T)
+  df[,3:6]<-type.convert(df[,3:6], as.is=T)
   
   if(!db.is.registry(df, quiet = T)){
     db.is.registry(df, quiet = F)
