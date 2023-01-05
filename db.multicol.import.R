@@ -30,6 +30,9 @@ db.multicol.import<-function(dataframe, #the records to be added
     df[,i]<-trimws(df[,i])
   }
   
+  # Address the possibility that data may be stored in inappropriate data types
+  df<-type.convert(df)
+  
   # Date recorded
   if(date.col!=F){ #something is given
     if(length(date.col)==1){ #only one value
