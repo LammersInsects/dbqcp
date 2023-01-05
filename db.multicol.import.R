@@ -31,7 +31,7 @@ db.multicol.import<-function(dataframe, #the records to be added
   }
   
   # Address the possibility that data may be stored in inappropriate data types
-  df<-type.convert(df)
+  df<-type.convert(df, as.is=T)
   
   # Date recorded
   if(date.col!=F){ #something is given

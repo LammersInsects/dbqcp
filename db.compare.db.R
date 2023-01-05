@@ -44,8 +44,8 @@ db.compare.db<-function(existing.db,
   colnames(new.db)<-trimws(colnames(new.db))
   
   # Address the possibility that data may be stored in inappropriate data types
-  new.db<-type.convert(new.db)
-  existing.db<-type.convert(existing.db)
+  new.db<-type.convert(new.db, as.is=T)
+  existing.db<-type.convert(existing.db, as.is=T)
   
   # sort both databases by subject
   sort.col<-colnames(existing.db)[1] #this definitely works for databases from db, but is not an all-over solution for other dfs
