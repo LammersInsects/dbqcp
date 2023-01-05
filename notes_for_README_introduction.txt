@@ -3,3 +3,10 @@ Om dit probleem te voorkomen bij een nieuwe database, heb ik lang nagedacht over
 Om alsnog een database met hoge kwaliteitsstandaard mogelijk te maken, heb ik in 2018 besloten zelf een data management pakket te schrijven in R om precies dit soort data te kunnen beheren. Op dit moment bestaat het geheel uit een set functies die goed samenwerken en redelijk gebruiksvriendelijk zijn. Het idee is om dit als een nieuw R package te publiceren. Dit pakket is enkel voor de infrastructuur voor het beheer van dit soort data, niet de invulling van de literatuurgegevens zelf.
 Mijn voorstel is om de data in een traceerbaar format op te slaan, en de database volgens de principes van Open Science ook publiek beschikbaar te maken. De database op zichzelf en de criteria die wij hopelijk gaan vaststellen voor de definities van de traits, kan ook de basis van een publicatie zijn. Ik kan deze database beheren en online hosten. Waarschijnlijk op GitHub, dat lijkt me verreweg het eenvoudigst.
 Waar ik op dit moment niet de beschikking over heb, is tijd noch personeel om op grote schaal de gegevens te verzamelen. Het klinkt alsof jouw groep (Mathilde en Léonore) juist daar een rol in kunnen spelen. Maar wat de uiteindelijke invulling ook wordt, het belangrijkst lijkt me dat we dubbel werk voorkomen.
+
+De principes van FAIR data zijn een belangrijk onderliggend idee bij deze package
+https://www.go-fair.org/fair-principles/
+Findability -> up to the host of the data registry
+Accessibility -> code is public, data registries are portable
+Interoperability -> simple csv data format
+Reuse of digital assets -> for any record it is known when it was recorded and by whom. Actions also convenient to keep track of data that is judged to be useful or should be removed (without actually removing it)
