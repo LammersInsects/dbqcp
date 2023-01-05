@@ -27,7 +27,7 @@ db.multicol.import<-function(dataframe, #the records to be added
   
   # Remove any trailing whitespaces in each column
   for(i in 1:ncol(df)){
-    df[,i]<-trailingspace(df[,i])
+    df[,i]<-trimws(df[,i])
   }
   
   # Date recorded

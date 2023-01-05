@@ -38,10 +38,10 @@ db.compare.db<-function(existing.db,
   
   # Remove any trailing whitespaces in each column
   for(i in 1:ncol(new.db)){
-    new.db[,i]<-trailingspace(new.db[,i])
+    new.db[,i]<-trimws(new.db[,i])
   }
   # And also from the column names (normally not an issue, but sometimes new columns have a trailing space)
-  colnames(new.db)<-trailingspace(colnames(new.db))
+  colnames(new.db)<-trimws(colnames(new.db))
   
   # sort both databases by subject
   sort.col<-colnames(existing.db)[1] #this definitely works for databases from db, but is not an all-over solution for other dfs

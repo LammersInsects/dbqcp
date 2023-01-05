@@ -89,7 +89,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
           #TODO this is assuming that dates are always perfectly recorded in staged records!!!
           #requires QC before staging!
           for(column in 3:6){
-            staged[,column]<-trailingspace(staged[,column])
+            staged[,column]<-trimws(staged[,column])
           }
           #append the staged records
           if(all(colnames(existing.data.registry)==colnames(staged))){
@@ -230,8 +230,8 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     if(no.existing){
       #then we cannot check it
     } else {
-      n.new.subj<-sum(!unique(trailingspace(new.records[,3])) %in% unique(trailingspace(existing.data.registry[,3])))
-      n.new.field<-sum(!unique(trailingspace(new.records[,4])) %in% unique(trailingspace(existing.data.registry[,4])))
+      n.new.subj<-sum(!unique(trimws(new.records[,3])) %in% unique(trimws(existing.data.registry[,3])))
+      n.new.field<-sum(!unique(trimws(new.records[,4])) %in% unique(trimws(existing.data.registry[,4])))
       if(n.new.subj>0){
         if(n.new.field>0){
           if(!quiet){
@@ -300,7 +300,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   
   # Remove any trailing whitespaces in each column
   for(i in 3:6){
-    df[,i]<-trailingspace(df[,i])
+    df[,i]<-trimws(df[,i])
   }
   
   if(!db.is.registry(df, quiet = T)){
