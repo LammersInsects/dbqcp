@@ -43,6 +43,10 @@ db.compare.db<-function(existing.db,
   # And also from the column names (normally not an issue, but sometimes new columns have a trailing space)
   colnames(new.db)<-trimws(colnames(new.db))
   
+  # Address the possibility that data may be stored in inappropriate data types
+  new.db<-type.convert(new.db)
+  existing.db<-type.convert(existing.db)
+  
   # sort both databases by subject
   sort.col<-colnames(existing.db)[1] #this definitely works for databases from db, but is not an all-over solution for other dfs
   existing.db<-existing.db[order(existing.db[,sort.col]),]
