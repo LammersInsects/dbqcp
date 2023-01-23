@@ -1,4 +1,4 @@
-R package "dbpq"
+R package "dbqcp"
 ================
 
 By Mark Lammers, @LammersInsects
@@ -7,7 +7,7 @@ By Mark Lammers, @LammersInsects
 Table of Contents
 =================
 
-* [R package "dbpq"](#r-package-dbpq)
+* [R package "dbqcp"](#r-package-dbqcp)
 * [Table of Contents](#table-of-contents)
 * [Introduction](#introduction)
 * [Getting started](#getting-started)
@@ -62,13 +62,13 @@ If anyone feels like writing code to use an API for python or any other language
 
 All functions were written on Windows OS with Git taking care of line break conversion. Therefore the code should work on any OS as long as you retrieved it from GitHub.
 
-Please open an [issue](https://github.com/LammersInsects/dbpq/issues) if you find a piece of code that is Windows-specific.
+Please open an [issue](https://github.com/LammersInsects/dbqcp/issues) if you find a piece of code that is Windows-specific.
 
 ## Downloading the set of functions
 
 Ideal situation (requires a GitHub account and basic understanding of git): Make a GitHub `fork` and use `git clone` to get a copy of the repository.
 
-Manual download method: Go to @LammersInsects [package page](https://github.com/LammersInsects/dbpq) and download the files.
+Manual download method: Go to @LammersInsects [package page](https://github.com/LammersInsects/dbqcp) and download the files.
 
 Alternatively: use `github2R()` from my repo [MLmisc](https://github.com/LammersInsects/MLmisc/blob/main/github2R.R). This way you will always be using the latest stable version.
 
@@ -92,7 +92,7 @@ All code was written in Rstudio with the Editor Theme set to `Cobalt` (under Glo
 
 ## Issues?
 
-Open an issue in GitHub's [issue tracker for this repo](https://github.com/LammersInsects/dbpq/issues) if you encounter a bug or any other issue. Please add the output of `sessionInfo()` to your issue report. Using GitHub's issue labels is encouraged.
+Open an issue in GitHub's [issue tracker for this repo](https://github.com/LammersInsects/dbqcp/issues) if you encounter a bug or any other issue. Please add the output of `sessionInfo()` to your issue report. Using GitHub's issue labels is encouraged.
 
 # File format
 
@@ -163,15 +163,15 @@ Using the same example as above, the file would look like this:
 
 # Functions
 
-See [FUNCTIONS.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md) for the help files of all functions in the package.
+See [FUNCTIONS.md](https://github.com/LammersInsects/dbqcp/blob/main/FUNCTIONS.md) for the help files of all functions in the package.
 
 # Contributing
 
 YES PLEASE!
 
-Please use GitHub's [Issue](https://github.com/LammersInsects/dbpq/issues) and [Pull Request](https://github.com/LammersInsects/dbpq/pulls) functions for suggestions and patches. I get automatic notifications on issues and pull requests. Please refrain from contacting me through email.
+Please use GitHub's [Issue](https://github.com/LammersInsects/dbqcp/issues) and [Pull Request](https://github.com/LammersInsects/dbqcp/pulls) functions for suggestions and patches. I get automatic notifications on issues and pull requests. Please refrain from contacting me through email.
 
-See [CONTRIBUTING.md](https://github.com/LammersInsects/dbpq/blob/main/FUNCTIONS.md) for details on ways to contribute.
+See [CONTRIBUTING.md](https://github.com/LammersInsects/dbqcp/blob/main/FUNCTIONS.md) for details on ways to contribute.
 
 # Example work flows
 
