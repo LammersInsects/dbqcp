@@ -79,6 +79,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
       if(!quiet){
         cat(note('Existing registry is provided.\n'))
       }
+      if(db.is.legacy(registry = existing.data.registry, quiet = quiet)){ #check whether it is a legacy registry
+        existing.data.registry<-db.convert.legacy(registry = existing.data.registry, quiet = quiet)
+      }
       if(import.staged.records){
         if(db.staged(file.base.name = file.base.name, quiet = T)){ #check whether a staging file exists
           #load staged records
