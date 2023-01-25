@@ -34,6 +34,8 @@ Table of Contents
    * [db.files.R](#dbfilesr)
    * [db.dates.R](#dbdatesr)
    * [db.is.registry.R](#dbisregistryr)
+   * [db.is.legacy.R](#dbislegacyr)
+   * [db.convert.legacy.R](#dbconvertlegacyr)
    * [db.remove.R](#dbremover)
    * [db.staged.R](#dbstagedr)
    * [db.translate.R](#dbtranslater)
@@ -297,6 +299,28 @@ registry<-db.registry(existing.data.registry = todo.existing, new.records = todo
 - *Note*:
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
 - *See also*: db.registry
+- *Examples*:
+
+## `db.is.legacy.R`
+- *Description*: Test whether a registry is legacy registry from before Alpha.
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*: db.registry, db.convert.legacy
+- *Examples*:
+
+## `db.convert.legacy.R`
+- *Description*: Convert a legacy registry from before Alpha.
+- *Usage*:
+- *Arguments*:
+- *Details*:
+- *Value*:
+- *Note*:
+- *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
+- *See also*: db.registry, db.is.legacy
 - *Examples*:
 
 ## `db.remove.R`
