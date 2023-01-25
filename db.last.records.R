@@ -67,6 +67,10 @@ db.last.records<-function(registry, #the previously saved registry
     cat(warn(nrow(omit),'records were omitted because newer records replace those\n'))
   }
   
+  # Prepare output
+  keep.df<-keep.df[,colnames(keep.df)!='combo']
+  keep.df<-keep.df[order(keep.df$ID),]
+  
   # Write split registries to disk
   if(write.output){
     write.table(keep.df,file=paste(file.base.name,'.registry.newonly.csv',sep=''), sep=';',row.names=F)
@@ -76,10 +80,6 @@ db.last.records<-function(registry, #the previously saved registry
       cat(note('Omitted records have been saved as',paste(file.base.name,'.registry.omitted.csv',sep=''),'\n'))
     }
   }
-  
-  # Prepare output
-  keep.df<-keep.df[,-9]
-  keep.df<-keep.df[order(keep.df$ID),]
   
   # Return filtered registry
   if(!quiet){
