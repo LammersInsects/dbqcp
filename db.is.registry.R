@@ -13,7 +13,7 @@
 # db.is.registry(registry = df, quiet = F)
 # db.is.registry(registry = wd.base, quiet = F)
 # db.is.registry(registry = pot.new, quiet = F)
-# db.is.registry(registry = data.frame(matrix(1:40,nrow = 5, ncol = 8)), quiet = F)
+# db.is.registry(registry = data.frame(matrix(1:35,nrow = 5, ncol = 7)), quiet = F)
 
 # Reformat data
 
@@ -38,21 +38,21 @@ db.is.registry<-function(registry,
   nna<-T #no NAs in all columns except source
   nd <-T #number of unique data points is less or equal to number of rows
   
-  # 8 columns in total
-  #if this fails it should skip the  next two tests, as they depend on the df having 8 columns
+  # 7 columns in total
+  #if this fails it should skip the  next two tests, as they depend on the df having 7 columns
   if(is.null(ncol(df))){
     nc<-F
   } else {
-    nc<-dim(df)[2]==8
+    nc<-dim(df)[2]==7
   }
   
   if(nc){
-    # First column is called ID, column 7 is called Recorded.by, column 8 is called Verified
-    cn<-all(colnames(df)[c(1,7,8)]==c('ID','Recorded.by','Verified'))
+    # First column is called ID, column 7 is called Recorded.by
+    cn<-all(colnames(df)[c(1,7)]==c('ID','Recorded.by'))
     
     # Column data types are (all) integer, date, character, character, character, character, character, integer
     interchangeable<-c("integer","character","numeric")
-    dt<-all(sapply(df[,1:2],class)==c("integer","Date") & sapply(df[,3:8],class) %in% interchangeable)
+    dt<-all(sapply(df[,1:2],class)==c("integer","Date") & sapply(df[,3:7],class) %in% interchangeable)
     #MAYBE INCLUDE AN ATTEMPT TO DATE CONVERSION?
     # sapply(df,function(x){interpret.data.type(data.type(x))}) #first work on that function before using it here
   }
@@ -67,8 +67,8 @@ db.is.registry<-function(registry,
   tests<-rbind(nc,cn,dt,nna,nd)
   res<-data.frame(abbreviation=row.names(tests),
                   outcome=tests,
-                  explanation=c('number of colums != 8',
-                                'column 1, 2 or 8 have invalid names',
+                  explanation=c('number of colums != 7',
+                                'column(s) 1 or 2 have invalid names',
                                 'data types do not match expectations',
                                 'NAs in cells that should not have any',
                                 'more unique values per column than there are rows'))

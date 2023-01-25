@@ -167,7 +167,6 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     
     #Create to extra columns
     new.records$Recorded.by<-user
-    new.records$Verified<-0
     
     # Allocate IDs to new registry
     new.records$ID<-(id+1):(id+nrow(new.records))

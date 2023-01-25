@@ -79,8 +79,7 @@ db.create.action<-function(registry, #the previously saved registry
     }
     
     #create new record
-    record<-c('?', action.date, action.name, record.ID, reason.ok, "db.create.action", user, 0)
-    #TODO remove last zero from record once column Verified is purged from the package
+    record<-c('?', action.date, action.name, record.ID, reason.ok, "db.create.action", user)
     
     if(!quiet){
       cat(note('New action to remove record number <',record.ID,'> has been created\n'))
@@ -114,8 +113,7 @@ db.create.action<-function(registry, #the previously saved registry
     }
     
     #create new record
-    record<-c('?', action.date, action.name, original.ok, translation.ok, "db.create.action", user,0)
-    #TODO remove last zero from record once column Verified is purged from the package
+    record<-c('?', action.date, action.name, original.ok, translation.ok, "db.create.action", user)
     
     if(!quiet){
       cat(note('New record action to translate <',original,'> to <',translation,'> has been created\n'))

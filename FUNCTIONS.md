@@ -65,7 +65,7 @@ write.output | Should the output be written to working directory? Defaults to TR
 save.backup | Should a backup of the existing registry be saved? Defaults to TRUE
 
 - *Details*: This function is the workhorse of any database maintained using this package. It is the sole function to write a new version of the registry to be stored permanently.
-- *Value*: A dataframe of 8 variables
+- *Value*: A dataframe of 7 variables
 - *Note*: NA
 - *Author(s)*: Concept and implementation by Mark Lammers, @LammersInsects
 - *See also*: db.build

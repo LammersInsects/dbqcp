@@ -116,7 +116,7 @@ Take care that field names do not contain typos, it would be interpreted as a ne
 
 ## Stored registry
 
-The data is stored in eight columns in semicolon-separated CSV format as `<file.base.name>.registry.csv` in the working directory. Many columns can be renamed to basically any other string when a registry is initiated, see the table below which columns this (not) applies to.
+The data is stored in seven columns in semicolon-separated CSV format as `<file.base.name>.registry.csv` in the working directory. Many columns can be renamed to basically any other string when a registry is initiated, see the table below which columns this (not) applies to.
 
 Primarily, each record specifies the value of an attribute of a subject. For each subject, many atrributes can be recorded, and for each attribute, multiple values can be given.
 
@@ -129,15 +129,16 @@ Field | The attribute for which a value is recorded. | yes
 Value | The value of the given attribute. | yes
 Source | The source of the record. | yes
 Recorded.by | The person who entered the data. | no
-Verified | This is a legacy column, due to be removed in future versions. Currently, no parts of of the code use this column. | no
+
+Registries created with versions of `dbqcp` from before `v0.11` may have an additional column called "Verified". No parts of any of the code has ever use this column. Newer version will automatically convert legacy format registries to the current data format whenever a new record is committed.
 
 The first three lines of such a file containing records of plant species' traits could look like this:
 ```R
-"ID";"Date";"Subject";"Field";"Value";"Source";"Recorded.by";"Verified"
-1;2018-12-22;"Agave americana";"Spines";"many at leaf margin";"a book";"MarkLammers";0
-2;2018-12-22;"Agave americana";"Type";"succulent";"a book";"MarkLammers";0
-3;2019-02-21;"Trichodiadema spp.";"Type";"Succulent";"another book";"MarkLammers";0
-4;2019-02-21;"Trichodiadema spp.";"Spines";"many at leaf tip";"another book";"MarkLammers";0
+"ID";"Date";"Subject";"Field";"Value";"Source";"Recorded.by"
+1;2018-12-22;"Agave americana";"Spines";"many at leaf margin";"a book";"MarkLammers"
+2;2018-12-22;"Agave americana";"Type";"succulent";"a book";"MarkLammers"
+3;2019-02-21;"Trichodiadema spp.";"Type";"Succulent";"another book";"MarkLammers"
+4;2019-02-21;"Trichodiadema spp.";"Spines";"many at leaf tip";"another book";"MarkLammers"
 ```
 
 ## A compressed registry
