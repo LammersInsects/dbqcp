@@ -31,6 +31,14 @@ db.is.registry<-function(registry,
   
   df<-registry
   
+  # Test basic preconditions
+  stopifnot(is.data.frame(df))
+  
+  # First check whether the registry may be a LEGACY registry from before v0.11
+  if(db.is.legacy(registry = df, quiet = quiet)){
+    df<-db.convert.legacy(registry = df, quiet = quiet)
+  }
+  
   #ALL THE THINGS TO TEST FOR, set them to TRUE for starters
   nc <-T #number of columns
   cn <-T #column names
@@ -52,7 +60,7 @@ db.is.registry<-function(registry,
     
     # Column data types are (all) integer, date, character, character, character, character, character, integer
     interchangeable<-c("integer","character","numeric")
-    dt<-all(sapply(df[,1:2],class)==c("integer","Date") & sapply(df[,3:7],class) %in% interchangeable)
+    dt<-all(sapply(df[,1:2],class)==c("integer","Date"), sapply(df[,3:7],class) %in% interchangeable)
     #MAYBE INCLUDE AN ATTEMPT TO DATE CONVERSION?
     # sapply(df,function(x){interpret.data.type(data.type(x))}) #first work on that function before using it here
   }
@@ -96,5 +104,4 @@ db.is.registry<-function(registry,
   
   # Returned is only the conclusion of doing all tests
   return(all(tests))
-  
 }
