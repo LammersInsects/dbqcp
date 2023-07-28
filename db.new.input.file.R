@@ -106,6 +106,9 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
     if(!quiet){
       cat(note('Calling write.default.xlsx()\n'))
     }
+    if(!exists('write.default.xlsx')){
+      source('https://raw.githubusercontent.com/LammersInsects/MLmisc/main/write.default.xlsx.R')
+    }
     write.default.xlsx(dataframe = df.new, filepath = filepath, full.file.name = full.file.name, colwidths = colwidths,
                        extra.header.info = extra.header.info, quiet = quiet)
     if(!quiet){
