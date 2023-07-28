@@ -30,13 +30,13 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   }
   
   #A new.table and/or a registry must be provided
-  if(!(new.table[[3]][1]!=F | registry[[1]][1]!=F)){
+  if((is.logical(new.table) & is.logical(registry))){
     cat(error('ERROR: A new.table and/or a registry must be provided !\n'))
     stop()
   }
   
   #Check the predefined new.table, if it is provided
-  if(new.table[[3]][1]!=F){
+  if(!is.logical(new.table)){
     #Check new table
     if(ncol(new.table)==5){
       tmp.df<-new.table
@@ -47,7 +47,7 @@ db.new.input.file<-function(registry=F, #the registry for which an input file ne
   }
   
   #Check input registry, if it is provided
-  if(registry[[1]][1]!=F){
+  if(!is.logical(registry)){
     if(db.is.registry(registry = registry, quiet=T)){
       df.new<-registry
       
