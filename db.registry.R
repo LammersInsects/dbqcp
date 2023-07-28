@@ -33,19 +33,13 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
     cat(note('New data is recorded by'),white(user),'\n')
   }
   #   if(user %in% users){
-  if(user %in% local(users,env=hidden.env)){
-    if(new.records[[1]][[1]]==F){
-      #
-    } else {
-      
-    }
-  } else {
+  if(!user %in% local(users,env=hidden.env)){
     stop('Given user name is not validated')
   }
   
   # Checks before anything can be done
   #is any input provided?
-  if(existing.data.registry[[1]][[1]]==F & new.records[[1]][[1]]==F){
+  if(is.logical(existing.data.registry) & is.logical(new.records)){
     stop('ERROR: No input is provided.')
   } else {
     
@@ -56,7 +50,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   }
   
   #is an existing registry provided?
-  if(existing.data.registry[[1]][[1]]==F){
+  if(is.logical(existing.data.registry)){
     if(!quiet){
       cat(note('No existing data registry is provided, constructing a new one from the new records\n'))
     }
@@ -66,7 +60,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   } else {
     no.existing<-F
     # Convert standard Excel date format to R-friendly
-    if(existing.data.registry[[1]][[1]]!=F){
+    if(is.data.frame(existing.data.registry)){
       test1<-is.na(as.Date(existing.data.registry[1,2],format='%d-%m-%Y'))
       if(test1){
         existing.data.registry[,2]<-as.Date(existing.data.registry[,2],format='%Y-%m-%d') #this is what it should be
@@ -137,7 +131,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   }
   
   #are new records provided?
-  if(new.records[[1]][[1]]==F){
+  if(is.logical(new.records)){
     if(!quiet){
       cat(note('No new records are provided, loading the existing registry\n'))
     }
@@ -262,7 +256,7 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   }
   
   #colnames should be equal
-  if(existing.data.registry[[1]][[1]]!=F & new.records[[1]][[1]]!=F){
+  if(!no.existing & !no.new){
     if(all(colnames(existing.data.registry)==colnames(new.records))){
       #       print('CHECKPOINT OK: Names of columns of both existing and new registry are equal')
     } else {
@@ -276,9 +270,9 @@ db.registry<-function(existing.data.registry=F, #the previously saved registry
   }
   
   # Construct registry
-  if(existing.data.registry[[1]][[1]]==F){
+  if(no.existing){
     existing.data.registry<-data.frame()
-  } else if(new.records[[1]][[1]]==F){
+  } else if(no.new){
     new.records<-data.frame()
   }
   df<-rbind(existing.data.registry,new.records)
