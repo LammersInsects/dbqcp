@@ -151,7 +151,7 @@ db.multicol.import<-function(dataframe, #the records to be added
   ## Build the standardized registry
   output<-data.frame()
   for(col in value.columns){
-    add<-data.frame(Date=df$Date,
+    add<-data.frame(Date=format(df$Date, '%d.%m.%Y'),
                     Subject=df$Subject,
                     Field=col,
                     Value=df[,col],
