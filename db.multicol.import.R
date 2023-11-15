@@ -43,7 +43,18 @@ db.multicol.import<-function(dataframe, #the records to be added
           print(df[nodate,])
           df[nodate,date.col]<-Sys.Date()
         }
-        df$Date<-as.Date(df[,date.col], format='%d-%m-%Y') #assumes Excel-formatted short date
+        n.dash<-length(grep('-', df[,date.col], fixed = T))
+        n.dot<-length(grep('.', df[,date.col], fixed = T))
+        if(n.dash>0){
+          df$Date<-as.Date(df[,date.col], format='%d-%m-%Y') #assumes Excel-formatted short date
+          cat(note(n.dash,'out of',nrow(df),'records have a dash-notation date format\n'))
+        } else if(n.dot>0){
+          df$Date<-as.Date(df[,date.col], format='%d.%m.%Y') #assumes German-formatted short date
+          cat(note(n.dot,'out of',nrow(df),'records have a dash-notation date format\n'))
+        } else {
+          df$Date<-Sys.Date()
+          cat(warn('Date input format is not recognised! Check input data\n'))
+        }
         date.col.name<-date.col
       } else { #it's not a column name
         cat(warn('A single value is provided for the date, but not found as a column name, trying to use it as a date for all records\n'))
