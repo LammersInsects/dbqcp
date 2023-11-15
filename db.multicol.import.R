@@ -96,6 +96,18 @@ db.multicol.import<-function(dataframe, #the records to be added
   # Values
   if(value.columns[1]!=F){
     if(all(value.columns %in% colnames(df))){
+      #remove subject.col from value columns if that is provided
+      if(subject.col %in% value.columns){
+        value.columns<-value.columns[!subject.col==value.columns]
+      }
+      #remove date.col from value columns if that is provided
+      if(date.col %in% value.columns){
+        value.columns<-value.columns[!date.col==value.columns]
+      }
+      #remove source.col from value columns if that is provided
+      if(source.col %in% value.columns){
+        value.columns<-value.columns[!source.col==value.columns]
+      }
       nvalcol<-length(value.columns)
       if(quiet){
         cat(note(nvalcol,'columns with values are provided:\n'))
